@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f4efe6" />
+  <title>Clair Matin V5.5</title>
+  <style>
+    :root{
+      --bg:#f6f1e8;--paper:#fffaf2;--card:#ffffff;--ink:#2b241d;--muted:#7f7468;
+      --line:#eadfce;--accent:#86684d;--accent-2:#d7c0a5;--soft:#f1e6d8;
+      --green:#61735a;--red:#9a5a4b;--shadow:0 16px 40px rgba(55,42,28,.10);--radius:22px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#fbf7ef 0%,var(--bg) 50%,#efe4d7 100%)}
+    body{padding:0 0 calc(92px + env(safe-area-inset-bottom))}
+    button,input,select,textarea{font:inherit}
+    button{border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .app{max-width:760px;margin:0 auto;padding:18px 16px 0}
+    .topbar{position:sticky;top:0;z-index:20;margin:0 -16px 12px;padding:14px 16px 10px;background:rgba(246,241,232,.86);backdrop-filter:blur(16px);border-bottom:1px solid rgba(234,223,206,.65)}
+    .topline{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,#fff8ed,#d9c2a8);box-shadow:inset 0 0 0 1px rgba(134,104,77,.18),0 8px 18px rgba(77,57,38,.10);display:grid;place-items:center;font-size:22px}
+    h1{font-size:22px;line-height:1.05;margin:0;letter-spacing:-.02em}.version{font-size:12px;color:var(--muted);margin-top:3px}.helpBtn{width:42px;height:42px;border-radius:15px;background:var(--card);color:var(--accent);box-shadow:var(--shadow);font-weight:800;font-size:18px}
+    .dateLine{display:flex;gap:8px;align-items:center;margin-top:12px}.dateLine input{width:100%;border:1px solid var(--line);border-radius:17px;background:var(--paper);padding:12px 14px;color:var(--ink);outline:none}.todayBtn{white-space:nowrap;border-radius:17px;background:var(--accent);color:white;padding:12px 14px;font-weight:700}
+    .view{display:none;animation:fade .18s ease-out}.view.active{display:block}@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+    .hero{border-radius:28px;background:linear-gradient(145deg,#fffaf2,#efe0cf);box-shadow:var(--shadow);padding:20px;margin:12px 0 16px;border:1px solid rgba(234,223,206,.75)}
+    .hero small{color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:11px}.hero h2{font-size:25px;margin:8px 0;letter-spacing:-.03em}.hero p{margin:0;color:#5e5248;line-height:1.45}
+    .grid{display:grid;gap:12px}.card{background:rgba(255,255,255,.88);border:1px solid rgba(234,223,206,.9);border-radius:var(--radius);box-shadow:0 10px 25px rgba(55,42,28,.06);padding:16px}.cardTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.card h3{font-size:18px;margin:0;letter-spacing:-.015em}.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:6px 10px;background:var(--soft);color:#685746;font-size:12px;font-weight:700}
+    .formGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.full{grid-column:1/-1}label{font-size:12px;font-weight:800;color:var(--muted);display:block;margin:0 0 6px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:16px;background:#fffdf9;color:var(--ink);padding:12px 13px;outline:none}textarea{min-height:112px;resize:vertical;line-height:1.45}input:focus,select:focus,textarea:focus{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(215,192,165,.25)}
+    .btnRow{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.btn{border-radius:16px;background:var(--ink);color:white;padding:12px 14px;font-weight:800;box-shadow:0 8px 18px rgba(43,36,29,.14);transition:transform .12s ease,opacity .12s ease}.btn:active{transform:scale(.97);opacity:.88}.btn.secondary{background:var(--soft);color:var(--ink);box-shadow:none}.btn.accent{background:var(--accent)}.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line);box-shadow:none}.btn.danger{background:#f6e9e4;color:var(--red);box-shadow:none}
+    .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.quick button{border-radius:16px;background:#fffdf9;border:1px solid var(--line);padding:11px 8px;color:#5d5147;font-weight:800;font-size:13px}.quick button.activePlan{background:var(--accent);color:white;border-color:var(--accent)}.planLabel{margin-top:8px;color:var(--muted);font-size:12px}.miniDate{font-weight:800;color:#5d5147}
+    .empty{border:1px dashed #d8c8b5;border-radius:18px;padding:15px;color:var(--muted);background:#fffaf3;line-height:1.4}.tasks{display:grid;gap:9px}.task{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;background:#fffdf9;border:1px solid var(--line);border-radius:18px;padding:12px}.time{min-width:58px;padding:7px 8px;border-radius:12px;background:var(--soft);font-size:13px;font-weight:900;text-align:center;color:#634d38}.task.done{opacity:.62}.task.done .taskText{text-decoration:line-through}.taskText{font-weight:850;line-height:1.25}.taskMeta{margin-top:4px;color:var(--muted);font-size:12px}.taskActions{display:flex;gap:5px}.iconBtn{width:34px;height:34px;border-radius:12px;background:#f6efe5;color:#5e5145;font-weight:900}.iconBtn.danger{color:var(--red)}
+    .sectionDate{font-size:13px;font-weight:900;color:var(--muted);margin:6px 2px 8px}.dayBlock{display:grid;gap:8px;margin-bottom:14px}.chatBox{white-space:pre-wrap;background:#fffdf9;border:1px solid var(--line);border-radius:18px;padding:14px;line-height:1.45;color:#3f362f;max-height:360px;overflow:auto}.note{font-size:13px;color:var(--muted);line-height:1.4;margin-top:8px}.importResult{display:none;margin-top:12px;border-radius:16px;padding:12px;background:#f7f0e7;color:#5e5145;font-size:13px;line-height:1.45}.importResult.show{display:block}
+    .bottomNav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,250,242,.86);backdrop-filter:blur(18px);border-top:1px solid rgba(234,223,206,.9);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}.navInner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.navBtn{border-radius:18px;padding:11px 8px;background:transparent;color:var(--muted);font-weight:850;display:grid;gap:3px;place-items:center}.navBtn span{font-size:20px;line-height:1}.navBtn small{font-size:11px}.navBtn.active{background:var(--ink);color:white;box-shadow:0 10px 24px rgba(43,36,29,.16)}
+    .toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:rgba(43,36,29,.92);color:white;border-radius:999px;padding:11px 16px;font-weight:800;opacity:0;pointer-events:none;transition:.2s ease;z-index:60;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .modal{position:fixed;inset:0;background:rgba(43,36,29,.32);display:none;align-items:flex-end;z-index:80}.modal.show{display:flex}.sheet{width:100%;max-width:760px;margin:0 auto;background:var(--paper);border-radius:28px 28px 0 0;padding:20px 16px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(43,36,29,.18);max-height:86vh;overflow:auto}.sheet h2{margin:0 0 8px;font-size:24px;letter-spacing:-.03em}.sheet p,.sheet li{color:#5d5147;line-height:1.45}.sheet ul{padding-left:20px}.sheet .btnRow{position:sticky;bottom:0;background:linear-gradient(0deg,var(--paper) 70%,rgba(255,250,242,0));padding-top:16px}
+    @media (min-width:650px){.quick{grid-template-columns:repeat(6,1fr)}.formGrid{grid-template-columns:140px 1fr 1fr}.task{grid-template-columns:80px 1fr auto}.bottomNav{padding-left:20px;padding-right:20px}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="topline"><div class="brand"><div class="logo">☀️</div><div><h1>Clair Matin</h1><div class="version">V5.5 · import intelligent</div></div></div><button class="helpBtn" id="helpBtn" aria-label="Mode d'emploi">?</button></div>
+      <div class="dateLine"><input type="date" id="selectedDate" /><button class="todayBtn" id="todayBtn">Aujourd’hui</button></div>
+    </header>
+
+    <main>
+      <section id="viewToday" class="view active">
+        <div class="hero"><small id="dayLabel">Aujourd’hui</small><h2 id="heroTitle">Une journée claire</h2><p id="heroText">Les tâches saisies ici restent prioritaires.</p></div>
+        <div class="grid">
+          <article class="card"><div class="cardTitle"><h3>À faire aujourd’hui</h3><span class="pill" id="taskCount">0 tâche</span></div><div id="todayTasks" class="tasks"></div></article>
+          <article class="card">
+            <div class="cardTitle"><h3>Ajouter une chose</h3></div>
+            <div class="formGrid">
+              <div><label for="taskTime">Heure</label><input id="taskTime" type="time" /></div>
+              <div><label for="taskTitle">Tâche</label><input id="taskTitle" type="text" placeholder="Ex. nettoyer les vélos" /></div>
+              <div><label for="taskCategory">Catégorie</label><select id="taskCategory"><option>Maison</option><option>Administratif</option><option>Forme</option><option>Famille</option><option>Photo / Expo</option><option selected>À trier</option></select></div>
+              <div class="full"><label>Planifier pour</label><div class="quick" aria-label="Choix de date"><button type="button" class="activePlan" data-plan="0">Aujourd’hui</button><button type="button" data-plan="1">Demain</button><button type="button" data-plan="3">+3 jours</button><button type="button" data-plan="7">+1 semaine</button></div><div class="planLabel" id="planDateLabel">Ajout prévu pour : <span class="miniDate">aujourd’hui</span></div></div>
+            </div>
+            <div class="btnRow"><button class="btn accent" id="addTaskBtn">Ajouter</button><button class="btn secondary" id="clearDoneBtn">Vider le fait</button></div>
+            <div class="quick" aria-label="Actions rapides"><button data-quick="09:30|Salle|Forme">9h30 Salle</button><button data-quick="11:00|Sacoches|À trier">11h Sacoches</button><button data-quick="14:00|Nettoyer et préparer les vélos|Maison">14h Vélos</button><button data-quick="|Rangement léger|Maison">Rangement</button><button data-quick="|Note photo / expo|Photo / Expo">Photo</button><button data-set-title="Préparer demain">Préparer demain</button></div>
+          </article>
+          <article class="card"><div class="cardTitle"><h3>Actions reçues de Clair Photo</h3><span class="pill">léger</span></div><textarea id="photoInput" placeholder="Colle ici une action photo reçue de Clair Photo."></textarea><div class="btnRow"><button class="btn secondary" id="importPhotoBtn">Importer comme tâche</button></div><div class="note">Les phrases “Aucune action reçue” ou “Rien de prévu” sont ignorées.</div></article>
+        </div>
+      </section>
+
+      <section id="viewAgenda" class="view">
+        <div class="hero"><small>Agenda simple</small><h2>Les prochains jours</h2><p>Clair Matin reste léger : il prépare la journée sans remplacer Google Agenda.</p></div>
+        <div class="grid"><article class="card"><div class="cardTitle"><h3>Tâches enregistrées</h3><button class="btn ghost" id="exportBtn">Exporter</button></div><div id="agendaList"></div></article><article class="card"><div class="cardTitle"><h3>Sauvegarde simple</h3></div><div class="btnRow"><button class="btn secondary" id="backupBtn">Copier sauvegarde</button><button class="btn ghost" id="resetBtn">Réinitialiser</button></div><div class="note">La réinitialisation efface uniquement les données de Clair Matin sur cet appareil.</div></article></div>
+      </section>
+
+      <section id="viewChat" class="view">
+        <div class="hero"><small>Chat organisé</small><h2>Importer seulement l’essentiel</h2><p>Les pauses, départs, retours et créneaux de confort ne deviennent plus des tâches.</p></div>
+        <div class="grid">
+          <article class="card"><div class="cardTitle"><h3>Format pour Chat</h3><span class="pill">V5.5</span></div><div class="chatBox" id="chatPrompt"></div><div class="btnRow"><button class="btn accent" id="copyChatBtn">Copier pour ChatGPT</button><button class="btn secondary" id="openChatBtn">Ouvrir ChatGPT</button></div></article>
+          <article class="card"><div class="cardTitle"><h3>Réponse de Chat → vraies tâches</h3></div><textarea id="chatImport" placeholder="Colle ici la réponse de ChatGPT. Clair Matin gardera les actions utiles et ignorera les pauses, trajets et indications générales."></textarea><div class="btnRow"><button class="btn secondary" id="importChatBtn">Créer les vraies tâches</button><button class="btn danger" id="cleanImportBtn">Nettoyer les anciens imports</button></div><div class="note">Exemple : “09h30–10h15 — Salle” devient simplement “09h30 — Salle”.</div><div class="importResult" id="importResult"></div></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottomNav" aria-label="Navigation principale"><div class="navInner"><button class="navBtn active" data-view="today"><span>☀️</span><small>Aujourd’hui</small></button><button class="navBtn" data-view="agenda"><span>📅</span><small>Agenda</small></button><button class="navBtn" data-view="chat"><span>💬</span><small>Chat</small></button></div></nav>
+  <div class="toast" id="toast"></div>
+  <div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="sheet"><h2 id="helpTitle">Mode d’emploi rapide</h2><p><strong>1. Ajoute tes vraies tâches</strong> avec une heure si nécessaire.</p><p><strong>2. Pour organiser la journée</strong>, copie le message de l’onglet Chat vers ChatGPT.</p><p><strong>3. Pour récupérer la réponse</strong>, colle-la dans “Réponse de Chat → vraies tâches”.</p><ul><li>Les plages horaires sont nettoyées automatiquement.</li><li>Les départs, retours, repas, pauses et conseils de rythme sont ignorés.</li><li>Les doublons déjà présents sont évités.</li><li>Le bouton “Nettoyer les anciens imports” retire les repères parasites déjà créés.</li></ul><div class="btnRow"><button class="btn accent" id="closeHelpBtn">J’ai compris</button></div></div></div>
+
+  <script>
+  (() => {
+    const STORAGE_KEY = 'clairMatin_v5_5';
+    const LEGACY_KEYS = ['clairMatin_v5_4','clairMatin_v5_3','clairMatinTaches','clairMatinTasks','clairMatin_v5_tasks','clairMatinData'];
+    const $ = id => document.getElementById(id);
+    let selectedDate = localDate();
+    let planOffset = 0;
+    let planDate = localDate();
+    const state = loadState();
+
+    function localDate(d = new Date()){
+      const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+    function addDays(dateStr,days){const d=new Date(dateStr+'T12:00:00');d.setDate(d.getDate()+Number(days||0));return localDate(d)}
+    function formatDate(dateStr){return new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date(dateStr+'T12:00:00'))}
+    function safeParse(raw){if(!raw)return null;try{return JSON.parse(raw)}catch(e){return null}}
+    function normalizeTime(value){const s=String(value||'').trim().toLowerCase().replace(/\s/g,'').replace('h',':');const m=s.match(/^(\d{1,2})(?::(\d{1,2}))?$/);if(!m)return'';const hh=String(Math.min(23,Number(m[1]))).padStart(2,'0'),mm=String(Math.min(59,Number(m[2]||0))).padStart(2,'0');return `${hh}:${mm}`}
+    function stripAccents(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+    function normalizedText(s){return stripAccents(s).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+    function isEmptySentence(text){const s=normalizedText(text);return /aucune action|rien de prevu|pas d action|aucune tache|sans obligation/.test(s)}
+    function isSupportLine(text){
+      const s=normalizedText(text);
+      return /^(demarrage|depart|retour|recuperation|dejeuner|diner|petit dejeuner|pause|vraie pause|repos|trajet|temps libre|fin de journee|fin de matinee|fin d apres midi|matinee tranquille|apres midi tranquille|soiree tranquille|se preparer|preparation douce|respirer|prendre son temps|moment calme|transition)(\b|$)/.test(s)
+        || /^(priorites?|ordre conseille|petits creneaux|ce que je peux deplacer|rythme conseille|journee realiste|objectif|conseil)(\b|$)/.test(s);
+    }
+    function cleanImportedTitle(title){
+      let s=String(title||'').trim();
+      s=s.replace(/^[\s–—-]+/,'').trim();
+      s=s.replace(/^\d{1,2}\s*(?:h|:)\s*\d{0,2}\s*(?:a|à|jusqu['’]a|jusqu['’]à|[-–—])\s*\d{1,2}\s*(?:h|:)\s*\d{0,2}\s*(?:environ)?\s*[-–—:]?\s*/i,'');
+      s=s.replace(/^(?:jusqu['’]a|jusqu['’]à)?\s*\d{1,2}\s*(?:h|:)\s*\d{0,2}\s*(?:environ)?\s*[-–—:]\s*/i,'');
+      s=s.replace(/\s*\((?:forme|maison|famille|administratif|photo\s*\/\s*expo|a trier|à trier)\)\s*$/i,'').trim();
+      return s.replace(/^[\s–—:-]+/,'').replace(/[\s–—:-]+$/,'').trim();
+    }
+    function normalizeLegacy(raw){if(!raw)return[];const list=Array.isArray(raw)?raw:Array.isArray(raw.tasks)?raw.tasks:Array.isArray(raw.taches)?raw.taches:[];return list.map(normalizeTask).filter(Boolean)}
+    function normalizeTask(t){
+      if(!t||typeof t!=='object')return null;
+      let title=(t.title||t.titre||t.text||t.texte||t.nom||'').toString().trim();
+      title=cleanImportedTitle(title);
+      if(!title||isEmptySentence(title)||isSupportLine(title))return null;
+      return {id:t.id||`t_${Date.now()}_${Math.random().toString(16).slice(2)}`,date:t.date||t.day||t.jour||localDate(),time:normalizeTime(t.time||t.heure||''),title,category:t.category||t.categorie||guessCategory(title),done:Boolean(t.done||t.fait),createdAt:t.createdAt||new Date().toISOString()};
+    }
+    function tasksAreSimilar(a,b){
+      if(a.date!==b.date)return false;
+      if(a.time&&b.time&&a.time!==b.time)return false;
+      const na=normalizedText(a.title),nb=normalizedText(b.title);
+      if(!na||!nb)return false;
+      if(na===nb||na.includes(nb)||nb.includes(na))return true;
+      const wa=new Set(na.split(' ').filter(x=>x.length>2)),wb=new Set(nb.split(' ').filter(x=>x.length>2));
+      const inter=[...wa].filter(x=>wb.has(x)).length,union=new Set([...wa,...wb]).size;
+      return union>0&&inter/union>=.7;
+    }
+    function dedupeTasks(tasks){const out=[];for(const t of tasks){const existing=out.find(x=>tasksAreSimilar(x,t));if(!existing)out.push(t);else if(!existing.time&&t.time)existing.time=t.time}return out}
+    function loadState(){
+      const existing=safeParse(localStorage.getItem(STORAGE_KEY));
+      let base=existing&&Array.isArray(existing.tasks)?existing:{tasks:[]};
+      if(!existing){
+        for(const key of LEGACY_KEYS){const raw=safeParse(localStorage.getItem(key));const list=normalizeLegacy(raw);if(list.length){base.tasks.push(...list);break}}
+      }
+      base.tasks=dedupeTasks((base.tasks||[]).map(normalizeTask).filter(Boolean));
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(base));
+      return base;
+    }
+    function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
+    function setPlanOffset(offset){planOffset=Number(offset||0);planDate=addDays(localDate(),planOffset);document.querySelectorAll('[data-plan]').forEach(btn=>btn.classList.toggle('activePlan',Number(btn.dataset.plan)===planOffset));updatePlanLabel()}
+    function updatePlanLabel(){let label=formatDate(planDate);if(planOffset===0)label=`aujourd’hui · ${label}`;if(planOffset===1)label=`demain · ${label}`;if(planOffset===3)label=`dans 3 jours · ${label}`;if(planOffset===7)label=`dans 1 semaine · ${label}`;$('planDateLabel').innerHTML=`Ajout prévu pour : <span class="miniDate">${escapeHtml(label)}</span>`}
+    function getTasksForDate(dateStr){return state.tasks.filter(t=>t.date===dateStr).sort((a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99')||a.createdAt.localeCompare(b.createdAt))}
+    function selectedTasks(){return getTasksForDate(selectedDate)}
+    function futureTasks(limit=60){return state.tasks.filter(t=>t.date>=selectedDate).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'99:99').localeCompare(b.time||'99:99')).slice(0,limit)}
+    function addTask({date=selectedDate,time='',title,category='À trier',done=false}){
+      const cleanTitle=cleanImportedTitle(String(title||'').replace(/^[-•\s]+/,'').trim());
+      if(!cleanTitle||isEmptySentence(cleanTitle)||isSupportLine(cleanTitle))return {added:false,reason:'ignored'};
+      const candidate={id:`t_${Date.now()}_${Math.random().toString(16).slice(2)}`,date,time:normalizeTime(time),title:cleanTitle,category:category||guessCategory(cleanTitle),done,createdAt:new Date().toISOString()};
+      if(state.tasks.some(t=>tasksAreSimilar(t,candidate)))return {added:false,reason:'duplicate'};
+      state.tasks.push(candidate);save();render();return {added:true,task:candidate};
+    }
+    function deleteTask(id){const idx=state.tasks.findIndex(t=>t.id===id);if(idx>=0){state.tasks.splice(idx,1);save();render();toast('Supprimé')}}
+    function toggleTask(id){const t=state.tasks.find(t=>t.id===id);if(t){t.done=!t.done;save();render()}}
+    function render(){ $('selectedDate').value=selectedDate;updatePlanLabel();renderToday();renderAgenda();renderChat() }
+    function renderToday(){
+      const tasks=selectedTasks();$('dayLabel').textContent=formatDate(selectedDate);$('taskCount').textContent=tasks.length>1?`${tasks.length} tâches`:`${tasks.length} tâche`;
+      if(tasks.length){const main=tasks.find(t=>!t.done)||tasks[0];$('heroTitle').textContent='Une journée réaliste';$('heroText').textContent=`Priorité : ${main.time?main.time+' — ':''}${main.title}. Le reste reste simple.`}
+      else{$('heroTitle').textContent='Une journée calme';$('heroText').textContent='Aucune tâche réelle saisie pour cette date.'}
+      $('todayTasks').innerHTML=tasks.length?tasks.map(taskHtml).join(''):'<div class="empty">Rien de saisi pour cette date. Ajoute seulement ce qui est vraiment prévu.</div>';
+    }
+    function taskHtml(t){const gcal=googleCalendarUrl(t);return `<div class="task ${t.done?'done':''}" data-id="${escapeHtml(t.id)}"><div class="time">${t.time||'—'}</div><div><div class="taskText">${escapeHtml(t.title)}</div><div class="taskMeta">${escapeHtml(t.category||'À trier')}</div></div><div class="taskActions"><button class="iconBtn" data-action="toggle" title="Fait">✓</button><a class="iconBtn" href="${gcal}" target="_blank" rel="noopener" title="Ajouter à Google Agenda" style="display:grid;place-items:center;text-decoration:none">＋</a><button class="iconBtn danger" data-action="delete" title="Supprimer">×</button></div></div>`}
+    function googleCalendarUrl(t){const start=(t.date||selectedDate).replaceAll('-','')+(t.time?'T'+t.time.replace(':','')+'00':'T090000');const endDate=new Date(`${t.date||selectedDate}T${t.time||'09:00'}:00`);endDate.setMinutes(endDate.getMinutes()+30);const end=localDate(endDate).replaceAll('-','')+'T'+String(endDate.getHours()).padStart(2,'0')+String(endDate.getMinutes()).padStart(2,'0')+'00';const params=new URLSearchParams({action:'TEMPLATE',text:t.title,dates:`${start}/${end}`,details:'Ajouté depuis Clair Matin.'});return `https://calendar.google.com/calendar/render?${params.toString()}`}
+    function renderAgenda(){const list=futureTasks();if(!list.length){$('agendaList').innerHTML='<div class="empty">Aucune tâche à venir dans Clair Matin.</div>';return}const groups=list.reduce((acc,t)=>{(acc[t.date]||=[]).push(t);return acc},{});$('agendaList').innerHTML=Object.entries(groups).map(([date,tasks])=>`<div class="dayBlock"><div class="sectionDate">${formatDate(date)}</div>${tasks.map(taskHtml).join('')}</div>`).join('')}
+    function buildChatPrompt(){const tasks=selectedTasks();let txt=`Chat, voici mon agenda clair pour ${formatDate(selectedDate)}.\n\nActions photo reçues ce jour :\n- Aucune action photo en attente.\n\n`;if(tasks.length){txt+='Tâches réellement prévues :\n';tasks.forEach(t=>{txt+=`- ${t.time?t.time.replace(':','h')+' — ':''}${t.title}`;if(t.category&&t.category!=='À trier')txt+=` (${t.category})`;txt+='\n'})}else txt+='Tâches du jour :\n- Rien de prévu.\n';txt+='\nPeux-tu m’aider à en faire une journée réaliste ? Garde les vraies tâches comme lignes principales. Les départs, retours, repas, pauses et temps de récupération doivent rester de simples conseils, pas des tâches à importer.';return txt}
+    function renderChat(){$('chatPrompt').textContent=buildChatPrompt()}
+
+    function extractTimeAndTitle(raw){
+      let line=String(raw||'').replace(/^[•*\-–—\s]+/,'').replace(/^\d+[.)]\s*/,'').trim();
+      if(!line)return null;
+      const start=line.match(/^(\d{1,2})\s*(?:h|:)\s*(\d{0,2})\b/i);
+      let time='',title=line;
+      if(start){
+        time=normalizeTime(`${start[1]}:${start[2]||'00'}`);
+        title=line.slice(start[0].length).trim();
+        title=title.replace(/^\s*[-–—]\s*\d{1,2}\s*(?:h|:)\s*\d{0,2}\s*(?:environ)?\s*/i,'').trim();
+        title=title.replace(/^\s*(?:a|à|jusqu['’]a|jusqu['’]à)\s*\d{1,2}\s*(?:h|:)\s*\d{0,2}\s*(?:environ)?\s*/i,'').trim();
+        const parts=title.split(/\s+[—–-]\s+/).filter(Boolean);
+        if(parts.length>1)title=parts[parts.length-1];
+      }
+      title=cleanImportedTitle(title);
+      return {time,title};
+    }
+    function parseLinesToTasks(text){
+      const lines=String(text||'').split(/\n+/).map(l=>l.trim()).filter(Boolean);const found=[],ignored=[];
+      for(const raw of lines){
+        let line=raw.replace(/^#+\s*/,'').trim();
+        if(!line||isEmptySentence(line)||/^(note|remarque)\s*:/i.test(line)){ignored.push(raw);continue}
+        if(/^(priorit|ordre conseille|matin|midi|apres-midi|soir|a deplacer|resume|objectif|conseil|ce que tu peux deplacer)/i.test(normalizedText(line))){ignored.push(raw);continue}
+        let date=selectedDate;const low=normalizedText(line);if(low.includes('apres demain'))date=addDays(selectedDate,2);else if(/\bdemain\b/.test(low))date=addDays(selectedDate,1);
+        const parsed=extractTimeAndTitle(line);if(!parsed||!parsed.title||parsed.title.length<3||isSupportLine(parsed.title)){ignored.push(raw);continue}
+        found.push({date,time:parsed.time,title:parsed.title,category:guessCategory(parsed.title)});
+      }
+      return {tasks:dedupeTasks(found),ignored};
+    }
+    function guessCategory(title){const s=normalizedText(title);if(/salle|velo|marche|sport|coach/.test(s))return'Forme';if(/photo|expo|tirage|lightroom|clair photo|horizon/.test(s))return'Photo / Expo';if(/mail|papier|administratif|mairie|rdv|rendez vous/.test(s))return'Administratif';if(/famille|run|sylvie|enfant|petit/.test(s))return'Famille';if(/nettoyer|ranger|maison|courses|sacoche|preparer les velos/.test(s))return'Maison';return'À trier'}
+    function cleanExistingImports(){
+      const before=state.tasks.length;const cleaned=[];let changed=0;
+      for(const original of state.tasks){const t=normalizeTask(original);if(!t){changed++;continue}if(t.title!==original.title)changed++;cleaned.push(t)}
+      const deduped=dedupeTasks(cleaned);changed+=cleaned.length-deduped.length;state.tasks=deduped;save();render();return {removed:before-state.tasks.length,changed}
+    }
+    function escapeHtml(str){return String(str??'').replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]))}
+    function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('show'),1800)}
+    async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Copié')}catch(e){const tmp=document.createElement('textarea');tmp.value=text;document.body.appendChild(tmp);tmp.select();document.execCommand('copy');tmp.remove();toast('Copié')}}
+    function showImportResult(html){const el=$('importResult');el.innerHTML=html;el.classList.add('show')}
+
+    $('selectedDate').addEventListener('change',e=>{selectedDate=e.target.value||localDate();render()});
+    $('todayBtn').addEventListener('click',()=>{selectedDate=localDate();render()});
+    $('addTaskBtn').addEventListener('click',()=>{const result=addTask({date:planDate,time:$('taskTime').value,title:$('taskTitle').value,category:$('taskCategory').value});if(result.added){const addedDate=planDate;$('taskTitle').value='';$('taskTime').value='';$('taskCategory').value='À trier';selectedDate=addedDate;render();toast(planOffset===0?'Ajouté':'Ajouté à la bonne date')}else toast(result.reason==='duplicate'?'Déjà présent':'Rien à ajouter')});
+    $('taskTitle').addEventListener('keydown',e=>{if(e.key==='Enter')$('addTaskBtn').click()});
+    $('clearDoneBtn').addEventListener('click',()=>{const before=state.tasks.length;state.tasks=state.tasks.filter(t=>!(t.date===selectedDate&&t.done));save();render();toast(before===state.tasks.length?'Rien à vider':'Fait vidé')});
+    document.querySelectorAll('[data-plan]').forEach(btn=>btn.addEventListener('click',()=>setPlanOffset(btn.dataset.plan)));
+    document.querySelectorAll('[data-quick]').forEach(btn=>btn.addEventListener('click',()=>{const [time,title,category]=btn.dataset.quick.split('|');const r=addTask({date:planDate,time,title,category});if(r.added){selectedDate=planDate;render();toast('Ajouté')}else toast('Déjà présent')}));
+    document.querySelectorAll('[data-set-title]').forEach(btn=>btn.addEventListener('click',()=>{$('taskTitle').value=btn.dataset.setTitle||'';setPlanOffset(1);$('taskTitle').focus();toast('Date : demain')}));
+    document.body.addEventListener('click',e=>{const actionBtn=e.target.closest('[data-action]');if(!actionBtn)return;const taskEl=actionBtn.closest('.task');if(!taskEl)return;const id=taskEl.dataset.id;if(actionBtn.dataset.action==='toggle')toggleTask(id);if(actionBtn.dataset.action==='delete'&&confirm('Supprimer cette tâche ?'))deleteTask(id)});
+    document.querySelectorAll('.navBtn').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$('view'+btn.dataset.view[0].toUpperCase()+btn.dataset.view.slice(1)).classList.add('active');render()}));
+    $('copyChatBtn').addEventListener('click',()=>copyText(buildChatPrompt()));
+    $('openChatBtn').addEventListener('click',()=>window.open('https://chatgpt.com/','_blank','noopener'));
+    $('importPhotoBtn').addEventListener('click',()=>{const text=$('photoInput').value.trim();if(!text||isEmptySentence(text)){toast('Aucune action utile');return}const parsed=parseLinesToTasks(text);const candidates=parsed.tasks.length?parsed.tasks:[{date:selectedDate,time:'',title:text,category:'Photo / Expo'}];let count=0;candidates.forEach(t=>{if(addTask({...t,category:'Photo / Expo'}).added)count++});$('photoInput').value='';toast(count?`${count} action ajoutée`:'Rien ajouté')});
+    $('importChatBtn').addEventListener('click',()=>{const parsed=parseLinesToTasks($('chatImport').value);let added=0,duplicates=0;parsed.tasks.forEach(t=>{const r=addTask(t);if(r.added)added++;else if(r.reason==='duplicate')duplicates++});if(added)$('chatImport').value='';showImportResult(`<strong>${added} vraie${added>1?'s':''} tâche${added>1?'s':''} ajoutée${added>1?'s':''}.</strong><br>${parsed.ignored.length} ligne${parsed.ignored.length>1?'s':''} de pause, trajet ou conseil ignorée${parsed.ignored.length>1?'s':''}.${duplicates?`<br>${duplicates} doublon${duplicates>1?'s':''} évité${duplicates>1?'s':''}.`:''}`);toast(added?`${added} tâche(s) créée(s)`:'Aucune nouvelle tâche')});
+    $('cleanImportBtn').addEventListener('click',()=>{if(!confirm('Nettoyer les anciens imports ? Les pauses, départs, retours et doublons seront retirés.'))return;const r=cleanExistingImports();showImportResult(`<strong>Nettoyage terminé.</strong><br>${r.removed} ligne${r.removed>1?'s':''} retirée${r.removed>1?'s':''}. Les titres et doublons ont été simplifiés.`);toast('Imports nettoyés')});
+    $('backupBtn').addEventListener('click',()=>copyText(JSON.stringify(state,null,2)));
+    $('exportBtn').addEventListener('click',()=>copyText(futureTasks(100).map(t=>`${formatDate(t.date)} · ${t.time||'--'} · ${t.title} · ${t.category}`).join('\n')||'Aucune tâche.'));
+    $('resetBtn').addEventListener('click',()=>{if(confirm('Réinitialiser Clair Matin V5.5 dans ce navigateur ?')){state.tasks=[];save();render();toast('Réinitialisé')}});
+    $('helpBtn').addEventListener('click',()=>$('helpModal').classList.add('show'));$('closeHelpBtn').addEventListener('click',()=>$('helpModal').classList.remove('show'));$('helpModal').addEventListener('click',e=>{if(e.target.id==='helpModal')$('helpModal').classList.remove('show')});
+
+    setPlanOffset(0);render();
+  })();
+  </script>
+</body>
+</html>
