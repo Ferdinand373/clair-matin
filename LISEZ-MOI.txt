@@ -1,0 +1,15 @@
+CLAIR COURSES — V7.1 CORRIGÉE
+
+Fichiers à remplacer dans le dépôt GitHub :
+1. index.html
+2. service-worker.js
+
+Les données déjà enregistrées (liste et habituels) sont conservées.
+
+Améliorations :
+- rayons terminés masqués avec bouton pour les revoir ;
+- compteur « articles à acheter » ;
+- boutons Effacer et Partager affichés seulement quand ils sont utiles ;
+- « Liste de Chat » devient « Chat » ;
+- Mode Courses concentré sur un seul rayon, puis passage automatique au suivant ;
+- version du cache mise à jour en 7.1.0.

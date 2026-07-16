@@ -1,695 +1,139 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#f4efe6" />
-  <title>Clair Matin V5.4</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f4ed">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Clair Courses">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="description" content="Une liste de courses claire, rapide et privée.">
+  <title>Clair Courses</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icon-180.png">
   <style>
-    :root{
-      --bg:#f6f1e8;
-      --paper:#fffaf2;
-      --card:#ffffff;
-      --ink:#2b241d;
-      --muted:#7f7468;
-      --line:#eadfce;
-      --accent:#86684d;
-      --accent-2:#d7c0a5;
-      --soft:#f1e6d8;
-      --green:#61735a;
-      --red:#9a5a4b;
-      --shadow:0 16px 40px rgba(55,42,28,.10);
-      --radius:22px;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#fbf7ef 0%,var(--bg) 50%,#efe4d7 100%);}
-    body{padding:0 0 calc(92px + env(safe-area-inset-bottom));}
-    button,input,select,textarea{font:inherit}
-    button{border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
-    .app{max-width:760px;margin:0 auto;padding:18px 16px 0;}
-    .topbar{position:sticky;top:0;z-index:20;margin:0 -16px 12px;padding:14px 16px 10px;background:rgba(246,241,232,.86);backdrop-filter:blur(16px);border-bottom:1px solid rgba(234,223,206,.65)}
-    .topline{display:flex;align-items:center;justify-content:space-between;gap:12px;}
-    .brand{display:flex;align-items:center;gap:12px;}
-    .logo{width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,#fff8ed,#d9c2a8);box-shadow:inset 0 0 0 1px rgba(134,104,77,.18),0 8px 18px rgba(77,57,38,.10);display:grid;place-items:center;font-size:22px;}
-    h1{font-size:22px;line-height:1.05;margin:0;letter-spacing:-.02em;}
-    .version{font-size:12px;color:var(--muted);margin-top:3px;}
-    .helpBtn{width:42px;height:42px;border-radius:15px;background:var(--card);color:var(--accent);box-shadow:var(--shadow);font-weight:800;font-size:18px;}
-    .dateLine{display:flex;gap:8px;align-items:center;margin-top:12px;}
-    .dateLine input{width:100%;border:1px solid var(--line);border-radius:17px;background:var(--paper);padding:12px 14px;color:var(--ink);outline:none;}
-    .todayBtn{white-space:nowrap;border-radius:17px;background:var(--accent);color:white;padding:12px 14px;font-weight:700;}
-    .view{display:none;animation:fade .18s ease-out;}
-    .view.active{display:block;}
-    @keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
-    .hero{border-radius:28px;background:linear-gradient(145deg,#fffaf2,#efe0cf);box-shadow:var(--shadow);padding:20px;margin:12px 0 16px;border:1px solid rgba(234,223,206,.75);}
-    .hero small{color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:11px;}
-    .hero h2{font-size:25px;margin:8px 0 8px;letter-spacing:-.03em;}
-    .hero p{margin:0;color:#5e5248;line-height:1.45;}
-    .grid{display:grid;gap:12px;}
-    .card{background:rgba(255,255,255,.88);border:1px solid rgba(234,223,206,.9);border-radius:var(--radius);box-shadow:0 10px 25px rgba(55,42,28,.06);padding:16px;}
-    .cardTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
-    .card h3{font-size:18px;margin:0;letter-spacing:-.015em;}
-    .pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:6px 10px;background:var(--soft);color:#685746;font-size:12px;font-weight:700;}
-    .formGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
-    .full{grid-column:1/-1;}
-    label{font-size:12px;font-weight:800;color:var(--muted);display:block;margin:0 0 6px;}
-    input,select,textarea{width:100%;border:1px solid var(--line);border-radius:16px;background:#fffdf9;color:var(--ink);padding:12px 13px;outline:none;}
-    textarea{min-height:112px;resize:vertical;line-height:1.45;}
-    input:focus,select:focus,textarea:focus{border-color:var(--accent-2);box-shadow:0 0 0 4px rgba(215,192,165,.25);}
-    .btnRow{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px;}
-    .btn{border-radius:16px;background:var(--ink);color:white;padding:12px 14px;font-weight:800;box-shadow:0 8px 18px rgba(43,36,29,.14);transition:transform .12s ease,opacity .12s ease;}
-    .btn:active{transform:scale(.97);opacity:.88;}
-    .btn.secondary{background:var(--soft);color:var(--ink);box-shadow:none;}
-    .btn.accent{background:var(--accent);}
-    .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line);box-shadow:none;}
-    .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
-    .quick button{border-radius:16px;background:#fffdf9;border:1px solid var(--line);padding:11px 8px;color:#5d5147;font-weight:800;font-size:13px;}
-    .empty{border:1px dashed #d8c8b5;border-radius:18px;padding:15px;color:var(--muted);background:#fffaf3;line-height:1.4;}
-    .tasks{display:grid;gap:9px;}
-    .task{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;background:#fffdf9;border:1px solid var(--line);border-radius:18px;padding:12px;}
-    .time{min-width:58px;padding:7px 8px;border-radius:12px;background:var(--soft);font-size:13px;font-weight:900;text-align:center;color:#634d38;}
-    .task.done{opacity:.62;}
-    .task.done .taskText{text-decoration:line-through;}
-    .taskText{font-weight:850;line-height:1.25;}
-    .taskMeta{margin-top:4px;color:var(--muted);font-size:12px;}
-    .taskActions{display:flex;gap:5px;}
-    .iconBtn{width:34px;height:34px;border-radius:12px;background:#f6efe5;color:#5e5145;font-weight:900;}
-    .iconBtn.danger{color:var(--red);}
-    .sectionDate{font-size:13px;font-weight:900;color:var(--muted);margin:6px 2px 8px;}
-    .dayBlock{display:grid;gap:8px;margin-bottom:14px;}
-    .chatBox{white-space:pre-wrap;background:#fffdf9;border:1px solid var(--line);border-radius:18px;padding:14px;line-height:1.45;color:#3f362f;max-height:360px;overflow:auto;}
-    .note{font-size:13px;color:var(--muted);line-height:1.4;margin-top:8px;}
-    .divider{height:1px;background:var(--line);margin:14px 0;}
-    .bottomNav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,250,242,.86);backdrop-filter:blur(18px);border-top:1px solid rgba(234,223,206,.9);padding:10px 14px calc(10px + env(safe-area-inset-bottom));}
-    .navInner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-    .navBtn{border-radius:18px;padding:11px 8px;background:transparent;color:var(--muted);font-weight:850;display:grid;gap:3px;place-items:center;}
-    .navBtn span{font-size:20px;line-height:1}.navBtn small{font-size:11px}.navBtn.active{background:var(--ink);color:white;box-shadow:0 10px 24px rgba(43,36,29,.16);}
-    .toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:rgba(43,36,29,.92);color:white;border-radius:999px;padding:11px 16px;font-weight:800;opacity:0;pointer-events:none;transition:.2s ease;z-index:60;max-width:90%;text-align:center;}
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-    .modal{position:fixed;inset:0;background:rgba(43,36,29,.32);display:none;align-items:flex-end;z-index:80;}
-    .modal.show{display:flex;}
-    .sheet{width:100%;max-width:760px;margin:0 auto;background:var(--paper);border-radius:28px 28px 0 0;padding:20px 16px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(43,36,29,.18);max-height:86vh;overflow:auto;}
-    .sheet h2{margin:0 0 8px;font-size:24px;letter-spacing:-.03em}.sheet p,.sheet li{color:#5d5147;line-height:1.45}.sheet ul{padding-left:20px}.sheet .btnRow{position:sticky;bottom:0;background:linear-gradient(0deg,var(--paper) 70%,rgba(255,250,242,0));padding-top:16px;}
-    @media (min-width:650px){.quick{grid-template-columns:repeat(6,1fr)}.formGrid{grid-template-columns:140px 1fr 1fr}.full{grid-column:1/-1}.task{grid-template-columns:80px 1fr auto}.bottomNav{padding-left:20px;padding-right:20px}}
+:root{color-scheme:light;--bg:#f6f4ed;--surface:#fffefa;--soft:#eeeee5;--text:#203128;--muted:#647168;--line:#d9ded7;--accent:#2f6b4f;--accent2:#24543f;--accentSoft:#dceadf;--danger:#a33d36;--shadow:0 12px 30px rgba(36,61,48,.08);--radius:18px;--touch:48px}
+*{box-sizing:border-box}[hidden]{display:none!important}html{min-width:320px;min-height:100%;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;-webkit-text-size-adjust:100%}body{min-height:100vh;margin:0;color:var(--text);background:radial-gradient(circle at 100% 0,rgba(90,135,104,.12),transparent 24rem),var(--bg)}button,input,select,textarea{font:inherit}button,summary,input[type=checkbox]{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{cursor:default;opacity:.45}.app{width:min(620px,100%);min-height:100vh;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) calc(102px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}.brand-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.brand{min-width:0}h1,h2,p{margin-top:0}h1{margin-bottom:2px;font-size:clamp(1.9rem,9vw,2.5rem);line-height:1.05;letter-spacing:-.035em}.tagline{margin-bottom:0;color:var(--muted);font-size:.98rem}.visibility-button,.secondary-button,.icon-button,.check-all,.chip,.chip-remove,.completed-toggle{border:1px solid var(--line);color:var(--text);background:var(--surface)}.visibility-button{min-height:44px;flex:0 0 auto;padding:0 12px;border-radius:999px;font-size:.82rem;font-weight:750}.visibility-button[aria-pressed=true],.control-button[aria-pressed=true]{border-color:#a8c6b0;color:var(--accent2);background:var(--accentSoft)}.status-card{display:grid;gap:12px;margin:18px 0;padding:17px;border:1px solid rgba(72,91,79,.12);border-radius:var(--radius);background:rgba(255,254,250,.92);box-shadow:var(--shadow)}.status-copy{display:grid;gap:3px}.status-main{margin:0;font-size:1.28rem;font-weight:850;letter-spacing:-.015em}.status-sub{margin:0;color:var(--muted);font-size:.98rem}.progress-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-size:.84rem;font-weight:700}.progress-values{display:inline-flex;align-items:center;gap:8px}.progress-percent{min-width:42px;padding:3px 7px;border-radius:999px;color:var(--accent2);background:var(--accentSoft);text-align:center}.progress-track{width:100%;height:11px;overflow:hidden;border-radius:999px;background:#e5e8e2}.progress-fill{width:0;height:100%;border-radius:inherit;background:var(--accent);transition:width 180ms ease}.remaining-aisles{display:flex;flex-wrap:wrap;gap:6px}.remaining-aisle{padding:6px 10px;border:1px solid #d5dfd7;border-radius:999px;color:var(--accent2);background:#f2f7f3;font-size:.78rem;font-weight:750}.remaining-aisle.is-active{border-color:#8fb59a;background:var(--accentSoft)}.new-list-button{min-height:46px;padding:0 14px;border:1px solid #b9d1c0;border-radius:13px;color:var(--accent2);background:var(--accentSoft);font-weight:850}.course-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:-4px 0 18px}.control-button{min-height:50px;padding:7px 10px;border:1px solid var(--line);border-radius:14px;color:var(--text);background:var(--surface);font-size:.88rem;font-weight:850;line-height:1.15;box-shadow:0 4px 14px rgba(36,61,48,.045)}.control-icon{display:inline-block;margin-right:4px;font-size:1.05rem}.favorites-panel,.tools-panel{margin-bottom:18px;border:1px solid var(--line);border-radius:15px;background:rgba(255,254,250,.68)}summary{list-style:none}summary::-webkit-details-marker{display:none}.favorites-panel>summary,.tools-panel>summary{display:flex;min-height:50px;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;cursor:pointer;font-weight:800}.favorites-panel>summary:after,.tools-panel>summary:after{content:"⌄";color:var(--muted);font-size:1.25rem;transition:transform 150ms ease}.favorites-panel[open]>summary:after,.tools-panel[open]>summary:after{transform:rotate(180deg)}.favorites-content,.tools-content{display:grid;gap:12px;padding:0 12px 13px}.favorite-list{display:grid;gap:8px}.favorite{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:4px}.favorite-select-wrap{display:grid;width:44px;height:44px;place-items:center}.favorite-select{width:24px;height:24px;margin:0;accent-color:var(--accent)}.chip{min-height:44px;min-width:0;padding:0 12px;border-radius:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;font-weight:750}.chip:disabled{opacity:1}.favorite.is-present .chip{color:var(--muted);background:var(--soft)}.present-badge{display:block;margin-top:2px;color:var(--accent2);font-size:.72rem;font-weight:750}.chip-remove{width:44px;min-height:44px;border-radius:999px;color:var(--muted);font-size:1.15rem}.favorite-selection-actions,.tools-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tools-copy{margin:0;color:var(--muted);font-size:.88rem;line-height:1.45}.favorite-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.favorite-input,.field{width:100%;min-height:var(--touch);border:1px solid #cbd3cc;border-radius:12px;color:var(--text);background:#fff;font-size:16px}.favorite-input{padding:0 12px}.mini-add{min-width:82px;min-height:var(--touch);padding:0 14px;border:0;border-radius:12px;color:#fff;background:var(--accent);font-weight:800}.list-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}.list-heading h2{margin-bottom:0;font-size:1.22rem}.list-count{color:var(--muted);font-size:.88rem;font-weight:750}.empty-state{padding:30px 20px;border:1px dashed #c8d0c9;border-radius:var(--radius);color:var(--muted);background:rgba(255,254,250,.58);text-align:center}.empty-state strong{display:block;margin-bottom:5px;color:var(--text);font-size:1.08rem}.aisles{display:grid;gap:11px}.aisle{overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:0 5px 16px rgba(36,61,48,.045)}.aisle.is-complete{background:var(--soft);box-shadow:none;opacity:.82}.aisle-summary{display:grid;min-height:62px;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:8px 10px 8px 13px;cursor:pointer}.aisle-chevron{color:var(--muted);font-size:.95rem;transition:transform 150ms ease}.aisle[open] .aisle-chevron{transform:rotate(90deg)}.aisle-name{display:block;margin-bottom:2px;font-weight:850}.aisle-count{display:block;color:var(--muted);font-size:.82rem}.check-all{min-height:44px;padding:0 10px;border-radius:999px;color:var(--accent2);font-size:.78rem;font-weight:800}.items{border-top:1px solid var(--line)}.item{display:grid;min-height:64px;grid-template-columns:44px minmax(0,1fr) repeat(3,44px);align-items:center;gap:3px;padding:5px 7px 5px 12px;border-bottom:1px solid rgba(217,222,215,.75)}.item:last-child{border-bottom:0}.item.is-checked{color:var(--muted);background:#f3f3ed}.item-check{width:44px;height:44px;margin:0;border:2px solid #8b998f;border-radius:9px;appearance:none;-webkit-appearance:none;background:#fff;cursor:pointer}.item-check:checked{border-color:var(--accent);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 12 4 4 8-9' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/22px no-repeat,var(--accent)}.item-label{min-width:0;padding:8px 4px;overflow-wrap:anywhere;line-height:1.25}.item.is-checked .item-label{text-decoration:line-through}.quantity{margin-right:.35em;font-weight:850}.icon-button{display:inline-grid;width:44px;height:44px;place-items:center;padding:0;border-color:transparent;border-radius:999px;color:var(--muted);background:transparent;font-size:1.05rem}.favorite-toggle[aria-pressed=true]{color:#986f13;background:#fff4cf}.delete-button{color:var(--danger)}.completed-note{margin:0;padding:13px;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;text-align:center}.completed-toggle{width:100%;min-height:48px;margin-top:12px;border-radius:14px;color:var(--muted);font-weight:800}.action-bar{position:fixed;right:0;bottom:0;left:0;z-index:8;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));border-top:1px solid rgba(194,203,196,.86);background:rgba(250,249,244,.94);backdrop-filter:blur(16px)}.action-bar-inner{display:grid;width:min(620px,100%);margin:0 auto;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:4px}.action{display:grid;min-width:0;min-height:58px;place-items:center;align-content:center;gap:2px;padding:4px 2px;border:0;border-radius:12px;color:var(--text);background:transparent;font-size:.75rem;font-weight:800;line-height:1.05}.action-icon{font-size:1.25rem;line-height:1}.action.primary{color:#fff;background:var(--accent)}dialog{width:min(520px,calc(100% - 24px));max-height:calc(100dvh - 24px);margin:auto;padding:0;overflow:auto;border:0;border-radius:22px;color:var(--text);background:var(--surface);box-shadow:0 24px 70px rgba(26,44,34,.26)}dialog::backdrop{background:rgba(22,38,29,.42);backdrop-filter:blur(2px)}.dialog-card{display:grid;gap:16px;padding:20px}.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:12px}.dialog-header h2{margin-bottom:0;font-size:1.35rem}.close-button{display:inline-grid;width:44px;height:44px;place-items:center;padding:0;border:1px solid var(--line);border-radius:999px;color:var(--text);background:var(--soft);font-size:1.45rem}.form-grid{display:grid;gap:14px}label{font-weight:800}.label-hint{display:block;margin-top:3px;color:var(--muted);font-size:.82rem;font-weight:500}.field{margin-top:7px;padding:0 12px}textarea.field{min-height:220px;padding-top:12px;padding-bottom:12px;resize:vertical;line-height:1.42}.favorite-choice{display:flex;min-height:48px;align-items:center;gap:10px}.favorite-choice input{width:23px;height:23px;margin:0;accent-color:var(--accent)}.quick-aisles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.quick-aisle{min-height:44px;padding:5px 8px;border:1px solid var(--line);border-radius:12px;color:var(--text);background:var(--soft);font-size:.8rem;font-weight:800}.quick-aisle[aria-pressed=true]{border-color:#a8c6b0;color:var(--accent2);background:var(--accentSoft)}.import-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:4px;border:0;border-radius:14px;background:var(--soft)}.mode-option{position:relative}.mode-option input{position:absolute;opacity:0}.mode-option span{display:grid;min-height:48px;place-items:center;padding:6px 10px;border:1px solid transparent;border-radius:11px;color:var(--muted);text-align:center;font-size:.86rem;font-weight:800}.mode-option input:checked+span{border-color:#c9d3cb;color:var(--accent2);background:#fff}.dialog-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.three-actions .primary-button{grid-column:1/-1}.primary-button,.secondary-button{min-height:var(--touch);padding:0 15px;border-radius:13px;font-weight:850}.primary-button{border:0;color:#fff;background:var(--accent)}.review-summary{margin:0;padding:10px 12px;border-radius:12px;color:var(--accent2);background:var(--accentSoft);font-weight:800}.review-groups{display:grid;gap:14px}.review-group{display:grid;gap:8px}.review-group h3{margin:0;font-size:1rem}.review-row{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:8px;padding:10px;border:1px solid var(--line);border-radius:14px;background:#fff}.review-row .field{margin:0}.review-aisle{grid-column:1/-1}.update-banner{display:grid;gap:12px;margin:14px 0 4px;padding:15px;border:1px solid rgba(38,91,71,.24);border-radius:18px;background:#eef6f0}.update-banner>div:first-child{display:grid;gap:3px}.update-banner span{color:#52635b;font-size:.88rem}.update-actions{display:flex;gap:8px}.update-actions button{flex:1}.version-line{margin:12px 0 0;color:#68726d;font-size:.82rem;text-align:center}.toast{position:fixed;right:14px;bottom:calc(82px + env(safe-area-inset-bottom));left:14px;z-index:20;display:flex;width:fit-content;max-width:min(520px,calc(100% - 28px));align-items:center;justify-content:center;gap:10px;margin:0 auto;padding:11px 15px;border-radius:999px;color:#fff;background:#263d30;box-shadow:0 10px 30px rgba(21,38,27,.22);font-size:.9rem;font-weight:750;text-align:center;transform:translateY(12px);opacity:0;pointer-events:none;transition:opacity 160ms ease,transform 160ms ease}.toast.is-visible{transform:translateY(0);opacity:1}.toast.has-action{pointer-events:auto}.toast-action{min-height:36px;padding:0 12px;border:1px solid rgba(255,255,255,.55);border-radius:999px;color:#fff;background:rgba(255,255,255,.12);font-weight:850}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}:focus-visible{outline:3px solid rgba(47,107,79,.34);outline-offset:2px}
+body.course-mode .favorites-panel,body.course-mode .tools-panel,body.course-mode .list-heading,body.course-mode .action-bar,body.course-mode .visibility-button,body.course-mode .completed-toggle,body.course-mode .item .icon-button{display:none!important}body.course-mode .app{padding-bottom:calc(26px + env(safe-area-inset-bottom))}body.course-mode .course-controls{position:sticky;top:calc(8px + env(safe-area-inset-top));z-index:7;margin-bottom:12px;padding:7px;border:1px solid rgba(194,203,196,.86);border-radius:16px;background:rgba(250,249,244,.95);backdrop-filter:blur(16px);box-shadow:0 7px 20px rgba(36,61,48,.08)}body.course-mode .item{min-height:78px;grid-template-columns:58px minmax(0,1fr);gap:6px;padding:8px 12px}body.course-mode .item-check{width:52px;height:52px;border-width:3px;border-radius:12px}body.course-mode .item-label{padding:10px 4px;font-size:1.16rem;font-weight:700;line-height:1.3}body.course-mode .aisle-summary{min-height:70px}body.course-mode .aisle{box-shadow:0 9px 28px rgba(36,61,48,.1)}
+@media(max-width:370px){.app{padding-right:10px;padding-left:10px}.visibility-button{max-width:116px;white-space:normal}.item{padding-left:8px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
   </style>
 </head>
 <body>
   <div class="app">
-    <header class="topbar">
-      <div class="topline">
-        <div class="brand">
-          <div class="logo">☀️</div>
-          <div>
-            <h1>Clair Matin</h1>
-            <div class="version">V5.4 · planification simple</div>
-          </div>
-        </div>
-        <button class="helpBtn" id="helpBtn" aria-label="Mode d'emploi">?</button>
+    <header>
+      <div class="brand-row">
+        <div class="brand"><h1>Clair Courses</h1><p class="tagline">Ma liste, simplement</p></div>
+        <button class="visibility-button" id="visibility-button" type="button" aria-pressed="false">Masquer achetés</button>
       </div>
-      <div class="dateLine">
-        <input type="date" id="selectedDate" />
-        <button class="todayBtn" id="todayBtn">Aujourd’hui</button>
-      </div>
+      <section class="status-card" aria-label="Avancement des courses">
+        <div class="status-copy" aria-live="polite" aria-atomic="true"><p class="status-main" id="status-main">Votre liste est vide</p><p class="status-sub" id="status-sub">Ajoutez un article pour commencer.</p></div>
+        <div class="progress-meta"><span>Progression</span><span class="progress-values"><span id="progress-count">0 sur 0</span><span class="progress-percent" id="progress-percent">0 %</span></span></div>
+        <div class="progress-track" id="progress-track" role="progressbar" aria-label="Progression des courses" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="remaining-aisles" id="remaining-aisles" aria-label="Rayons restants" hidden></div>
+        <button class="new-list-button" id="new-list-button" type="button" hidden>Terminer les courses</button>
+      </section>
+      <section class="course-controls" aria-label="Confort pendant les courses">
+        <button class="control-button" id="course-mode-button" type="button" aria-pressed="false"><span class="control-icon" aria-hidden="true">🛒</span>Mode Courses</button>
+        <button class="control-button" id="wake-lock-button" type="button" aria-pressed="false"><span class="control-icon" aria-hidden="true">☀️</span>Garder l’écran allumé</button>
+      </section>
     </header>
 
+    <section class="update-banner" id="update-banner" aria-live="polite" hidden>
+      <div><strong>Une nouvelle version est disponible</strong><span>Votre liste et vos habituels resteront enregistrés.</span></div>
+      <div class="update-actions"><button class="primary-button" id="update-now-button" type="button">Mettre à jour maintenant</button><button class="secondary-button" id="update-later-button" type="button">Plus tard</button></div>
+    </section>
+
     <main>
-      <section id="viewToday" class="view active">
-        <div class="hero">
-          <small id="dayLabel">Aujourd’hui</small>
-          <h2 id="heroTitle">Une journée claire</h2>
-          <p id="heroText">Les tâches saisies ici seront toujours prioritaires dans le brief.</p>
-        </div>
-
-        <div class="grid">
-          <article class="card">
-            <div class="cardTitle">
-              <h3>À faire aujourd’hui</h3>
-              <span class="pill" id="taskCount">0 tâche</span>
-            </div>
-            <div id="todayTasks" class="tasks"></div>
-          </article>
-
-          <article class="card">
-            <div class="cardTitle"><h3>Ajouter une chose</h3></div>
-            <div class="formGrid">
-              <div>
-                <label for="taskTime">Heure</label>
-                <input id="taskTime" type="time" />
-              </div>
-              <div>
-                <label for="taskTitle">Tâche</label>
-                <input id="taskTitle" type="text" placeholder="Ex. nettoyer les vélos" />
-              </div>
-              <div>
-                <label for="taskCategory">Catégorie</label>
-                <select id="taskCategory">
-                  <option>Maison</option>
-                  <option>Administratif</option>
-                  <option>Forme</option>
-                  <option>Famille</option>
-                  <option>Photo / Expo</option>
-                  <option selected>À trier</option>
-                </select>
-              </div>
-              <div class="full">
-                <label>Planifier pour</label>
-                <div class="quick" aria-label="Choix de date">
-                  <button type="button" class="activePlan" data-plan="0">Aujourd’hui</button>
-                  <button type="button" data-plan="1">Demain</button>
-                  <button type="button" data-plan="3">+3 jours</button>
-                  <button type="button" data-plan="7">+1 semaine</button>
-                </div>
-                <div class="planLabel" id="planDateLabel">Ajout prévu pour : <span class="miniDate">aujourd’hui</span></div>
-              </div>
-            </div>
-            <div class="btnRow">
-              <button class="btn accent" id="addTaskBtn">Ajouter</button>
-              <button class="btn secondary" id="clearDoneBtn">Vider le fait</button>
-            </div>
-            <div class="quick" aria-label="Actions rapides">
-              <button data-quick="09:30|Salle|Forme">9h30 Salle</button>
-              <button data-quick="10:30|Sacoche à Hinault|À trier">10h30 Sacoche</button>
-              <button data-quick="14:00|Nettoyer les vélos pour la sortie|Forme">14h Vélo</button>
-              <button data-quick="|Rangement léger|Maison">Rangement</button>
-              <button data-quick="|Note photo / expo|Photo / Expo">Photo</button>
-              <button data-set-title="Préparer demain">Préparer demain</button>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="cardTitle">
-              <h3>Actions reçues de Clair Photo</h3>
-              <span class="pill">léger</span>
-            </div>
-            <textarea id="photoInput" placeholder="Colle ici une action photo reçue de Clair Photo, seulement s’il y en a une."></textarea>
-            <div class="btnRow">
-              <button class="btn secondary" id="importPhotoBtn">Importer comme tâche</button>
-            </div>
-            <div class="note">Les phrases “Aucune action reçue” ou “Rien de prévu” sont ignorées pour éviter les faux rappels.</div>
-          </article>
-        </div>
-      </section>
-
-      <section id="viewAgenda" class="view">
-        <div class="hero">
-          <small>Agenda simple</small>
-          <h2>Les prochains jours</h2>
-          <p>Clair Matin reste léger : il ne remplace pas Google Agenda, il prépare seulement la journée.</p>
-        </div>
-        <div class="grid">
-          <article class="card">
-            <div class="cardTitle">
-              <h3>Tâches enregistrées</h3>
-              <button class="btn ghost" id="exportBtn">Exporter</button>
-            </div>
-            <div id="agendaList"></div>
-          </article>
-          <article class="card">
-            <div class="cardTitle"><h3>Sauvegarde simple</h3></div>
-            <div class="btnRow">
-              <button class="btn secondary" id="backupBtn">Copier sauvegarde</button>
-              <button class="btn ghost" id="resetBtn">Réinitialiser</button>
-            </div>
-            <div class="note">La réinitialisation efface uniquement les données Clair Matin stockées dans ce navigateur.</div>
-          </article>
-        </div>
-      </section>
-
-      <section id="viewChat" class="view">
-        <div class="hero">
-          <small>Chat organisé</small>
-          <h2>Copier pour ChatGPT</h2>
-          <p>Cette version relit d’abord les vraies tâches du jour. S’il y en a, elle n’écrit plus “rien de prévu”.</p>
-        </div>
-        <div class="grid">
-          <article class="card">
-            <div class="cardTitle">
-              <h3>Format pour Chat</h3>
-              <span class="pill">corrigé V5.3</span>
-            </div>
-            <div class="chatBox" id="chatPrompt"></div>
-            <div class="btnRow">
-              <button class="btn accent" id="copyChatBtn">Copier pour ChatGPT</button>
-              <button class="btn secondary" id="openChatBtn">Ouvrir ChatGPT</button>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="cardTitle"><h3>Réponse de Chat → tâches rapides</h3></div>
-            <textarea id="chatImport" placeholder="Colle ici une réponse de ChatGPT. Clair Matin essaiera d’extraire les lignes utiles avec une heure ou une action claire."></textarea>
-            <div class="btnRow">
-              <button class="btn secondary" id="importChatBtn">Créer les tâches</button>
-            </div>
-            <div class="note">Les lignes vagues, “rien de prévu” et “aucune action” sont ignorées.</div>
-          </article>
-        </div>
+      <details class="favorites-panel" id="favorites-panel">
+        <summary><span>Mes habituels</span><span class="sr-only">Afficher ou masquer</span></summary>
+        <div class="favorites-content"><div class="favorite-list" id="favorite-list"></div><div class="favorite-selection-actions"><button class="secondary-button" id="select-all-favorites" type="button">Tout sélectionner</button><button class="primary-button" id="add-selected-favorites" type="button" disabled>Ajouter la sélection</button></div><form class="favorite-form" id="favorite-form"><label class="sr-only" for="favorite-name">Nouvel habituel</label><input class="favorite-input" id="favorite-name" type="text" maxlength="100" placeholder="Ajouter un habituel" autocomplete="off"><button class="mini-add" type="submit">Ajouter</button></form></div>
+      </details>
+      <details class="tools-panel" id="tools-panel">
+        <summary><span>Aide et sauvegarde</span><span class="sr-only">Afficher ou masquer</span></summary>
+        <div class="tools-content"><p class="tools-copy">La dernière liste est sauvegardée automatiquement avant un effacement ou un remplacement.</p><div class="tools-actions"><button class="secondary-button" id="export-data-button" type="button">Exporter mes données</button><button class="secondary-button" id="import-data-button" type="button">Importer mes données</button><button class="secondary-button" id="restore-previous-list-button" type="button" disabled>Restaurer la liste précédente</button><button class="secondary-button" id="check-update-button" type="button">Vérifier les mises à jour</button></div><p class="version-line">Clair Courses — Version <span id="app-release">7.1</span></p><input class="sr-only" id="import-data-file" type="file" accept="application/json,.json"></div>
+      </details>
+      <section aria-labelledby="list-title">
+        <div class="list-heading"><h2 id="list-title">Ma liste</h2><span class="list-count" id="list-count">0 à acheter</span></div>
+        <div class="empty-state" id="empty-state"><strong>La liste est prête.</strong>Ajoutez un article ou collez une liste préparée avec ChatGPT.</div>
+        <div class="aisles" id="aisles-root"></div>
+        <button class="completed-toggle" id="completed-toggle" type="button" hidden></button>
       </section>
     </main>
   </div>
 
-  <nav class="bottomNav" aria-label="Navigation principale">
-    <div class="navInner">
-      <button class="navBtn active" data-view="today"><span>☀️</span><small>Aujourd’hui</small></button>
-      <button class="navBtn" data-view="agenda"><span>📅</span><small>Agenda</small></button>
-      <button class="navBtn" data-view="chat"><span>💬</span><small>Chat</small></button>
-    </div>
-  </nav>
+  <nav class="action-bar" aria-label="Actions principales"><div class="action-bar-inner">
+    <button class="action primary" id="add-button" type="button"><span class="action-icon">＋</span><span>Ajouter</span></button>
+    <button class="action" id="import-button" type="button"><span class="action-icon">✨</span><span>Chat</span></button>
+    <button class="action" id="clear-button" type="button" hidden><span class="action-icon">🗑️</span><span>Effacer cochés</span></button>
+    <button class="action" id="share-button" type="button" hidden><span class="action-icon">📤</span><span>Partager</span></button>
+  </div></nav>
 
-  <div class="toast" id="toast"></div>
+  <dialog id="item-dialog" aria-labelledby="item-dialog-title"><form class="dialog-card" id="item-form"><div class="dialog-header"><h2 id="item-dialog-title">Ajouter un article</h2><button class="close-button" id="item-close" type="button" aria-label="Fermer">×</button></div><div class="form-grid"><label>Article<input class="field" id="item-name" type="text" maxlength="140" autocomplete="off" required></label><label>Quantité<span class="label-hint">Facultative, par exemple « 2 » ou « 1 kg »</span><input class="field" id="item-quantity" type="text" maxlength="60" autocomplete="off"></label><label>Rayon<span class="label-hint">Laissez le classement automatique si nécessaire</span><select class="field" id="item-aisle"></select></label><div class="quick-aisles" id="quick-aisles"></div><label class="favorite-choice"><input id="item-favorite" type="checkbox">Garder dans Mes habituels</label></div><div class="dialog-actions"><button class="secondary-button" id="item-cancel" type="button">Annuler</button><button class="primary-button" type="submit">Enregistrer</button></div></form></dialog>
 
-  <div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
-    <div class="sheet">
-      <h2 id="helpTitle">Mode d’emploi rapide</h2>
-      <p><strong>1. Choisis la date de planification</strong> : Aujourd’hui, Demain, +3 jours ou +1 semaine.</p>
-      <p><strong>2. Ajoute tes vraies tâches</strong> : heure, titre, catégorie.</p>
-      <p><strong>3. Ouvre l’onglet Chat</strong>, puis copie “Format pour ChatGPT”.</p>
-      <p><strong>4. Colle la réponse de ChatGPT</strong> dans “Réponse de Chat → tâches rapides” seulement si tu veux créer des tâches depuis sa réponse.</p>
-      <ul>
-        <li>Les tâches saisies par Freddy sont prioritaires.</li>
-        <li>“Rien de prévu” n’écrase plus les vraies tâches.</li>
-        <li>Les boutons Demain / +3 jours / +1 semaine créent maintenant de vraies tâches aux bonnes dates.</li>
-        <li>Clair Matin reste sans API, sans compte, sans intégration lourde.</li>
-      </ul>
-      <div class="btnRow">
-        <button class="btn accent" id="closeHelpBtn">J’ai compris</button>
-      </div>
-    </div>
-  </div>
+  <dialog id="import-dialog" aria-labelledby="import-dialog-title"><div class="dialog-card"><div class="dialog-header"><h2 id="import-dialog-title">Coller la liste préparée par Chat</h2><button class="close-button" id="import-close" type="button" aria-label="Fermer">×</button></div><section id="import-paste-panel"><form class="form-grid" id="import-form"><fieldset class="import-mode"><legend class="sr-only">Mode d’import</legend><label class="mode-option"><input type="radio" name="import-mode" value="add" checked><span>Ajouter à ma liste</span></label><label class="mode-option"><input type="radio" name="import-mode" value="replace"><span>Remplacer ma liste</span></label></fieldset><label>Coller la liste préparée par Chat<span class="label-hint">Les articles seront classés par rayons.</span><textarea class="field" id="import-text" placeholder="Boucherie&#10;500 g de poulet&#10;&#10;Fruits et légumes&#10;3 courgettes" required></textarea></label><button class="secondary-button" id="paste-clipboard-button" type="button">Coller depuis le presse-papiers</button><div class="dialog-actions three-actions"><button class="primary-button" type="submit">Vérifier la liste</button><button class="secondary-button" id="clear-import-text" type="button">Effacer</button><button class="secondary-button" id="import-cancel" type="button">Annuler</button></div></form></section><section class="form-grid" id="import-review-panel" hidden><p class="review-summary" id="review-summary"></p><div class="review-groups" id="review-groups"></div><div class="dialog-actions"><button class="secondary-button" id="review-back" type="button">Retour</button><button class="primary-button" id="apply-import" type="button">Ajouter à ma liste</button></div></section></div></dialog>
 
-  <script>
-    (() => {
-      const STORAGE_KEY = 'clairMatin_v5_4';
-      const LEGACY_KEYS = ['clairMatin_v5_3','clairMatinTaches','clairMatinTasks','clairMatin_v5_tasks','clairMatinData'];
-      const $ = (id) => document.getElementById(id);
+  <dialog id="new-list-dialog" aria-labelledby="new-list-title"><div class="dialog-card"><div class="dialog-header"><h2 id="new-list-title">Terminer les courses</h2></div><p>La liste actuelle sera gardée comme liste précédente.</p><div class="dialog-actions"><button class="secondary-button" id="cancel-new-list" type="button">Annuler</button><button class="primary-button" id="confirm-new-list" type="button">Oui, terminer</button></div></div></dialog>
 
-      const state = loadState();
-      let selectedDate = localDate();
-      let planOffset = 0;
-      let planDate = localDate();
+  <div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-message"></span><button class="toast-action" id="toast-action" type="button" hidden>Annuler</button></div>
 
-      function localDate(d = new Date()){
-        const y = d.getFullYear();
-        const m = String(d.getMonth()+1).padStart(2,'0');
-        const day = String(d.getDate()).padStart(2,'0');
-        return `${y}-${m}-${day}`;
-      }
-
-      function addDays(dateStr, days){
-        const d = new Date(dateStr + 'T12:00:00');
-        d.setDate(d.getDate() + days);
-        return localDate(d);
-      }
-
-      function formatDate(dateStr){
-        return new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date(dateStr+'T12:00:00'));
-      }
-
-      function loadState(){
-        const base = safeParse(localStorage.getItem(STORAGE_KEY)) || {tasks:[]};
-        if (!Array.isArray(base.tasks)) base.tasks = [];
-
-        // Petite migration douce : si une ancienne version avait stocké des tâches ailleurs,
-        // on les récupère sans effacer les données existantes.
-        const knownIds = new Set(base.tasks.map(t => t.id));
-        LEGACY_KEYS.forEach(key => {
-          const raw = safeParse(localStorage.getItem(key));
-          const legacyTasks = normalizeLegacy(raw);
-          legacyTasks.forEach(t => {
-            if (!knownIds.has(t.id)) {
-              base.tasks.push(t);
-              knownIds.add(t.id);
-            }
-          });
-        });
-        base.tasks = base.tasks.map(normalizeTask).filter(Boolean);
-        return base;
-      }
-
-      function safeParse(raw){
-        if (!raw) return null;
-        try { return JSON.parse(raw); } catch(e){ return null; }
-      }
-
-      function normalizeLegacy(raw){
-        if (!raw) return [];
-        if (Array.isArray(raw)) return raw.map(normalizeTask).filter(Boolean);
-        if (Array.isArray(raw.tasks)) return raw.tasks.map(normalizeTask).filter(Boolean);
-        if (Array.isArray(raw.taches)) return raw.taches.map(normalizeTask).filter(Boolean);
-        return [];
-      }
-
-      function normalizeTask(t){
-        if (!t || typeof t !== 'object') return null;
-        const title = (t.title || t.titre || t.text || t.texte || t.nom || '').toString().trim();
-        if (!title || isEmptySentence(title)) return null;
-        return {
-          id: t.id || `t_${Date.now()}_${Math.random().toString(16).slice(2)}`,
-          date: t.date || t.day || t.jour || localDate(),
-          time: normalizeTime(t.time || t.heure || ''),
-          title,
-          category: t.category || t.categorie || 'À trier',
-          done: Boolean(t.done || t.fait),
-          createdAt: t.createdAt || new Date().toISOString()
-        };
-      }
-
-      function save(){
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      }
-
-      function normalizeTime(value){
-        const s = String(value || '').trim().replace('h',':');
-        const m = s.match(/^(\d{1,2})(?::(\d{2}))?$/);
-        if (!m) return '';
-        const hh = String(Math.min(23, Number(m[1]))).padStart(2,'0');
-        const mm = String(Math.min(59, Number(m[2] || 0))).padStart(2,'0');
-        return `${hh}:${mm}`;
-      }
-
-      function setPlanOffset(offset){
-        planOffset = Number(offset || 0);
-        planDate = addDays(localDate(), planOffset);
-        document.querySelectorAll('[data-plan]').forEach(btn => {
-          btn.classList.toggle('activePlan', Number(btn.dataset.plan) === planOffset);
-        });
-        updatePlanLabel();
-      }
-
-      function updatePlanLabel(){
-        const el = $('planDateLabel');
-        if (!el) return;
-        let label = formatDate(planDate);
-        if (planOffset === 0) label = `aujourd’hui · ${label}`;
-        if (planOffset === 1) label = `demain · ${label}`;
-        if (planOffset === 3) label = `dans 3 jours · ${label}`;
-        if (planOffset === 7) label = `dans 1 semaine · ${label}`;
-        el.innerHTML = `Ajout prévu pour : <span class="miniDate">${escapeHtml(label)}</span>`;
-      }
-
-      function selectedTasks(){
-        return getTasksForDate(selectedDate);
-      }
-
-      function getTasksForDate(dateStr){
-        return state.tasks
-          .filter(t => t.date === dateStr)
-          .sort((a,b) => (a.time || '99:99').localeCompare(b.time || '99:99') || a.createdAt.localeCompare(b.createdAt));
-      }
-
-      function futureTasks(limit = 21){
-        return state.tasks
-          .filter(t => t.date >= selectedDate)
-          .sort((a,b) => a.date.localeCompare(b.date) || (a.time || '99:99').localeCompare(b.time || '99:99'))
-          .slice(0, limit);
-      }
-
-      function isEmptySentence(text){
-        const s = (text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-        return /aucune action|rien de prevu|pas d'action|aucune tache|sans obligation/.test(s);
-      }
-
-      function addTask({date = selectedDate, time = '', title, category = 'À trier', done = false}){
-        const cleanTitle = String(title || '').replace(/^[-•\s]+/,'').trim();
-        if (!cleanTitle || isEmptySentence(cleanTitle)) return false;
-        state.tasks.push({
-          id:`t_${Date.now()}_${Math.random().toString(16).slice(2)}`,
-          date,
-          time:normalizeTime(time),
-          title:cleanTitle,
-          category,
-          done,
-          createdAt:new Date().toISOString()
-        });
-        save();
-        render();
-        return true;
-      }
-
-      function deleteTask(id){
-        const idx = state.tasks.findIndex(t => t.id === id);
-        if (idx >= 0){ state.tasks.splice(idx,1); save(); render(); toast('Supprimé'); }
-      }
-
-      function toggleTask(id){
-        const t = state.tasks.find(t => t.id === id);
-        if (t){ t.done = !t.done; save(); render(); }
-      }
-
-      function render(){
-        $('selectedDate').value = selectedDate;
-        updatePlanLabel();
-        renderToday();
-        renderAgenda();
-        renderChat();
-      }
-
-      function renderToday(){
-        const tasks = selectedTasks();
-        $('dayLabel').textContent = formatDate(selectedDate);
-        $('taskCount').textContent = tasks.length > 1 ? `${tasks.length} tâches` : `${tasks.length} tâche`;
-        if (tasks.length){
-          const main = tasks.find(t => !t.done) || tasks[0];
-          $('heroTitle').textContent = 'Une journée réaliste';
-          $('heroText').textContent = `Priorité : ${main.time ? main.time + ' — ' : ''}${main.title}. Le reste reste simple, sans alourdir.`;
-        } else {
-          $('heroTitle').textContent = 'Une journée calme';
-          $('heroText').textContent = 'Aucune tâche réelle saisie pour cette date. Tu peux garder une journée légère.';
-        }
-        $('todayTasks').innerHTML = tasks.length ? tasks.map(taskHtml).join('') : `<div class="empty">Rien de saisi pour cette date. Ajoute une tâche seulement si elle est vraiment prévue.</div>`;
-      }
-
-      function taskHtml(t){
-        const gcal = googleCalendarUrl(t);
-        return `<div class="task ${t.done ? 'done' : ''}" data-id="${escapeHtml(t.id)}">
-          <div class="time">${t.time || '—'}</div>
-          <div>
-            <div class="taskText">${escapeHtml(t.title)}</div>
-            <div class="taskMeta">${escapeHtml(t.category || 'À trier')}</div>
-          </div>
-          <div class="taskActions">
-            <button class="iconBtn" data-action="toggle" title="Fait">✓</button>
-            <a class="iconBtn" href="${gcal}" target="_blank" rel="noopener" title="Ajouter à Google Agenda" style="display:grid;place-items:center;text-decoration:none;">＋</a>
-            <button class="iconBtn danger" data-action="delete" title="Supprimer">×</button>
-          </div>
-        </div>`;
-      }
-
-      function googleCalendarUrl(t){
-        const start = (t.date || selectedDate).replaceAll('-','') + (t.time ? 'T' + t.time.replace(':','') + '00' : 'T090000');
-        const endDate = new Date(`${t.date || selectedDate}T${t.time || '09:00'}:00`);
-        endDate.setMinutes(endDate.getMinutes() + 30);
-        const end = localDate(endDate).replaceAll('-','') + 'T' + String(endDate.getHours()).padStart(2,'0') + String(endDate.getMinutes()).padStart(2,'0') + '00';
-        const params = new URLSearchParams({
-          action:'TEMPLATE',
-          text:t.title,
-          dates:`${start}/${end}`,
-          details:'Ajouté depuis Clair Matin.'
-        });
-        return `https://calendar.google.com/calendar/render?${params.toString()}`;
-      }
-
-      function renderAgenda(){
-        const list = futureTasks(60);
-        if (!list.length){
-          $('agendaList').innerHTML = `<div class="empty">Aucune tâche à venir dans Clair Matin.</div>`;
-          return;
-        }
-        const groups = list.reduce((acc,t) => {
-          (acc[t.date] ||= []).push(t);
-          return acc;
-        },{});
-        $('agendaList').innerHTML = Object.entries(groups).map(([date,tasks]) => `
-          <div class="dayBlock">
-            <div class="sectionDate">${formatDate(date)}</div>
-            ${tasks.map(taskHtml).join('')}
-          </div>
-        `).join('');
-      }
-
-      function buildChatPrompt(){
-        const tasks = selectedTasks();
-        let txt = `Chat, voici mon agenda clair pour ${formatDate(selectedDate)}.\n\n`;
-        txt += `Actions photo reçues ce jour :\n`;
-        txt += `- Aucune action photo en attente.\n\n`;
-
-        // CORRECTION V5.3 : les tâches saisies passent avant tout texte automatique.
-        if (tasks.length > 0){
-          txt += `Tâches réellement prévues :\n`;
-          tasks.forEach(t => {
-            txt += `- ${t.time ? t.time.replace(':','h') + ' — ' : ''}${t.title}`;
-            if (t.category && t.category !== 'À trier') txt += ` (${t.category})`;
-            txt += `\n`;
-          });
-        } else {
-          txt += `Tâches du jour :\n- Rien de prévu.\n`;
-        }
-        txt += `\nPeux-tu m’aider à en faire une journée réaliste : priorités, ordre conseillé, petits créneaux, et ce que je peux déplacer ?`;
-        return txt;
-      }
-
-      function renderChat(){
-        $('chatPrompt').textContent = buildChatPrompt();
-      }
-
-      function parseLinesToTasks(text){
-        const lines = String(text || '').split(/\n+/).map(l => l.trim()).filter(Boolean);
-        const found = [];
-        for (let raw of lines){
-          let line = raw.replace(/^[•\-–—*]\s*/,'').trim();
-          if (!line || isEmptySentence(line)) continue;
-          if (/^(priorit|ordre conseillé|matin|midi|après-midi|soir|à déplacer|résumé|objectif)/i.test(line)) continue;
-          let date = selectedDate;
-          const low = line.toLowerCase();
-          if (low.includes('après-demain') || low.includes('apres-demain')) date = addDays(selectedDate,2);
-          else if (low.includes('demain')) date = addDays(selectedDate,1);
-
-          const m = line.match(/(?:^|\s)(\d{1,2})\s*(?:h|:)(\d{0,2})\s*(?:[—\-:]\s*)?(.*)$/i);
-          let time = '', title = line;
-          if (m){
-            time = normalizeTime(`${m[1]}:${m[2] || '00'}`);
-            title = (m[3] || line.replace(m[0],'')).trim();
-          }
-          title = title.replace(/^(—|-|:)+/,'').trim();
-          if (!title || title.length < 3) continue;
-          found.push({date,time,title,category:guessCategory(title)});
-        }
-        return found;
-      }
-
-      function guessCategory(title){
-        const s = title.toLowerCase();
-        if (/salle|vélo|velo|marche|sport|coach/.test(s)) return 'Forme';
-        if (/photo|expo|tirage|lightroom|clair photo|horizon/.test(s)) return 'Photo / Expo';
-        if (/mail|papier|administratif|mairie|rdv|rendez-vous/.test(s)) return 'Administratif';
-        if (/famille|run|sylvie|enfant|petit/.test(s)) return 'Famille';
-        if (/nettoyer|ranger|maison|courses/.test(s)) return 'Maison';
-        return 'À trier';
-      }
-
-      function escapeHtml(str){
-        return String(str ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
-      }
-
-      function toast(msg){
-        const el = $('toast');
-        el.textContent = msg;
-        el.classList.add('show');
-        clearTimeout(toast._t);
-        toast._t = setTimeout(() => el.classList.remove('show'), 1600);
-      }
-
-      async function copyText(text){
-        try{
-          await navigator.clipboard.writeText(text);
-          toast('Copié');
-        } catch(e){
-          const tmp = document.createElement('textarea');
-          tmp.value = text;
-          document.body.appendChild(tmp);
-          tmp.select();
-          document.execCommand('copy');
-          tmp.remove();
-          toast('Copié');
-        }
-      }
-
-      // Events
-      $('selectedDate').addEventListener('change', e => { selectedDate = e.target.value || localDate(); render(); });
-      $('todayBtn').addEventListener('click', () => { selectedDate = localDate(); render(); });
-      $('addTaskBtn').addEventListener('click', () => {
-        const ok = addTask({date:planDate, time:$('taskTime').value, title:$('taskTitle').value, category:$('taskCategory').value});
-        if (ok){
-          const addedDate = planDate;
-          $('taskTitle').value = '';
-          $('taskTime').value = '';
-          $('taskCategory').value = 'À trier';
-          selectedDate = addedDate;
-          render();
-          toast(planOffset === 0 ? 'Ajouté' : 'Ajouté à la bonne date');
-        }
-        else toast('Rien à ajouter');
-      });
-      $('clearDoneBtn').addEventListener('click', () => {
-        const before = state.tasks.length;
-        state.tasks = state.tasks.filter(t => !(t.date === selectedDate && t.done));
-        save(); render(); toast(before === state.tasks.length ? 'Rien à vider' : 'Fait vidé');
-      });
-      document.querySelectorAll('[data-plan]').forEach(btn => {
-        btn.addEventListener('click', () => setPlanOffset(btn.dataset.plan));
-      });
-      document.querySelectorAll('[data-quick]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const [time,title,category] = btn.dataset.quick.split('|');
-          if (addTask({date:planDate,time,title,category})){
-            selectedDate = planDate;
-            render();
-            toast(planOffset === 0 ? 'Ajouté' : 'Ajouté à la bonne date');
-          }
-        });
-      });
-      document.querySelectorAll('[data-set-title]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          $('taskTitle').value = btn.dataset.setTitle || '';
-          setPlanOffset(1);
-          $('taskTitle').focus();
-          toast('Date : demain');
-        });
-      });
-      document.body.addEventListener('click', e => {
-        const actionBtn = e.target.closest('[data-action]');
-        if (!actionBtn) return;
-        const taskEl = actionBtn.closest('.task');
-        if (!taskEl) return;
-        const id = taskEl.dataset.id;
-        const action = actionBtn.dataset.action;
-        if (action === 'toggle') toggleTask(id);
-        if (action === 'delete' && confirm('Supprimer cette tâche ?')) deleteTask(id);
-      });
-      document.querySelectorAll('.navBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.navBtn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-          $('view' + btn.dataset.view[0].toUpperCase() + btn.dataset.view.slice(1)).classList.add('active');
-          render();
-        });
-      });
-      $('copyChatBtn').addEventListener('click', () => copyText(buildChatPrompt()));
-      $('openChatBtn').addEventListener('click', () => window.open('https://chatgpt.com/', '_blank', 'noopener'));
-      $('importPhotoBtn').addEventListener('click', () => {
-        const text = $('photoInput').value.trim();
-        if (!text || isEmptySentence(text)){ toast('Aucune action utile'); return; }
-        const lines = parseLinesToTasks(text);
-        const candidates = lines.length ? lines : [{date:selectedDate,time:'',title:text,category:'Photo / Expo'}];
-        let count = 0;
-        candidates.forEach(t => { if (addTask({...t, category:'Photo / Expo'})) count++; });
-        $('photoInput').value = '';
-        toast(count ? `${count} action ajoutée` : 'Rien ajouté');
-      });
-      $('importChatBtn').addEventListener('click', () => {
-        const found = parseLinesToTasks($('chatImport').value);
-        let count = 0;
-        found.forEach(t => { if (addTask(t)) count++; });
-        if (count){ $('chatImport').value = ''; toast(`${count} tâche(s) créée(s)`); }
-        else toast('Aucune tâche claire trouvée');
-      });
-      $('backupBtn').addEventListener('click', () => copyText(JSON.stringify(state,null,2)));
-      $('exportBtn').addEventListener('click', () => {
-        const txt = futureTasks(100).map(t => `${formatDate(t.date)} · ${t.time || '--'} · ${t.title} · ${t.category}`).join('\n') || 'Aucune tâche.';
-        copyText(txt);
-      });
-      $('resetBtn').addEventListener('click', () => {
-        if (confirm('Réinitialiser Clair Matin V5.4 dans ce navigateur ?')){
-          state.tasks = [];
-          save(); render(); toast('Réinitialisé');
-        }
-      });
-      $('helpBtn').addEventListener('click', () => $('helpModal').classList.add('show'));
-      $('closeHelpBtn').addEventListener('click', () => $('helpModal').classList.remove('show'));
-      $('helpModal').addEventListener('click', e => { if (e.target.id === 'helpModal') $('helpModal').classList.remove('show'); });
-
-      setPlanOffset(0);
-      render();
-    })();
-  </script>
+<script defer>
+"use strict";
+const STORAGE_KEY="clairCourses.state",PREVIOUS_LIST_KEY="clairCourses.previousList.v7",DATA_VERSION=7,APP_RELEASE="7.1";
+const AISLES=["Fruits et légumes","Boucherie","Poissonnerie","Crèmerie","Boulangerie","Épicerie","Surgelés","Boissons","Maison","Hygiène","Divers"];
+const DEFAULT_FAVORITES=[{name:"Eau",quantity:"",aisle:"Boissons"},{name:"Pain",quantity:"",aisle:"Boulangerie"},{name:"Lait",quantity:"",aisle:"Crèmerie"},{name:"Beurre",quantity:"",aisle:"Crèmerie"},{name:"Café",quantity:"",aisle:"Épicerie"},{name:"Papier aluminium",quantity:"",aisle:"Maison"},{name:"Sacs-poubelle",quantity:"",aisle:"Maison"}];
+const KEYWORDS={
+"Fruits et légumes":["abricot","ail","ananas","aubergine","avocat","banane","betterave","brocoli","carotte","céleri","champignon","chou","citron","clémentine","concombre","courgette","échalote","épinard","fraise","framboise","haricot vert","kiwi","mâche","mandarine","melon","navet","oignon","orange","pamplemousse","poire","poireau","poivron","pomme","pomme de terre","raisin","salade","tomate"],
+"Boucherie":["agneau","andouillette","bavette","boeuf","bœuf","canard","chipolata","côte de porc","dinde","entrecôte","escalope","filet mignon","jambon","jambon cru","lapin","lardon","merguez","porc","poulet","rôti","saucisse","steak","veau","viande"],
+"Poissonnerie":["bar","cabillaud","calamar","crevette","daurade","dorade","huître","maquereau","moule","poisson","saumon","sardine","sole","thon frais","truite"],
+"Crèmerie":["beurre","camembert","crème","crème fraîche","emmental","faisselle","fromage","gruyère","lait","mozzarella","oeuf","œuf","parmesan","yaourt"],
+"Boulangerie":["baguette","brioche","croissant","pain","pain de mie","pâtisserie","viennoiserie"],
+"Épicerie":["biscuit","café","céréale","chocolat","compote","confiture","conserve","couscous","épice","farine","herbes de provence","huile","lentille","miel","moutarde","pâte","pâtes","poivre","quinoa","riz","sel","semoule","sucre","thé","thon en boîte","vinaigre"],
+"Surgelés":["frites surgelées","glace","glaçon","légumes surgelés","pizza surgelée","sorbet","surgelé"],
+"Boissons":["bière","cidre","eau","eau gazeuse","jus","limonade","sirop","soda","vin"],
+"Maison":["adoucissant","aluminium","ampoule","bougie","éponge","essuie tout","film alimentaire","liquide vaisselle","lessive","nettoyant","papier aluminium","papier cuisson","sac poubelle","sacs poubelle","sopalin","eau de javel"],
+"Hygiène":["brosse à dents","coton tige","couche","déodorant","dentifrice","gel douche","mouchoir","rasoir","savon","papier toilette","shampoing","shampooing"]};
+const $=s=>document.querySelector(s);
+const els={statusMain:$("#status-main"),statusSub:$("#status-sub"),progressCount:$("#progress-count"),progressPercent:$("#progress-percent"),progressTrack:$("#progress-track"),progressFill:$("#progress-fill"),remainingAisles:$("#remaining-aisles"),newListButton:$("#new-list-button"),visibilityButton:$("#visibility-button"),courseModeButton:$("#course-mode-button"),wakeLockButton:$("#wake-lock-button"),updateBanner:$("#update-banner"),updateNowButton:$("#update-now-button"),updateLaterButton:$("#update-later-button"),checkUpdateButton:$("#check-update-button"),appRelease:$("#app-release"),favoriteList:$("#favorite-list"),favoriteForm:$("#favorite-form"),favoriteName:$("#favorite-name"),selectAllFavorites:$("#select-all-favorites"),addSelectedFavorites:$("#add-selected-favorites"),exportDataButton:$("#export-data-button"),importDataButton:$("#import-data-button"),restorePreviousListButton:$("#restore-previous-list-button"),importDataFile:$("#import-data-file"),listCount:$("#list-count"),emptyState:$("#empty-state"),aislesRoot:$("#aisles-root"),completedToggle:$("#completed-toggle"),addButton:$("#add-button"),importButton:$("#import-button"),clearButton:$("#clear-button"),shareButton:$("#share-button"),itemDialog:$("#item-dialog"),itemForm:$("#item-form"),itemDialogTitle:$("#item-dialog-title"),itemName:$("#item-name"),itemQuantity:$("#item-quantity"),itemAisle:$("#item-aisle"),quickAisles:$("#quick-aisles"),itemFavorite:$("#item-favorite"),itemClose:$("#item-close"),itemCancel:$("#item-cancel"),importDialog:$("#import-dialog"),importForm:$("#import-form"),importDialogTitle:$("#import-dialog-title"),importPastePanel:$("#import-paste-panel"),importReviewPanel:$("#import-review-panel"),importText:$("#import-text"),pasteClipboardButton:$("#paste-clipboard-button"),clearImportText:$("#clear-import-text"),importClose:$("#import-close"),importCancel:$("#import-cancel"),reviewSummary:$("#review-summary"),reviewGroups:$("#review-groups"),reviewBack:$("#review-back"),applyImport:$("#apply-import"),newListDialog:$("#new-list-dialog"),cancelNewList:$("#cancel-new-list"),confirmNewList:$("#confirm-new-list"),toast:$("#toast"),toastMessage:$("#toast-message"),toastAction:$("#toast-action")};
+let state=loadState(),editingItemId=null,selectedFavoriteIds=new Set(),openAisles=new Set(AISLES.filter(a=>state.items.some(i=>i.aisle===a&&!i.checked))),importSession={mode:"add",rows:[]},courseMode=false,courseAisle="",showCompletedAisles=false,wakeLockRequested=false,wakeLockEnabledByCourseMode=false,wakeLockSentinel=null,toastTimer=0,serviceWorkerRegistration=null,pendingUpdateWorker=null,reloadingForUpdate=false;
+function uid(p){return p+"-"+(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2))}function clean(v,m=160){return String(v??"").replace(/\s+/g," ").trim().slice(0,m)}function norm(v){return clean(v,300).normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/œ/g,"oe").replace(/[’']/g," ").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}function plural(n,s,p){return `${n} ${n===1?s:p}`}function clone(v){return JSON.parse(JSON.stringify(v))}function displayLabel(x){return [clean(x.quantity,60),clean(x.name,160)].filter(Boolean).join(" ")}function itemKey(x){return norm(x.name||displayLabel(x))}function isAisle(v){return AISLES.includes(v)}
+function classify(label){const text=` ${norm(label)} `;let best="Divers",len=0;for(const [aisle,words] of Object.entries(KEYWORDS))for(const word of words){const w=norm(word);if(w.length>len&&(text.includes(` ${w} `)||text.includes(` ${w}s `)||text.includes(` ${w}es `))){best=aisle;len=w.length}}return best}
+function makeItem(raw,index=0){if(!raw)return null;const s=typeof raw==="string"?{name:raw}:raw,name=clean(s.name??s.nom??s.label??s.article??s.text,160);if(!name)return null;return{id:clean(s.id,120)||uid("item"),name,quantity:clean(s.quantity??s.quantite??s.qty,60),aisle:isAisle(s.aisle??s.rayon??s.category)?(s.aisle??s.rayon??s.category):classify(`${s.quantity||""} ${name}`),checked:Boolean(s.checked??s.bought??s.done),createdAt:Number(s.createdAt)||Date.now()+index}}
+function makeFavorite(raw){if(!raw)return null;const s=typeof raw==="string"?{name:raw}:raw,name=clean(s.name??s.nom??s.label,160);if(!name)return null;return{id:clean(s.id,120)||uid("favorite"),name,quantity:clean(s.quantity??s.quantite,60),aisle:isAisle(s.aisle??s.rayon??s.category)?(s.aisle??s.rayon??s.category):classify(name)}}
+function defaultState(){return{appVersion:DATA_VERSION,items:[],favorites:DEFAULT_FAVORITES.map(makeFavorite),hideBought:false}}
+function loadState(){const fallback=defaultState();try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return fallback;const data=JSON.parse(raw),base=data&&typeof data==="object"?(data.state||data.data||data):{},itemSource=base.items??base.articles??base.list??base.liste??[],hasFavorites=["favorites","favourites","habituels","favoris"].some(k=>Object.prototype.hasOwnProperty.call(base,k)),favSource=base.favorites??base.favourites??base.habituels??base.favoris??[];return{appVersion:DATA_VERSION,items:Array.isArray(itemSource)?itemSource.map(makeItem).filter(Boolean):[],favorites:hasFavorites&&Array.isArray(favSource)?favSource.map(makeFavorite).filter(Boolean):fallback.favorites,hideBought:Boolean(base.hideBought??base.settings?.hideBought)}}catch(e){console.warn("Sauvegarde illisible",e);return fallback}}
+function saveState(){state.appVersion=DATA_VERSION;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));return true}catch(e){console.warn(e);showToast("Modification gardée pour cette session seulement.");return false}}function commit(message){saveState();render();if(message)showToast(message)}
+function showToast(message,actionLabel,actionHandler,duration){clearTimeout(toastTimer);els.toastMessage.textContent=message;els.toastAction.hidden=!actionLabel;els.toast.classList.toggle("has-action",Boolean(actionLabel));els.toast.classList.add("is-visible");els.toastAction.onclick=null;if(actionLabel&&actionHandler){els.toastAction.textContent=actionLabel;els.toastAction.onclick=()=>{clearTimeout(toastTimer);els.toast.classList.remove("is-visible","has-action");els.toastAction.hidden=true;actionHandler()}}toastTimer=setTimeout(()=>{els.toast.classList.remove("is-visible","has-action");els.toastAction.hidden=true},duration||(actionLabel?6000:2600))}function openDialog(d){d.showModal?d.showModal():d.setAttribute("open","")}function closeDialog(d){d.close?d.close():d.removeAttribute("open")}
+function readPreviousList(){try{const raw=localStorage.getItem(PREVIOUS_LIST_KEY);if(!raw)return null;const snap=JSON.parse(raw);return snap&&Array.isArray(snap.items)&&snap.items.length?snap:null}catch{return null}}function updateRestoreButton(){const snap=readPreviousList();els.restorePreviousListButton.disabled=!snap;els.restorePreviousListButton.title=snap?"Liste sauvegardée automatiquement":"Aucune liste précédente disponible"}function savePreviousList(reason){if(!state.items.length)return false;try{localStorage.setItem(PREVIOUS_LIST_KEY,JSON.stringify({savedAt:new Date().toISOString(),reason:reason||"Sauvegarde automatique",items:clone(state.items)}));updateRestoreButton();return true}catch{return false}}
+function restorePreviousList(){const snap=readPreviousList();if(!snap){showToast("Aucune liste précédente disponible.");return}if(state.items.length&&!confirm("Remplacer la liste actuelle par la liste précédente ?"))return;const current=clone(state.items);state.items=clone(snap.items).map(makeItem).filter(Boolean);if(current.length)localStorage.setItem(PREVIOUS_LIST_KEY,JSON.stringify({savedAt:new Date().toISOString(),reason:"Liste remplacée lors d’une restauration",items:current}));else localStorage.removeItem(PREVIOUS_LIST_KEY);openAisles=new Set(AISLES.filter(a=>state.items.some(i=>i.aisle===a&&!i.checked)));commit("Liste précédente restaurée.")}
+function pendingAisles(){return AISLES.filter(a=>state.items.some(i=>i.aisle===a&&!i.checked))}function ensureCourseAisle(){const pending=pendingAisles();if(!pending.includes(courseAisle))courseAisle=pending[0]||""}
+function renderStatus(){const total=state.items.length,checked=state.items.filter(i=>i.checked).length,remaining=total-checked,counts=AISLES.map(aisle=>({aisle,count:state.items.filter(i=>i.aisle===aisle&&!i.checked).length})).filter(x=>x.count),percent=total?Math.round(checked/total*100):0;ensureCourseAisle();if(!total){els.statusMain.textContent="Votre liste est vide";els.statusSub.textContent="Ajoutez un article pour commencer."}else if(!remaining){els.statusMain.textContent="Courses terminées 🎉";els.statusSub.textContent="Bon retour à la maison."}else{els.statusMain.textContent=`${plural(remaining,"article à acheter","articles à acheter")}`;els.statusSub.textContent=`${plural(checked,"article acheté","articles achetés")} · ${plural(counts.length,"rayon restant","rayons restants")}`}els.progressCount.textContent=`${checked} sur ${total}`;els.progressPercent.textContent=`${percent} %`;els.progressFill.style.width=`${percent}%`;els.progressTrack.setAttribute("aria-valuenow",String(percent));els.remainingAisles.replaceChildren(...counts.map(x=>{const b=document.createElement("button");b.type="button";b.className="remaining-aisle"+(courseMode&&courseAisle===x.aisle?" is-active":"");b.textContent=`${x.aisle} · ${x.count}`;b.onclick=()=>{courseAisle=x.aisle;openAisles.add(x.aisle);render();document.querySelector(".aisle")?.scrollIntoView({behavior:"smooth",block:"start"})};return b}));els.remainingAisles.hidden=!counts.length;els.newListButton.hidden=!(total&&remaining===0);els.listCount.textContent=remaining?plural(remaining,"à acheter","à acheter"):total?"Tout est acheté":"0 à acheter";els.clearButton.hidden=!checked;els.shareButton.hidden=!state.items.some(i=>!effectiveHideBought()||!i.checked)}
+function effectiveHideBought(){return courseMode||state.hideBought}
+function render(){renderStatus();renderFavorites();renderAisles();els.visibilityButton.setAttribute("aria-pressed",String(state.hideBought));els.visibilityButton.textContent=state.hideBought?"Afficher achetés":"Masquer achetés";document.body.classList.toggle("course-mode",courseMode);els.courseModeButton.setAttribute("aria-pressed",String(courseMode));els.courseModeButton.innerHTML=courseMode?'<span class="control-icon">✓</span>Quitter le mode Courses':'<span class="control-icon">🛒</span>Mode Courses';updateWakeButton();updateRestoreButton()}
+function findDuplicate(c,list=state.items){const k=itemKey(c);return list.find(i=>itemKey(i)===k)||null}
+function renderFavorites(){els.favoriteList.replaceChildren();const available=state.favorites.filter(f=>!findDuplicate(f));for(const f of state.favorites){const present=Boolean(findDuplicate(f)),row=document.createElement("div");row.className="favorite"+(present?" is-present":"");const wrap=document.createElement("label"),cb=document.createElement("input");wrap.className="favorite-select-wrap";cb.type="checkbox";cb.className="favorite-select";cb.checked=selectedFavoriteIds.has(f.id);cb.disabled=present;cb.setAttribute("aria-label",`Sélectionner ${displayLabel(f)}`);cb.onchange=()=>{cb.checked?selectedFavoriteIds.add(f.id):selectedFavoriteIds.delete(f.id);updateFavoriteActions()};wrap.append(cb);const add=document.createElement("button");add.className="chip";add.type="button";add.disabled=present;add.textContent=displayLabel(f);if(present){const badge=document.createElement("span");badge.className="present-badge";badge.textContent="Déjà présent";add.append(badge)}add.onclick=()=>addFavorite(f);const remove=document.createElement("button");remove.className="chip-remove";remove.type="button";remove.textContent="×";remove.setAttribute("aria-label",`Retirer ${displayLabel(f)} des habituels`);remove.onclick=()=>{selectedFavoriteIds.delete(f.id);state.favorites=state.favorites.filter(x=>x.id!==f.id);commit("Habituel retiré.")};row.append(wrap,add,remove);els.favoriteList.append(row)}if(!state.favorites.length){const p=document.createElement("p");p.className="status-sub";p.textContent="Aucun habituel pour le moment.";els.favoriteList.append(p)}updateFavoriteActions(available)}
+function updateFavoriteActions(available=state.favorites.filter(f=>!findDuplicate(f))){const ids=new Set(available.map(f=>f.id));selectedFavoriteIds=new Set([...selectedFavoriteIds].filter(id=>ids.has(id)));const all=available.length&&available.every(f=>selectedFavoriteIds.has(f.id));els.selectAllFavorites.disabled=!available.length;els.selectAllFavorites.textContent=all?"Tout désélectionner":"Tout sélectionner";els.addSelectedFavorites.disabled=!selectedFavoriteIds.size;els.addSelectedFavorites.textContent=selectedFavoriteIds.size?`Ajouter la sélection (${selectedFavoriteIds.size})`:"Ajouter la sélection"}
+function addFavorite(f){if(findDuplicate(f)){showToast(`${displayLabel(f)} est déjà dans la liste.`);return}state.items.push({id:uid("item"),name:f.name,quantity:f.quantity,aisle:f.aisle,checked:false,createdAt:Date.now()});openAisles.add(f.aisle);commit(`${displayLabel(f)} ajouté.`)}function addSelectedFavorites(){let added=0;for(const f of state.favorites.filter(x=>selectedFavoriteIds.has(x.id))){if(findDuplicate(f))continue;state.items.push({id:uid("item"),name:f.name,quantity:f.quantity,aisle:f.aisle,checked:false,createdAt:Date.now()+added});openAisles.add(f.aisle);added++}selectedFavoriteIds.clear();commit(added?`${plural(added,"habituel ajouté","habituels ajoutés")}.`:"Aucun nouvel habituel à ajouter.")}
+function createItemRow(item){const row=document.createElement("div");row.className="item"+(item.checked?" is-checked":"");const cb=document.createElement("input");cb.className="item-check";cb.type="checkbox";cb.checked=item.checked;cb.setAttribute("aria-label",`${item.checked?"Décocher":"Cocher"} ${displayLabel(item)}`);cb.onchange=()=>{item.checked=cb.checked;if(item.checked&&!state.items.some(i=>i.aisle===item.aisle&&!i.checked)){openAisles.delete(item.aisle);if(courseMode)courseAisle=""}else if(!item.checked)openAisles.add(item.aisle);commit()};const label=document.createElement("div");label.className="item-label";if(item.quantity){const q=document.createElement("span");q.className="quantity";q.textContent=item.quantity;label.append(q)}label.append(document.createTextNode(item.name));const isFav=state.favorites.some(f=>itemKey(f)===itemKey(item)),fav=document.createElement("button");fav.className="icon-button favorite-toggle";fav.type="button";fav.textContent=isFav?"★":"☆";fav.setAttribute("aria-pressed",String(isFav));fav.onclick=()=>{if(isFav)state.favorites=state.favorites.filter(f=>itemKey(f)!==itemKey(item));else state.favorites.push({id:uid("favorite"),name:item.name,quantity:item.quantity,aisle:item.aisle});commit(isFav?"Habituel retiré.":"Ajouté à Mes habituels.")};const edit=document.createElement("button");edit.className="icon-button";edit.type="button";edit.textContent="✎";edit.setAttribute("aria-label",`Modifier ${displayLabel(item)}`);edit.onclick=()=>openItemEditor(item.id);const del=document.createElement("button");del.className="icon-button delete-button";del.type="button";del.textContent="×";del.setAttribute("aria-label",`Supprimer ${displayLabel(item)}`);del.onclick=()=>{const index=state.items.findIndex(i=>i.id===item.id);if(index<0)return;const deleted=clone(state.items[index]);state.items.splice(index,1);commit();showToast("Article supprimé.","Annuler",()=>{if(!state.items.some(i=>i.id===deleted.id)){state.items.splice(Math.min(index,state.items.length),0,deleted);commit("Article restauré.")}},6000)};row.append(cb,label,fav,edit,del);return row}
+function createAisle(aisle,items){const pending=items.filter(i=>!i.checked).length,details=document.createElement("details");details.className="aisle"+(pending?"":" is-complete");details.open=pending>0&&(courseMode||openAisles.has(aisle));const summary=document.createElement("summary");summary.className="aisle-summary";const chev=document.createElement("span");chev.className="aisle-chevron";chev.textContent="›";const copy=document.createElement("span"),name=document.createElement("span"),count=document.createElement("span");name.className="aisle-name";name.textContent=aisle;count.className="aisle-count";count.textContent=pending?plural(pending,"article à acheter","articles à acheter"):"Rayon terminé";copy.append(name,count);summary.append(chev,copy);if(pending>1){const all=document.createElement("button");all.className="check-all";all.type="button";all.textContent="Tout cocher";all.onclick=e=>{e.preventDefault();e.stopPropagation();state.items.forEach(i=>{if(i.aisle===aisle)i.checked=true});openAisles.delete(aisle);if(courseMode)courseAisle="";commit("Rayon terminé.")};summary.append(all)}else summary.append(document.createElement("span"));details.append(summary);const visible=items.filter(i=>!(effectiveHideBought()&&i.checked)).sort((a,b)=>Number(a.checked)-Number(b.checked)||a.createdAt-b.createdAt);if(visible.length){const list=document.createElement("div");list.className="items";visible.forEach(i=>list.append(createItemRow(i)));details.append(list)}else{const p=document.createElement("p");p.className="completed-note";p.textContent="Les articles achetés sont masqués.";details.append(p)}details.ontoggle=()=>details.open?openAisles.add(aisle):openAisles.delete(aisle);return details}
+function renderAisles(){els.aislesRoot.replaceChildren();els.emptyState.hidden=Boolean(state.items.length);const completed=AISLES.filter(a=>state.items.some(i=>i.aisle===a)&&!state.items.some(i=>i.aisle===a&&!i.checked));if(courseMode){ensureCourseAisle();if(courseAisle){const items=state.items.filter(i=>i.aisle===courseAisle);els.aislesRoot.append(createAisle(courseAisle,items))}}else{for(const aisle of AISLES){const items=state.items.filter(i=>i.aisle===aisle);if(!items.length)continue;const pending=items.some(i=>!i.checked);if(pending||showCompletedAisles)els.aislesRoot.append(createAisle(aisle,items))}}els.completedToggle.hidden=courseMode||!completed.length;els.completedToggle.textContent=showCompletedAisles?`Masquer les rayons terminés (${completed.length})`:`Voir les rayons terminés (${completed.length})`}
+function setQuickAisle(value){els.itemAisle.value=value;[...els.quickAisles.children].forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.aisle===value)))}function openItemEditor(id){editingItemId=id||null;const item=id?state.items.find(i=>i.id===id):null;els.itemDialogTitle.textContent=item?"Modifier l’article":"Ajouter un article";els.itemName.value=item?.name||"";els.itemQuantity.value=item?.quantity||"";setQuickAisle(item?.aisle||"");els.itemFavorite.checked=item?state.favorites.some(f=>itemKey(f)===itemKey(item)):false;openDialog(els.itemDialog);setTimeout(()=>els.itemName.focus(),0)}
+function saveItem(e){e.preventDefault();const name=clean(els.itemName.value,140),quantity=clean(els.itemQuantity.value,60);if(!name){els.itemName.focus();return}const aisle=isAisle(els.itemAisle.value)?els.itemAisle.value:classify(`${quantity} ${name}`);let item=editingItemId?state.items.find(i=>i.id===editingItemId):null;const oldKey=item?itemKey(item):"";if(item){item.name=name;item.quantity=quantity;item.aisle=aisle}else{item={id:uid("item"),name,quantity,aisle,checked:false,createdAt:Date.now()};state.items.push(item)}if(oldKey)state.favorites=state.favorites.filter(f=>itemKey(f)!==oldKey);if(els.itemFavorite.checked){state.favorites=state.favorites.filter(f=>itemKey(f)!==itemKey(item));state.favorites.push({id:uid("favorite"),name,quantity,aisle})}openAisles.add(aisle);closeDialog(els.itemDialog);commit(editingItemId?"Article modifié.":"Article ajouté.")}
+function parseQuantity(line){const m=line.match(/^(\d+(?:[.,]\d+)?(?:\s*(?:à|-|x)\s*\d+(?:[.,]\d+)?)?(?:\s*(?:kg|g|l|cl|ml|tranches?|boules?|dos|filets?|paquets?|bouteilles?|rouleaux?|boîtes?|pièces?))?)\s+(?:de\s+|d[’']\s*)?(.+)$/i);return m?{quantity:clean(m[1],60),name:clean(m[2],160)}:{quantity:"",name:clean(line,160)}}function headingAisle(line){const n=norm(line.replace(/[:：]$/,"") );return AISLES.find(a=>norm(a)===n)||({"fruits legumes":"Fruits et légumes","viande":"Boucherie","poisson":"Poissonnerie","produits laitiers":"Crèmerie","menage":"Maison"})[n]||""}
+function parseImport(text){let aisle="";const rows=[],seen=new Set();for(const raw of String(text).split(/\r?\n/)){let line=raw.trim().replace(/^#{1,6}\s*/,"").replace(/^(?:[-*•–—]\s*)?(?:☐|☑|□|✅|\[\s?[xX]?\])?\s*/,"").replace(/^\d+[.)]\s+/,"").replace(/^\*\*(.+)\*\*$/,"$1").trim();if(!line)continue;const h=headingAisle(line);if(h){aisle=h;continue}if(/^(liste|courses|liste des courses|ma liste)/i.test(line))continue;const split=parseQuantity(line),row={id:uid("draft"),name:split.name,quantity:split.quantity,aisle:aisle||classify(line)},key=`${norm(row.name)}|${row.aisle}`;if(row.name&&!seen.has(key)){seen.add(key);rows.push(row)}}return rows}
+function setImportPanel(review){els.importPastePanel.hidden=review;els.importReviewPanel.hidden=!review;els.importDialogTitle.textContent=review?"Vérifier la liste":"Coller la liste préparée par Chat"}function renderImportReview(){els.reviewGroups.replaceChildren();for(const aisle of AISLES){const rows=importSession.rows.filter(r=>r.aisle===aisle);if(!rows.length)continue;const group=document.createElement("section");group.className="review-group";const h=document.createElement("h3");h.textContent=`${aisle} · ${rows.length}`;group.append(h);for(const row of rows){const card=document.createElement("article");card.className="review-row";const input=document.createElement("input");input.className="field";input.value=displayLabel(row);input.onchange=()=>{const p=parseQuantity(clean(input.value,160));row.name=p.name;row.quantity=p.quantity};const del=document.createElement("button");del.className="icon-button delete-button";del.type="button";del.textContent="×";del.onclick=()=>{importSession.rows=importSession.rows.filter(x=>x.id!==row.id);renderImportReview()};const select=document.createElement("select");select.className="field review-aisle";AISLES.forEach(a=>select.append(new Option(a,a,a===row.aisle,a===row.aisle)));select.onchange=()=>row.aisle=select.value;card.append(input,del,select);group.append(card)}els.reviewGroups.append(group)}els.reviewSummary.textContent=`${plural(importSession.rows.length,"article reconnu","articles reconnus")} dans ${plural(new Set(importSession.rows.map(r=>r.aisle)).size,"rayon","rayons")}.`;els.applyImport.disabled=!importSession.rows.length;els.applyImport.textContent=importSession.mode==="replace"?"Remplacer ma liste":"Ajouter à ma liste"}
+function prepareImport(e){e.preventDefault();const rows=parseImport(els.importText.value);if(!rows.length){showToast("Aucun article reconnu.");return}importSession={mode:els.importForm.querySelector('input[name="import-mode"]:checked')?.value||"add",rows};renderImportReview();setImportPanel(true)}function applyImport(){if(!importSession.rows.length)return;if(importSession.mode==="replace"&&!confirm(`Remplacer les ${state.items.length} articles actuels ?`))return;if(importSession.mode==="replace")savePreviousList("Liste remplacée par un import");const working=importSession.mode==="replace"?[]:clone(state.items);let added=0,ignored=0;for(const row of importSession.rows){if(findDuplicate(row,working)){ignored++;continue}working.push({id:uid("item"),name:clean(row.name,160),quantity:clean(row.quantity,60),aisle:isAisle(row.aisle)?row.aisle:classify(displayLabel(row)),checked:false,createdAt:Date.now()+added});openAisles.add(row.aisle);added++}state.items=working;closeDialog(els.importDialog);setImportPanel(false);importSession={mode:"add",rows:[]};commit(`${plural(added,"article ajouté","articles ajoutés")}${ignored?` · ${plural(ignored,"doublon ignoré","doublons ignorés")}`:""}.`)}
+function clearChecked(){const checked=state.items.filter(i=>i.checked);if(!checked.length)return;if(checked.length>1&&!confirm(`Effacer ${plural(checked.length,"article coché","articles cochés")} ?`))return;savePreviousList("Articles cochés effacés");const ids=new Set(checked.map(i=>i.id));state.items=state.items.filter(i=>!ids.has(i.id));commit(`${plural(checked.length,"article effacé","articles effacés")}.`)}
+function buildShareText(){const sections=[];for(const aisle of AISLES){const items=state.items.filter(i=>i.aisle===aisle&&(!effectiveHideBought()||!i.checked));if(items.length)sections.push(`${aisle}\n${items.map(i=>`${i.checked?"☑":"☐"} ${displayLabel(i)}`).join("\n")}`)}return sections.length?`Liste des courses\n\n${sections.join("\n\n")}`:""}async function shareList(){const text=buildShareText();if(!text){showToast("Aucun article visible à partager.");return}if(navigator.share)try{await navigator.share({title:"Clair Courses",text});return}catch(e){if(e?.name==="AbortError")return}try{await navigator.clipboard.writeText(text);showToast("Liste copiée dans le presse-papiers.")}catch{prompt("Copiez votre liste :",text)}}
+function exportData(){const payload={app:"Clair Courses",formatVersion:DATA_VERSION,exportedAt:new Date().toISOString(),items:state.items,habituels:state.favorites,settings:{hideBought:state.hideBought}},blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`clair-courses-sauvegarde-${new Date().toISOString().slice(0,10)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);showToast("Sauvegarde JSON prête.")}
+async function importDataFile(file){if(!file)return;let data;try{data=JSON.parse(await file.text())}catch{showToast("Fichier JSON invalide. Aucune donnée modifiée.");return}const base=data?.state||data?.data||data;if(!base||typeof base!=="object"){showToast("Sauvegarde non reconnue.");return}const itemSource=base.items??base.articles??base.list??base.liste,hasFavorites=["habituels","favorites","favourites","favoris"].some(k=>Object.prototype.hasOwnProperty.call(base,k)),favSource=base.habituels??base.favorites??base.favourites??base.favoris??[];if(!Array.isArray(itemSource)){showToast("Sauvegarde non reconnue.");return}const items=itemSource.map(makeItem).filter(Boolean),favorites=Array.isArray(favSource)?favSource.map(makeFavorite).filter(Boolean):[];if(!confirm("Cette importation remplacera votre liste actuelle. Continuer ?"))return;savePreviousList("Liste remplacée par une sauvegarde");state={appVersion:DATA_VERSION,items,favorites:hasFavorites?favorites:state.favorites,hideBought:Boolean(base.hideBought??base.settings?.hideBought)};openAisles=new Set(AISLES.filter(a=>items.some(i=>i.aisle===a&&!i.checked)));commit(`Import terminé : ${plural(items.length,"article récupéré","articles récupérés")}.`)}
+function updateWakeButton(){const active=Boolean(wakeLockSentinel&&!wakeLockSentinel.released);els.wakeLockButton.setAttribute("aria-pressed",String(active));els.wakeLockButton.innerHTML=active?'<span class="control-icon">☀️</span>Écran maintenu allumé':'<span class="control-icon">☀️</span>Garder l’écran allumé'}async function requestWakeLock(silent=false){if(!("wakeLock" in navigator)||!isSecureContext){wakeLockRequested=false;updateWakeButton();if(!silent)showToast("Le maintien de l’écran nécessite l’application publiée en HTTPS.");return false}try{wakeLockSentinel=await navigator.wakeLock.request("screen");wakeLockSentinel.addEventListener("release",()=>{wakeLockSentinel=null;updateWakeButton()});updateWakeButton();if(!silent)showToast("L’écran restera allumé tant que Clair Courses est affichée.");return true}catch(e){console.warn(e);wakeLockRequested=false;wakeLockSentinel=null;updateWakeButton();if(!silent)showToast("L’iPhone n’a pas autorisé le maintien de l’écran allumé.");return false}}async function setWakeLock(enabled,silent=false){wakeLockRequested=Boolean(enabled);if(enabled)return requestWakeLock(silent);if(wakeLockSentinel&&!wakeLockSentinel.released)try{await wakeLockSentinel.release()}catch{}wakeLockSentinel=null;updateWakeButton();if(!silent)showToast("Maintien de l’écran désactivé.");return true}
+async function toggleCourseMode(){courseMode=!courseMode;if(courseMode){ensureCourseAisle();if(courseAisle)openAisles.add(courseAisle);if(!wakeLockRequested)wakeLockEnabledByCourseMode=await setWakeLock(true,true)}else if(wakeLockEnabledByCourseMode){wakeLockEnabledByCourseMode=false;await setWakeLock(false,true)}render();showToast(courseMode?(wakeLockRequested?"Mode Courses activé · écran maintenu allumé.":"Mode Courses activé."):"Mode Courses désactivé.")}
+function showUpdateBanner(worker){pendingUpdateWorker=worker||null;els.updateBanner.hidden=false;els.updateNowButton.disabled=false;els.updateNowButton.textContent="Mettre à jour maintenant"}async function checkUpdate(showResult){if(!serviceWorkerRegistration){if(showResult)showToast("La vérification sera disponible après publication sur GitHub.");return}els.checkUpdateButton.disabled=true;try{await serviceWorkerRegistration.update();if(serviceWorkerRegistration.waiting)showUpdateBanner(serviceWorkerRegistration.waiting);else if(showResult)showToast(`Clair Courses est à jour (version ${APP_RELEASE}).`)}catch{if(showResult)showToast("Vérification impossible pour le moment.")}finally{els.checkUpdateButton.disabled=false}}function applyUpdate(){const worker=pendingUpdateWorker||serviceWorkerRegistration?.waiting;if(!worker){checkUpdate(true);return}els.updateNowButton.disabled=true;els.updateNowButton.textContent="Mise à jour…";worker.postMessage({type:"SKIP_WAITING"})}
+AISLES.forEach(a=>els.itemAisle.append(new Option(a,a)));els.itemAisle.prepend(new Option("Classement automatique",""));["Fruits et légumes","Boucherie","Poissonnerie","Crèmerie","Épicerie","Maison","Divers"].forEach(a=>{const b=document.createElement("button");b.type="button";b.className="quick-aisle";b.dataset.aisle=a;b.textContent=a;b.onclick=()=>setQuickAisle(a);els.quickAisles.append(b)});
+els.courseModeButton.onclick=toggleCourseMode;els.wakeLockButton.onclick=()=>{wakeLockEnabledByCourseMode=false;setWakeLock(!wakeLockRequested)};document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&wakeLockRequested&&!wakeLockSentinel)requestWakeLock(true)});els.visibilityButton.onclick=()=>{state.hideBought=!state.hideBought;commit()};els.completedToggle.onclick=()=>{showCompletedAisles=!showCompletedAisles;renderAisles()};els.addButton.onclick=()=>openItemEditor();els.itemForm.onsubmit=saveItem;els.itemClose.onclick=els.itemCancel.onclick=()=>closeDialog(els.itemDialog);els.importButton.onclick=()=>{els.importForm.reset();els.importText.value="";importSession={mode:"add",rows:[]};setImportPanel(false);openDialog(els.importDialog);setTimeout(()=>els.importText.focus(),0)};els.importClose.onclick=els.importCancel.onclick=()=>closeDialog(els.importDialog);els.clearImportText.onclick=()=>{els.importText.value="";els.importText.focus()};els.pasteClipboardButton.onclick=async()=>{try{els.importText.value=await navigator.clipboard.readText();els.importText.focus()}catch{showToast("Faites un appui long dans la zone, puis choisissez Coller.")}};els.importForm.onsubmit=prepareImport;els.reviewBack.onclick=()=>setImportPanel(false);els.applyImport.onclick=applyImport;els.clearButton.onclick=clearChecked;els.shareButton.onclick=shareList;els.newListButton.onclick=()=>openDialog(els.newListDialog);els.cancelNewList.onclick=()=>closeDialog(els.newListDialog);els.confirmNewList.onclick=()=>{savePreviousList("Nouvelle liste");state.items=[];openAisles.clear();selectedFavoriteIds.clear();courseMode=false;courseAisle="";showCompletedAisles=false;wakeLockEnabledByCourseMode=false;if(wakeLockRequested)setWakeLock(false,true);closeDialog(els.newListDialog);commit("Nouvelle liste prête.")};els.selectAllFavorites.onclick=()=>{const available=state.favorites.filter(f=>!findDuplicate(f)),all=available.length&&available.every(f=>selectedFavoriteIds.has(f.id));selectedFavoriteIds=all?new Set():new Set(available.map(f=>f.id));renderFavorites()};els.addSelectedFavorites.onclick=addSelectedFavorites;els.favoriteForm.onsubmit=e=>{e.preventDefault();const name=clean(els.favoriteName.value,140);if(!name)return;const fav={id:uid("favorite"),name,quantity:"",aisle:classify(name)};if(state.favorites.some(f=>itemKey(f)===itemKey(fav))){showToast("Cet habituel existe déjà.");return}state.favorites.push(fav);els.favoriteName.value="";commit("Habituel ajouté.")};els.exportDataButton.onclick=exportData;els.importDataButton.onclick=()=>{els.importDataFile.value="";els.importDataFile.click()};els.importDataFile.onchange=async()=>{await importDataFile(els.importDataFile.files?.[0]);els.importDataFile.value=""};els.restorePreviousListButton.onclick=restorePreviousList;els.checkUpdateButton.onclick=()=>checkUpdate(true);els.updateNowButton.onclick=applyUpdate;els.updateLaterButton.onclick=()=>{els.updateBanner.hidden=true;showToast("La mise à jour pourra être installée plus tard.")};[els.itemDialog,els.importDialog,els.newListDialog].forEach(d=>d.addEventListener("click",e=>{if(e.target===d)closeDialog(d)}));
+els.appRelease.textContent=APP_RELEASE;render();if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.addEventListener("controllerchange",()=>{if(reloadingForUpdate)return;reloadingForUpdate=true;location.reload()});addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js",{updateViaCache:"none"}).then(reg=>{serviceWorkerRegistration=reg;if(reg.waiting&&navigator.serviceWorker.controller)showUpdateBanner(reg.waiting);reg.addEventListener("updatefound",()=>{const w=reg.installing;if(w)w.addEventListener("statechange",()=>{if(w.state==="installed"&&navigator.serviceWorker.controller)showUpdateBanner(reg.waiting||w)})});setTimeout(()=>checkUpdate(false),1200)}).catch(console.warn))}
+</script>
 </body>
 </html>
