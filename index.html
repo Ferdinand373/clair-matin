@@ -3,79 +3,359 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#f4efe6" />
+  <meta name="theme-color" content="#f7f1e8" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Clair Matin" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <title>Clair Matin V5.5</title>
+  <title>Clair Matin V5.6</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <style>
-    :root{--bg:#f6f1e8;--paper:#fffaf2;--card:#fff;--ink:#2b241d;--muted:#7f7468;--line:#eadfce;--accent:#86684d;--soft:#f1e6d8;--green:#61735a;--red:#9a5a4b;--shadow:0 16px 40px rgba(55,42,28,.10);--radius:22px}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#fbf7ef 0%,var(--bg) 50%,#efe4d7 100%)}
-    body{padding:0 0 calc(92px + env(safe-area-inset-bottom))}button,input,select,textarea{font:inherit}button{border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}.app{max-width:760px;margin:0 auto;padding:calc(18px + env(safe-area-inset-top)) 16px 0}
-    .topbar{position:sticky;top:0;z-index:20;margin:0 -16px 12px;padding:10px 16px;background:rgba(246,241,232,.91);backdrop-filter:blur(16px);border-bottom:1px solid rgba(234,223,206,.65)}.topline,.dateLine,.cardTitle,.task,.taskActions,.btnRow{display:flex;align-items:center}.topline,.cardTitle{justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,#fff8ed,#d9c2a8);box-shadow:inset 0 0 0 1px rgba(134,104,77,.18),0 8px 18px rgba(77,57,38,.10);display:grid;place-items:center;font-size:22px}h1{font-size:22px;line-height:1.05;margin:0}.version{font-size:12px;color:var(--muted);margin-top:3px}.helpBtn{width:42px;height:42px;border-radius:15px;background:var(--card);color:var(--accent);box-shadow:var(--shadow);font-weight:800;font-size:18px}.dateLine{gap:8px;margin-top:12px}.dateLine input{flex:1}.todayBtn{white-space:nowrap;border-radius:17px;background:var(--accent);color:white;padding:12px 14px;font-weight:700}
-    input,select,textarea{width:100%;border:1px solid var(--line);border-radius:16px;background:#fffdf9;color:var(--ink);padding:12px 13px;outline:none}textarea{min-height:112px;resize:vertical;line-height:1.45}.view{display:none;animation:fade .18s ease-out}.view.active{display:block}@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
-    .hero{border-radius:28px;background:linear-gradient(145deg,#fffaf2,#efe0cf);box-shadow:var(--shadow);padding:20px;margin:12px 0 16px;border:1px solid rgba(234,223,206,.75)}.hero small{color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:11px}.hero h2{font-size:25px;margin:8px 0}.hero p{margin:0;color:#5e5248;line-height:1.45}.grid{display:grid;gap:12px}.card{background:rgba(255,255,255,.88);border:1px solid rgba(234,223,206,.9);border-radius:var(--radius);box-shadow:0 10px 25px rgba(55,42,28,.06);padding:16px}.card h3{font-size:18px;margin:0}.bridge{border-color:#cbb89f;background:linear-gradient(145deg,#fffdf8,#f3e7d8)}.bridge p{color:#66594d;line-height:1.45}.pill{display:inline-flex;border-radius:999px;padding:6px 10px;background:var(--soft);color:#685746;font-size:12px;font-weight:700}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.full{grid-column:1/-1}label{font-size:12px;font-weight:800;color:var(--muted);display:block;margin:0 0 6px}.btnRow{gap:9px;flex-wrap:wrap;margin-top:12px}.btn{border-radius:16px;background:var(--ink);color:white;padding:12px 14px;font-weight:800;box-shadow:0 8px 18px rgba(43,36,29,.14)}.btn.secondary{background:var(--soft);color:var(--ink);box-shadow:none}.btn.accent{background:var(--accent)}.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line);box-shadow:none}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.quick button{border-radius:16px;background:#fffdf9;border:1px solid var(--line);padding:11px 8px;color:#5d5147;font-weight:800;font-size:13px}.quick button.activePlan{background:var(--accent);color:white}.planLabel,.note{font-size:13px;color:var(--muted);line-height:1.4;margin-top:8px}
-    .tasks{display:grid;gap:9px}.task{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;background:#fffdf9;border:1px solid var(--line);border-radius:18px;padding:12px}.time{min-width:58px;padding:7px 8px;border-radius:12px;background:var(--soft);font-size:13px;font-weight:900;text-align:center;color:#634d38}.task.done{opacity:.62}.task.done .taskText{text-decoration:line-through}.taskText{font-weight:850;line-height:1.25}.taskMeta{margin-top:4px;color:var(--muted);font-size:12px}.taskActions{gap:5px}.iconBtn{width:34px;height:34px;border-radius:12px;background:#f6efe5;color:#5e5145;font-weight:900;display:grid;place-items:center;text-decoration:none}.iconBtn.danger{color:var(--red)}.empty{border:1px dashed #d8c8b5;border-radius:18px;padding:15px;color:var(--muted);background:#fffaf3;line-height:1.4}.sectionDate{font-size:13px;font-weight:900;color:var(--muted);margin:6px 2px 8px}.dayBlock{display:grid;gap:8px;margin-bottom:14px}.chatBox{white-space:pre-wrap;background:#fffdf9;border:1px solid var(--line);border-radius:18px;padding:14px;line-height:1.45;color:#3f362f;max-height:360px;overflow:auto}
-    .bottomNav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,250,242,.9);backdrop-filter:blur(18px);border-top:1px solid rgba(234,223,206,.9);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}.navInner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.navBtn{border-radius:18px;padding:11px 8px;background:transparent;color:var(--muted);font-weight:850;display:grid;gap:3px;place-items:center}.navBtn span{font-size:20px}.navBtn small{font-size:11px}.navBtn.active{background:var(--ink);color:white;box-shadow:0 10px 24px rgba(43,36,29,.16)}.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:rgba(43,36,29,.94);color:white;border-radius:999px;padding:11px 16px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:60;max-width:92%;text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.modal{position:fixed;inset:0;background:rgba(43,36,29,.32);display:none;align-items:flex-end;z-index:80}.modal.show{display:flex}.sheet{width:100%;max-width:760px;margin:0 auto;background:var(--paper);border-radius:28px 28px 0 0;padding:20px 16px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(43,36,29,.18);max-height:86vh;overflow:auto}.sheet h2{margin:0 0 8px}.sheet p,.sheet li{color:#5d5147;line-height:1.45}
-    @media(min-width:650px){.quick{grid-template-columns:repeat(6,1fr)}.formGrid{grid-template-columns:140px 1fr 1fr}}
+    :root{
+      --bg:#f7f1e8;
+      --paper:#fffdf8;
+      --card:rgba(255,253,248,.93);
+      --ink:#312922;
+      --muted:#8f8174;
+      --line:#e8ddd0;
+      --accent:#d4874d;
+      --accent-dark:#b96f39;
+      --sage:#8fa080;
+      --soft:#f3ebe1;
+      --danger:#9b5a4f;
+      --shadow:0 16px 42px rgba(66,48,31,.08);
+      --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:linear-gradient(180deg,#fbf7f0 0%,var(--bg) 58%,#eee3d6 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif}
+    body{padding:0 0 calc(96px + env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent}
+    button,input,select,textarea{font:inherit}
+    button{border:0;cursor:pointer;color:inherit}
+    .app{max-width:760px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 16px 24px}
+    .topbar{padding:8px 2px 12px}
+    .topline{display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:13px;min-width:0}
+    .logo{width:56px;height:56px;flex:0 0 56px;border-radius:20px;position:relative;overflow:hidden;background:linear-gradient(145deg,#fffaf2,#f1dfcd);border:1px solid rgba(212,135,77,.26);box-shadow:0 10px 24px rgba(89,59,35,.08)}
+    .logo:before{content:"";position:absolute;width:27px;height:27px;border-radius:50%;background:#e8a264;left:14px;top:12px}
+    .logo:after{content:"";position:absolute;left:10px;right:10px;bottom:13px;height:17px;background:linear-gradient(180deg,#fffdf8 0 58%,#d8c7b6 58% 66%,#fffdf8 66%);box-shadow:0 8px 0 rgba(216,199,182,.45)}
+    .brandText{min-width:0}
+    .titleLine{display:flex;align-items:baseline;gap:9px;min-width:0}
+    h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,8vw,43px);font-weight:600;letter-spacing:-.035em;line-height:1;margin:0;white-space:nowrap}
+    .version{font-size:12px;color:var(--muted);white-space:nowrap}
+    .tagline{margin-top:7px;color:var(--muted);font-size:16px}
+    .profileBtn{width:50px;height:50px;flex:0 0 50px;border-radius:50%;background:rgba(255,253,248,.9);border:1px solid var(--line);font-size:20px;font-weight:800;box-shadow:0 8px 20px rgba(58,43,29,.05)}
+    .dateButton{display:inline-flex;align-items:center;gap:9px;margin-top:18px;padding:5px 4px;background:transparent;color:var(--muted);font-size:15px}
+    .dateIcon{width:20px;height:20px;border:1.8px solid #b9a18b;border-radius:5px;position:relative}
+    .dateIcon:before{content:"";position:absolute;left:3px;right:3px;top:5px;border-top:1.8px solid #b9a18b}
+    .view{display:none;animation:fade .2s ease-out}
+    .view.active{display:block}
+    @keyframes fade{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
+    .hero{position:relative;overflow:hidden;margin:8px 0 28px;padding:28px 28px 30px;border:1px solid rgba(232,221,208,.92);border-radius:34px;background:linear-gradient(145deg,rgba(255,253,248,.97),rgba(250,245,237,.90));box-shadow:var(--shadow);min-height:260px}
+    .eyebrow{font-size:13px;font-weight:850;letter-spacing:.075em;text-transform:uppercase;color:#987055}
+    .hero h2{position:relative;z-index:2;max-width:74%;font-family:Georgia,"Times New Roman",serif;font-size:clamp(39px,10.5vw,58px);line-height:1.01;letter-spacing:-.045em;font-weight:600;margin:24px 0 22px}
+    .hero p{position:relative;z-index:2;max-width:65%;margin:0;color:#786c61;font-size:18px;line-height:1.5}
+    .botanical{position:absolute;right:18px;top:75px;width:145px;height:160px;opacity:.43}
+    .stem{position:absolute;width:3px;height:128px;background:var(--sage);border-radius:999px;transform:rotate(25deg);right:57px;top:18px}
+    .leaf{position:absolute;width:50px;height:24px;background:var(--sage);border-radius:100% 0 100% 0;transform:rotate(var(--r,0deg))}
+    .leaf.l1{right:20px;top:45px;--r:28deg}.leaf.l2{right:67px;top:54px;--r:155deg}.leaf.l3{right:11px;top:92px;--r:17deg}.leaf.l4{right:72px;top:103px;--r:160deg}.leaf.l5{right:38px;top:13px;--r:54deg;width:38px;height:19px}
+    .sectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 4px 15px}
+    .sectionHead h2{margin:0;font-size:15px;letter-spacing:.075em;text-transform:uppercase;color:#8e684e}
+    .smallLink{background:transparent;color:var(--accent-dark);font-size:13px;font-weight:750;padding:5px}
+    .taskList{display:grid;gap:9px}
+    .taskRow{width:100%;display:grid;grid-template-columns:48px minmax(0,1fr) auto 16px;align-items:center;gap:12px;padding:13px 14px;background:var(--card);border:1px solid var(--line);border-radius:23px;box-shadow:0 9px 22px rgba(57,42,28,.045);text-align:left}
+    .taskIcon{width:46px;height:46px;border-radius:17px;background:#f8f2e9;display:grid;place-items:center;color:var(--sage);font-size:22px}
+    .taskIcon.timed{color:var(--accent-dark)}
+    .taskMain{min-width:0}
+    .taskTitle{display:block;font-family:Georgia,"Times New Roman",serif;font-size:20px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .taskMeta{display:block;margin-top:4px;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .taskTime{font-size:15px;color:var(--accent-dark);font-weight:700;white-space:nowrap}
+    .chevron{font-size:24px;color:#c9b8a7;font-weight:300}
+    .taskRow.done{opacity:.56}.taskRow.done .taskTitle{text-decoration:line-through}
+    .empty{padding:22px 18px;border:1px dashed #d7c8b8;border-radius:23px;background:rgba(255,253,248,.62);color:var(--muted);text-align:center;line-height:1.45}
+    .moreLine{margin:11px 4px 0;color:var(--muted);font-size:13px}
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0 10px}
+    .primaryBtn,.secondaryBtn{min-height:62px;border-radius:22px;font-size:17px;font-weight:800}
+    .primaryBtn{background:linear-gradient(135deg,#dc9055,#ca7841);color:#fff;box-shadow:0 12px 24px rgba(194,112,57,.20)}
+    .secondaryBtn{background:rgba(255,253,248,.84);border:1px solid #ddcfc0;color:var(--ink)}
+    .pageTitle{margin:8px 2px 18px}.pageTitle small{color:#987055;font-weight:850;letter-spacing:.075em;text-transform:uppercase;font-size:12px}.pageTitle h2{font-family:Georgia,"Times New Roman",serif;font-size:38px;letter-spacing:-.035em;margin:8px 0 5px}.pageTitle p{color:var(--muted);margin:0;line-height:1.45}
+    .card{margin-bottom:14px;background:var(--card);border:1px solid var(--line);border-radius:27px;padding:18px;box-shadow:0 10px 26px rgba(57,42,28,.045)}
+    .cardTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.cardTitle h3{font-size:18px;margin:0}.pill{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--soft);color:#796653;font-size:12px;font-weight:800}
+    .datePickerRow{display:grid;grid-template-columns:1fr auto;gap:9px}
+    input,select,textarea{width:100%;border:1px solid var(--line);border-radius:16px;background:#fffdf9;color:var(--ink);padding:13px;outline:none}
+    textarea{min-height:110px;resize:vertical;line-height:1.45}
+    label{font-size:12px;font-weight:800;color:var(--muted);display:block;margin:0 0 6px}
+    .todayButton{padding:0 15px;border-radius:16px;background:var(--soft);font-weight:800;color:#685645}
+    .formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
+    .quickDates{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}.quickDates button{padding:11px 5px;border-radius:15px;background:#fffaf4;border:1px solid var(--line);font-size:12px;font-weight:800;color:#796a5d}.quickDates button.active{background:var(--accent);border-color:var(--accent);color:white}
+    .formActions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}.compactBtn{padding:12px 15px;border-radius:16px;font-weight:800}.compactBtn.accent{background:var(--accent);color:white}.compactBtn.soft{background:var(--soft)}.compactBtn.ghost{background:transparent;border:1px solid var(--line);color:#7a604c}
+    details{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}summary{cursor:pointer;color:#7d6c5c;font-weight:750;font-size:14px}
+    .bridgeNote{color:var(--muted);font-size:13px;line-height:1.45;margin:10px 0}.bridgeStatus{color:#756452;font-size:12px;margin-top:9px}
+    .dayBlock{margin-bottom:18px}.dayLabel{margin:0 3px 9px;font-size:13px;font-weight:850;color:#8f7d6d;text-transform:capitalize}
+    .bottomNav{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:rgba(255,252,247,.90);backdrop-filter:blur(18px);border-top:1px solid rgba(232,221,208,.86)}
+    .navInner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.navBtn{min-height:58px;border-radius:19px;background:transparent;color:#a09285;display:grid;place-items:center;gap:2px}.navBtn span{font-size:21px;line-height:1}.navBtn small{font-size:11px}.navBtn.active{color:var(--accent-dark);background:#fff8ef}
+    .toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(18px);background:rgba(49,41,34,.94);color:#fff;border-radius:999px;padding:11px 16px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:90;max-width:92%;text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .modal{position:fixed;inset:0;z-index:80;background:rgba(42,34,28,.30);display:none;align-items:flex-end;padding-top:env(safe-area-inset-top)}.modal.show{display:flex}.sheet{width:100%;max-width:760px;max-height:88vh;overflow:auto;margin:0 auto;background:var(--paper);border-radius:30px 30px 0 0;padding:22px 18px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -15px 40px rgba(43,34,27,.18)}
+    .sheetHandle{width:44px;height:5px;border-radius:999px;background:#d8cabb;margin:0 auto 18px}.sheet h2{font-family:Georgia,"Times New Roman",serif;font-size:30px;margin:0 0 6px}.sheetIntro{color:var(--muted);margin:0 0 18px;line-height:1.45}.briefBox{white-space:pre-wrap;border:1px solid var(--line);border-radius:20px;background:#fffaf4;padding:16px;line-height:1.5;max-height:320px;overflow:auto}.modalGrid{display:grid;gap:10px}.checkLine{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:16px;background:#fffaf4}.checkLine input{width:auto}.dangerBtn{background:#f4e5e2;color:var(--danger);padding:12px 15px;border-radius:16px;font-weight:800}
+    .editGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.statusLine{font-size:13px;color:var(--muted);margin-top:8px}
+    @media(max-width:430px){.hero{padding:25px 23px;min-height:245px}.hero h2{max-width:78%;font-size:42px}.hero p{max-width:68%;font-size:17px}.botanical{right:5px;transform:scale(.88)}.taskTitle{font-size:18px}.taskRow{grid-template-columns:44px minmax(0,1fr) auto 12px;gap:10px;padding:12px}.taskIcon{width:42px;height:42px}.actions{gap:9px}.primaryBtn,.secondaryBtn{min-height:58px}.quickDates{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
-<div class="app">
-<header class="topbar"><div class="topline"><div class="brand"><div class="logo">☀️</div><div><h1>Clair Matin</h1><div class="version">V5.5 · liaison Clair Horizon</div></div></div><button class="helpBtn" id="helpBtn">?</button></div><div class="dateLine"><input type="date" id="selectedDate"><button class="todayBtn" id="todayBtn">Aujourd’hui</button></div></header>
-<main>
-<section id="viewToday" class="view active">
-  <div class="hero"><small id="dayLabel">Aujourd’hui</small><h2 id="heroTitle">Une journée claire</h2><p id="heroText">Les tâches saisies ici restent prioritaires.</p></div>
-  <div class="grid">
-    <article class="card bridge"><div class="cardTitle"><h3>Depuis Clair Horizon</h3><span class="pill">liaison fiable</span></div><p>Après avoir touché « Préparer pour Clair Matin » dans Clair Horizon, reviens ici et importe la tâche.</p><div class="btnRow"><button class="btn accent" id="importHorizonBtn">Importer depuis Clair Horizon</button></div><details><summary class="note">Coller manuellement si nécessaire</summary><textarea id="horizonPaste" placeholder="Colle ici le texte copié par Clair Horizon."></textarea><div class="btnRow"><button class="btn secondary" id="importHorizonTextBtn">Importer ce texte</button></div></details><div class="note" id="bridgeStatus">Aucun import effectué dans cette version.</div></article>
-    <article class="card"><div class="cardTitle"><h3>À faire ce jour</h3><span class="pill" id="taskCount">0 tâche</span></div><div id="todayTasks" class="tasks"></div></article>
-    <article class="card"><div class="cardTitle"><h3>Ajouter une chose</h3></div><div class="formGrid"><div><label>Heure</label><input id="taskTime" type="time"></div><div><label>Tâche</label><input id="taskTitle" placeholder="Ex. nettoyer les vélos"></div><div><label>Catégorie</label><select id="taskCategory"><option>Maison</option><option>Administratif</option><option>Forme</option><option>Famille</option><option>Photo / Expo</option><option selected>À trier</option></select></div><div class="full"><label>Planifier pour</label><div class="quick"><button data-plan="0" class="activePlan">Aujourd’hui</button><button data-plan="1">Demain</button><button data-plan="3">+3 jours</button><button data-plan="7">+1 semaine</button></div><div class="planLabel" id="planDateLabel"></div></div></div><div class="btnRow"><button class="btn accent" id="addTaskBtn">Ajouter</button><button class="btn secondary" id="clearDoneBtn">Vider le fait</button></div></article>
+  <div class="app">
+    <header class="topbar">
+      <div class="topline">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div class="brandText">
+            <div class="titleLine"><h1>Clair Matin</h1><span class="version">V5.6</span></div>
+            <div class="tagline">Une chose à la fois.</div>
+          </div>
+        </div>
+        <button class="profileBtn" id="profileBtn" aria-label="Ouvrir les réglages">F</button>
+      </div>
+      <button class="dateButton" id="headerDateBtn"><span class="dateIcon" aria-hidden="true"></span><span id="headerDate"></span></button>
+    </header>
+
+    <main>
+      <section id="viewHome" class="view active">
+        <article class="hero">
+          <div class="eyebrow">Bonjour Freddy</div>
+          <h2>Aujourd’hui,<br>l’essentiel.</h2>
+          <p>Trois choses suffisent pour avancer calmement.</p>
+          <div class="botanical" aria-hidden="true"><span class="stem"></span><span class="leaf l1"></span><span class="leaf l2"></span><span class="leaf l3"></span><span class="leaf l4"></span><span class="leaf l5"></span></div>
+        </article>
+        <div class="sectionHead"><h2>Aujourd’hui</h2><button class="smallLink" id="showAllTodayBtn">Tout voir</button></div>
+        <div id="homeTasks" class="taskList"></div>
+        <div class="moreLine" id="homeMore"></div>
+        <div class="actions"><button class="primaryBtn" id="homeAddBtn">Ajouter</button><button class="secondaryBtn" id="briefBtn">Voir le brief</button></div>
+      </section>
+
+      <section id="viewToday" class="view">
+        <div class="pageTitle"><small>Ma journée</small><h2>Aujourd’hui</h2><p>Tout ce qui compte, sans surcharger la journée.</p></div>
+        <article class="card">
+          <div class="datePickerRow"><input type="date" id="selectedDate"><button class="todayButton" id="todayBtn">Aujourd’hui</button></div>
+        </article>
+        <article class="card"><div class="cardTitle"><h3>À faire ce jour</h3><span class="pill" id="taskCount">0 tâche</span></div><div id="todayTasks" class="taskList"></div></article>
+        <article class="card" id="addCard">
+          <div class="cardTitle"><h3>Ajouter une chose</h3></div>
+          <div class="formGrid">
+            <div><label>Heure</label><input id="taskTime" type="time"></div>
+            <div><label>Catégorie</label><select id="taskCategory"><option>Maison</option><option>Administratif</option><option>Forme</option><option>Famille</option><option>Photo / Expo</option><option selected>À trier</option></select></div>
+            <div class="full"><label>Tâche</label><input id="taskTitle" placeholder="Ex. préparer les vélos"></div>
+            <div class="full"><label>Planifier pour</label><div class="quickDates"><button data-plan="0" class="active">Aujourd’hui</button><button data-plan="1">Demain</button><button data-plan="3">+3 jours</button><button data-plan="7">+1 semaine</button></div><div class="statusLine" id="planDateLabel"></div></div>
+          </div>
+          <div class="formActions"><button class="compactBtn accent" id="addTaskBtn">Ajouter</button><button class="compactBtn soft" id="clearDoneBtn">Retirer les tâches faites</button></div>
+          <details>
+            <summary>Recevoir une tâche de Clair Horizon</summary>
+            <p class="bridgeNote">Dans Clair Horizon, touche « Préparer pour Clair Matin », puis importe ici.</p>
+            <div class="formActions"><button class="compactBtn accent" id="importHorizonBtn">Importer depuis le presse-papiers</button></div>
+            <textarea id="horizonPaste" placeholder="Ou colle ici le texte préparé par Clair Horizon."></textarea>
+            <div class="formActions"><button class="compactBtn soft" id="importHorizonTextBtn">Importer ce texte</button></div>
+            <div class="bridgeStatus" id="bridgeStatus">Aucun import effectué dans cette version.</div>
+          </details>
+        </article>
+      </section>
+
+      <section id="viewLater" class="view">
+        <div class="pageTitle"><small>À garder en vue</small><h2>Plus tard</h2><p>Les choses prévues après aujourd’hui, rangées simplement.</p></div>
+        <div id="laterTasks"></div>
+        <article class="card">
+          <div class="cardTitle"><h3>Avec ChatGPT</h3><span class="pill">facultatif</span></div>
+          <p class="bridgeNote">Prépare une journée ou transforme une réponse de Chat en tâches.</p>
+          <div class="formActions"><button class="compactBtn accent" id="copyChatBtn">Copier le format</button><button class="compactBtn soft" id="openChatBtn">Ouvrir ChatGPT</button></div>
+          <details><summary>Importer une réponse de Chat</summary><textarea id="chatImport" placeholder="Colle ici une réponse contenant une action par ligne."></textarea><div class="formActions"><button class="compactBtn accent" id="importChatBtn">Créer les tâches utiles</button></div></details>
+        </article>
+      </section>
+    </main>
   </div>
-</section>
-<section id="viewAgenda" class="view"><div class="hero"><small>À venir</small><h2>Agenda clair</h2><p>Les tâches prévues, rangées par date.</p></div><div id="agendaList"></div></section>
-<section id="viewChat" class="view"><div class="hero"><small>Avec Chat</small><h2>Préparer la journée</h2><p>Copie ce format et colle la réponse utile seulement si nécessaire.</p></div><div class="grid"><article class="card"><div class="cardTitle"><h3>Format pour ChatGPT</h3></div><div class="chatBox" id="chatPrompt"></div><div class="btnRow"><button class="btn accent" id="copyChatBtn">Copier</button><button class="btn secondary" id="openChatBtn">Ouvrir ChatGPT</button></div></article><article class="card"><div class="cardTitle"><h3>Réponse de Chat → tâches</h3></div><textarea id="chatImport" placeholder="Colle ici la réponse de Chat."></textarea><div class="btnRow"><button class="btn accent" id="importChatBtn">Créer les tâches utiles</button></div></article><article class="card"><div class="cardTitle"><h3>Sauvegarde</h3></div><div class="btnRow"><button class="btn secondary" id="backupBtn">Copier la sauvegarde</button><button class="btn secondary" id="exportBtn">Copier l’agenda</button><button class="btn ghost" id="resetBtn">Réinitialiser</button></div></article></div></section>
-</main></div>
-<nav class="bottomNav"><div class="navInner"><button class="navBtn active" data-view="today"><span>☀️</span><small>Aujourd’hui</small></button><button class="navBtn" data-view="agenda"><span>▦</span><small>Agenda</small></button><button class="navBtn" data-view="chat"><span>✦</span><small>Chat</small></button></div></nav>
-<div class="toast" id="toast"></div>
-<div class="modal" id="helpModal"><div class="sheet"><h2>Mode d’emploi</h2><p><strong>Pour recevoir une envie :</strong></p><ol><li>Dans Clair Horizon, ouvre une envie planifiée.</li><li>Touche « Préparer pour Clair Matin ».</li><li>Ouvre Clair Matin et touche « Importer depuis Clair Horizon ».</li><li>Autorise « Coller » si l’iPhone le demande.</li></ol><p>Le même projet peut être réimporté : il sera mis à jour sans doublon.</p><div class="btnRow"><button class="btn accent" id="closeHelpBtn">J’ai compris</button></div></div></div>
-<script>
-(()=>{
-const STORAGE_KEY='clairMatin_v5_4', LEGACY_KEYS=['clairMatin_v5_3','clairMatinTaches','clairMatinTasks','clairMatin_v5_tasks','clairMatinData'], PREFIX='CLAIR_HORIZON_TASK:';
-const $=id=>document.getElementById(id);let state=loadState(),selectedDate=localDate(),planOffset=0,planDate=localDate();
-function localDate(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function addDays(s,n){const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+Number(n));return localDate(d)}
-function formatDate(s){return new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date(s+'T12:00:00'))}
-function safeParse(x){try{return x?JSON.parse(x):null}catch{return null}}
-function normalizeTime(v){const m=String(v||'').trim().replace('h',':').match(/^(\d{1,2})(?::(\d{2}))?$/);return m?`${String(Math.min(23,+m[1])).padStart(2,'0')}:${String(Math.min(59,+(m[2]||0))).padStart(2,'0')}`:''}
-function normalizeTask(t){if(!t||typeof t!=='object')return null;const title=String(t.title||t.titre||t.text||'').trim();if(!title)return null;return{id:t.id||`t_${Date.now()}_${Math.random().toString(16).slice(2)}`,date:t.date||t.day||localDate(),time:normalizeTime(t.time||t.heure),title,category:t.category||t.categorie||t.cat||'À trier',done:Boolean(t.done||t.fait),createdAt:t.createdAt||new Date().toISOString(),source:t.source||''}}
-function loadState(){const base=safeParse(localStorage.getItem(STORAGE_KEY))||{tasks:[]};if(!Array.isArray(base.tasks))base.tasks=[];const ids=new Set(base.tasks.map(t=>t&&t.id));for(const k of LEGACY_KEYS){const r=safeParse(localStorage.getItem(k));const arr=Array.isArray(r)?r:Array.isArray(r?.tasks)?r.tasks:Array.isArray(r?.taches)?r.taches:[];for(const x of arr){const t=normalizeTask(x);if(t&&!ids.has(t.id)){base.tasks.push(t);ids.add(t.id)}}}base.tasks=base.tasks.map(normalizeTask).filter(Boolean);return base}
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
-function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function toast(m){const e=$('toast');e.textContent=m;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2400)}
-function setPlan(n){planOffset=Number(n);planDate=addDays(localDate(),planOffset);document.querySelectorAll('[data-plan]').forEach(b=>b.classList.toggle('activePlan',Number(b.dataset.plan)===planOffset));$('planDateLabel').textContent='Ajout prévu pour : '+formatDate(planDate)}
-function tasksFor(d){return state.tasks.filter(t=>t.date===d).sort((a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99')||a.createdAt.localeCompare(b.createdAt))}
-function futureTasks(limit=100){return state.tasks.filter(t=>t.date>=selectedDate).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'99:99').localeCompare(b.time||'99:99')).slice(0,limit)}
-function upsertTask(raw){const t=normalizeTask(raw);if(!t)return{ok:false};let i=state.tasks.findIndex(x=>x.id===t.id);let updated=false;if(i<0)i=state.tasks.findIndex(x=>x.date===t.date&&x.time===t.time&&x.title===t.title);if(i>=0){state.tasks[i]={...state.tasks[i],...t,done:state.tasks[i].done&&state.tasks[i].date===t.date};updated=true}else state.tasks.push(t);save();return{ok:true,updated,task:t}}
-function addTask(raw){const title=String(raw.title||'').trim();if(!title)return false;state.tasks.push(normalizeTask({...raw,title}));save();render();return true}
-function googleUrl(t){const start=(t.date||selectedDate).replaceAll('-','')+'T'+(t.time||'09:00').replace(':','')+'00';const d=new Date(`${t.date}T${t.time||'09:00'}:00`);d.setMinutes(d.getMinutes()+30);const end=localDate(d).replaceAll('-','')+'T'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0')+'00';const p=new URLSearchParams({action:'TEMPLATE',text:t.title,dates:`${start}/${end}`,details:'Ajouté depuis Clair Matin.'});return 'https://calendar.google.com/calendar/render?'+p}
-function taskHtml(t){return `<div class="task ${t.done?'done':''}" data-id="${esc(t.id)}"><div class="time">${esc(t.time||'—')}</div><div><div class="taskText">${esc(t.title)}</div><div class="taskMeta">${esc(t.category||'À trier')}${t.source==='clair-horizon'?' · Clair Horizon':''}</div></div><div class="taskActions"><button class="iconBtn" data-action="toggle">✓</button><a class="iconBtn" href="${googleUrl(t)}" target="_blank">＋</a><button class="iconBtn danger" data-action="delete">×</button></div></div>`}
-function renderToday(){const a=tasksFor(selectedDate);$('selectedDate').value=selectedDate;$('dayLabel').textContent=formatDate(selectedDate);$('taskCount').textContent=a.length+(a.length>1?' tâches':' tâche');$('heroTitle').textContent=a.length?'Une journée réaliste':'Une journée calme';$('heroText').textContent=a.length?`Priorité : ${(a.find(t=>!t.done)||a[0]).title}. Le reste reste simple.`:'Rien de réellement prévu pour cette date.';$('todayTasks').innerHTML=a.length?a.map(taskHtml).join(''):'<div class="empty">Rien de saisi pour cette date.</div>'}
-function renderAgenda(){const a=futureTasks();if(!a.length){$('agendaList').innerHTML='<div class="empty">Aucune tâche à venir.</div>';return}const g={};for(const t of a)(g[t.date]??=[]).push(t);$('agendaList').innerHTML=Object.entries(g).map(([d,ts])=>`<div class="dayBlock"><div class="sectionDate">${formatDate(d)}</div>${ts.map(taskHtml).join('')}</div>`).join('')}
-function buildChat(){const a=tasksFor(selectedDate);return `Chat, voici mon agenda clair pour ${formatDate(selectedDate)}.\n\nTâches réellement prévues :\n${a.length?a.map(t=>`- ${t.time?t.time.replace(':','h')+' — ':''}${t.title}${t.category&&t.category!=='À trier'?' ('+t.category+')':''}`).join('\n'):'- Rien de prévu.'}\n\nAide-moi à en faire une journée réaliste, sans la surcharger.`}
-function render(){renderToday();renderAgenda();$('chatPrompt').textContent=buildChat();setPlan(planOffset)}
-function category(title){const s=title.toLowerCase();if(/photo|expo|tirage/.test(s))return'Photo / Expo';if(/salle|vélo|marche|sport/.test(s))return'Forme';if(/mairie|rdv|papier|mail/.test(s))return'Administratif';if(/sylvie|famille|enfant/.test(s))return'Famille';if(/ranger|maison|courses/.test(s))return'Maison';return'À trier'}
-function parseLines(text){return String(text||'').split(/\n+/).map(x=>x.trim()).filter(Boolean).map(line=>{line=line.replace(/^[•\-–—*]\s*/,'');const m=line.match(/(?:^|\s)(\d{1,2})\s*(?:h|:)(\d{0,2})\s*(?:[—\-:]\s*)?(.*)$/i);let time='',title=line,date=selectedDate;if(/après-demain|apres-demain/i.test(line))date=addDays(selectedDate,2);else if(/demain/i.test(line))date=addDays(selectedDate,1);if(m){time=normalizeTime(`${m[1]}:${m[2]||'00'}`);title=(m[3]||line).trim()}return title.length>2?{date,time,title,category:category(title)}:null}).filter(Boolean)}
-async function copyText(x){try{await navigator.clipboard.writeText(x);toast('Copié')}catch{const a=document.createElement('textarea');a.value=x;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();toast('Copié')}}
-function decodeHorizon(text){const s=String(text||'').trim();const pos=s.indexOf(PREFIX);if(pos<0)throw new Error('prefix');const raw=decodeURIComponent(s.slice(pos+PREFIX.length).trim());const p=JSON.parse(raw);if(p.kind!=='clair-horizon-task'||!p.task)throw new Error('format');const t=normalizeTask({...p.task,source:'clair-horizon'});if(!t||!/^\d{4}-\d{2}-\d{2}$/.test(t.date))throw new Error('task');return{operation:p.operation||'upsert',task:t}}
-function importHorizon(text){try{const p=decodeHorizon(text);if(p.operation==='delete'){state.tasks=state.tasks.filter(t=>t.id!==p.task.id);save();render();toast('Tâche retirée');return}if(p.operation==='complete'){const t=state.tasks.find(t=>t.id===p.task.id);if(t)t.done=true;else state.tasks.push({...p.task,done:true});save();render();toast('Tâche terminée');return}const r=upsertTask(p.task);selectedDate=p.task.date;localStorage.setItem('clairMatin.lastHorizonImport',new Date().toISOString());$('bridgeStatus').textContent=(r.updated?'Mise à jour':'Ajout')+` : ${p.task.title} · ${formatDate(p.task.date)}${p.task.time?' à '+p.task.time:''}`;render();toast(r.updated?'Mis à jour depuis Clair Horizon':'Ajouté depuis Clair Horizon')}catch(e){toast('Aucune tâche Clair Horizon reconnue');return false}return true}
-$('importHorizonBtn').onclick=async()=>{try{const text=await navigator.clipboard.readText();importHorizon(text)}catch{$('horizonPaste').focus();toast('Autorise Coller, ou colle le texte ci-dessous')}};$('importHorizonTextBtn').onclick=()=>importHorizon($('horizonPaste').value);
-$('selectedDate').onchange=e=>{selectedDate=e.target.value||localDate();render()};$('todayBtn').onclick=()=>{selectedDate=localDate();render()};document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>setPlan(b.dataset.plan));$('addTaskBtn').onclick=()=>{if(addTask({date:planDate,time:$('taskTime').value,title:$('taskTitle').value,category:$('taskCategory').value})){selectedDate=planDate;$('taskTitle').value='';$('taskTime').value='';render();toast('Ajouté')}};$('clearDoneBtn').onclick=()=>{state.tasks=state.tasks.filter(t=>!(t.date===selectedDate&&t.done));save();render();toast('Fait vidé')};
-document.body.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const el=b.closest('.task');if(!el)return;const i=state.tasks.findIndex(t=>t.id===el.dataset.id);if(i<0)return;if(b.dataset.action==='toggle')state.tasks[i].done=!state.tasks[i].done;if(b.dataset.action==='delete'&&confirm('Supprimer cette tâche ?'))state.tasks.splice(i,1);save();render()});
-document.querySelectorAll('.navBtn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.navBtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));$('view'+b.dataset.view[0].toUpperCase()+b.dataset.view.slice(1)).classList.add('active');render()});
-$('copyChatBtn').onclick=()=>copyText(buildChat());$('openChatBtn').onclick=()=>window.open('https://chatgpt.com/','_blank');$('importChatBtn').onclick=()=>{const a=parseLines($('chatImport').value);a.forEach(addTask);$('chatImport').value='';toast(a.length?`${a.length} tâche(s) créée(s)`:'Aucune tâche claire')};$('backupBtn').onclick=()=>copyText(JSON.stringify(state,null,2));$('exportBtn').onclick=()=>copyText(futureTasks().map(t=>`${formatDate(t.date)} · ${t.time||'--'} · ${t.title} · ${t.category}`).join('\n')||'Aucune tâche.');$('resetBtn').onclick=()=>{if(confirm('Réinitialiser Clair Matin sur cet appareil ?')){state={tasks:[]};save();render()}};$('helpBtn').onclick=()=>$('helpModal').classList.add('show');$('closeHelpBtn').onclick=()=>$('helpModal').classList.remove('show');$('helpModal').onclick=e=>{if(e.target.id==='helpModal')$('helpModal').classList.remove('show')};
-const last=localStorage.getItem('clairMatin.lastHorizonImport');if(last)$('bridgeStatus').textContent='Dernier import : '+new Intl.DateTimeFormat('fr-FR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(last));
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));setPlan(0);render();
-})();
-</script></body></html>
+
+  <nav class="bottomNav"><div class="navInner"><button class="navBtn active" data-view="home"><span>⌂</span><small>Accueil</small></button><button class="navBtn" data-view="today"><span>☷</span><small>Aujourd’hui</small></button><button class="navBtn" data-view="later"><span>⌁</span><small>Plus tard</small></button></div></nav>
+  <div class="toast" id="toast"></div>
+
+  <div class="modal" id="briefModal"><div class="sheet"><div class="sheetHandle"></div><h2>Le brief du jour</h2><p class="sheetIntro" id="briefIntro"></p><div class="briefBox" id="briefText"></div><div class="formActions"><button class="compactBtn accent" id="copyBriefBtn">Copier</button><button class="compactBtn soft" id="briefChatBtn">Ouvrir ChatGPT</button><button class="compactBtn ghost" data-close="briefModal">Fermer</button></div></div></div>
+
+  <div class="modal" id="profileModal"><div class="sheet"><div class="sheetHandle"></div><h2>Clair Matin</h2><p class="sheetIntro">V5.6 · Une organisation simple, centrée sur aujourd’hui.</p><div class="modalGrid"><button class="compactBtn soft" id="backupBtn">Copier la sauvegarde</button><button class="compactBtn soft" id="exportBtn">Copier l’agenda</button><button class="compactBtn ghost" id="helpBtn">Mode d’emploi</button><button class="dangerBtn" id="resetBtn">Réinitialiser l’application</button><button class="compactBtn ghost" data-close="profileModal">Fermer</button></div></div></div>
+
+  <div class="modal" id="helpModal"><div class="sheet"><div class="sheetHandle"></div><h2>Mode d’emploi</h2><p class="sheetIntro"><strong>Accueil</strong> montre les trois premières choses de la journée.<br><br><strong>Aujourd’hui</strong> permet d’ajouter, modifier ou terminer une tâche.<br><br><strong>Plus tard</strong> rassemble ce qui est prévu après aujourd’hui.<br><br>Une tâche reçue de Clair Horizon se trouve dans « Aujourd’hui », tout en bas du formulaire.</p><button class="compactBtn accent" data-close="helpModal">J’ai compris</button></div></div>
+
+  <div class="modal" id="taskModal"><div class="sheet"><div class="sheetHandle"></div><h2>La tâche</h2><p class="sheetIntro">Tu peux la modifier, la terminer ou l’ajouter à Google Agenda.</p><div class="editGrid"><div><label>Date</label><input type="date" id="editDate"></div><div><label>Heure</label><input type="time" id="editTime"></div><div class="full"><label>Tâche</label><input id="editTitle"></div><div class="full"><label>Catégorie</label><select id="editCategory"><option>Maison</option><option>Administratif</option><option>Forme</option><option>Famille</option><option>Photo / Expo</option><option>À trier</option></select></div></div><div class="checkLine"><input type="checkbox" id="editDone"><label for="editDone" style="margin:0">Tâche terminée</label></div><div class="formActions"><button class="compactBtn accent" id="saveTaskBtn">Enregistrer</button><button class="compactBtn soft" id="calendarTaskBtn">Google Agenda</button><button class="dangerBtn" id="deleteTaskBtn">Supprimer</button><button class="compactBtn ghost" data-close="taskModal">Fermer</button></div></div></div>
+
+  <script>
+  (()=>{
+    'use strict';
+    const STORAGE_KEY='clairMatin_v5_4';
+    const LEGACY_KEYS=['clairMatin_v5_3','clairMatinTaches','clairMatinTasks','clairMatin_v5_tasks','clairMatinData'];
+    const PREFIX='CLAIR_HORIZON_TASK:';
+    const $=id=>document.getElementById(id);
+    let state=loadState();
+    let selectedDate=localDate();
+    let planOffset=0;
+    let planDate=localDate();
+    let editingId=null;
+
+    function localDate(d=new Date()){
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function addDays(s,n){const d=new Date(`${s}T12:00:00`);d.setDate(d.getDate()+Number(n));return localDate(d)}
+    function formatDate(s,year=true){return new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'numeric',month:'long',...(year?{year:'numeric'}:{})}).format(new Date(`${s}T12:00:00`))}
+    function safeParse(x){try{return x?JSON.parse(x):null}catch{return null}}
+    function normalizeTime(v){const m=String(v||'').trim().replace('h',':').match(/^(\d{1,2})(?::(\d{2}))?$/);return m?`${String(Math.min(23,+m[1])).padStart(2,'0')}:${String(Math.min(59,+(m[2]||0))).padStart(2,'0')}`:''}
+    function normalizeTask(t){
+      if(!t||typeof t!=='object')return null;
+      const title=String(t.title||t.titre||t.text||'').trim();
+      if(!title)return null;
+      return {id:t.id||`t_${Date.now()}_${Math.random().toString(16).slice(2)}`,date:t.date||t.day||localDate(),time:normalizeTime(t.time||t.heure),title,category:t.category||t.categorie||t.cat||'À trier',done:Boolean(t.done||t.fait),createdAt:t.createdAt||new Date().toISOString(),source:t.source||''};
+    }
+    function loadState(){
+      const base=safeParse(localStorage.getItem(STORAGE_KEY))||{tasks:[]};
+      if(!Array.isArray(base.tasks))base.tasks=[];
+      const ids=new Set(base.tasks.map(t=>t&&t.id));
+      for(const k of LEGACY_KEYS){
+        const r=safeParse(localStorage.getItem(k));
+        const arr=Array.isArray(r)?r:Array.isArray(r?.tasks)?r.tasks:Array.isArray(r?.taches)?r.taches:[];
+        for(const x of arr){const t=normalizeTask(x);if(t&&!ids.has(t.id)){base.tasks.push(t);ids.add(t.id)}}
+      }
+      base.tasks=base.tasks.map(normalizeTask).filter(Boolean);
+      return base;
+    }
+    function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
+    function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+    function toast(m){const e=$('toast');e.textContent=m;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2300)}
+    function tasksFor(d){return state.tasks.filter(t=>t.date===d).sort((a,b)=>(a.done-b.done)||(a.time||'99:99').localeCompare(b.time||'99:99')||a.createdAt.localeCompare(b.createdAt))}
+    function futureTasks(){return state.tasks.filter(t=>t.date>localDate()).sort((a,b)=>a.date.localeCompare(b.date)||(a.done-b.done)||(a.time||'99:99').localeCompare(b.time||'99:99'))}
+    function iconFor(t){if(t.time)return '◷';const c=(t.category||'').toLowerCase();if(c.includes('photo'))return '▣';if(c.includes('forme'))return '◇';if(c.includes('famille'))return '♡';if(c.includes('administratif'))return '≡';if(c.includes('maison'))return '⌂';return '○'}
+    function taskHtml(t){return `<button class="taskRow ${t.done?'done':''}" data-task-id="${esc(t.id)}"><span class="taskIcon ${t.time?'timed':''}">${iconFor(t)}</span><span class="taskMain"><span class="taskTitle">${esc(t.title)}</span><span class="taskMeta">${esc(t.category||'À trier')}${t.source==='clair-horizon'?' · Clair Horizon':''}</span></span><span class="taskTime">${esc(t.time||'')}</span><span class="chevron">›</span></button>`}
+    function renderHome(){
+      const all=tasksFor(localDate());
+      const visible=all.slice(0,3);
+      $('homeTasks').innerHTML=visible.length?visible.map(taskHtml).join(''):'<div class="empty">Rien de prévu aujourd’hui.<br>La journée peut rester légère.</div>';
+      $('homeMore').textContent=all.length>3?`${all.length-3} autre${all.length-3>1?'s':''} chose${all.length-3>1?'s':''} dans la journée.`:'';
+    }
+    function renderToday(){
+      const a=tasksFor(selectedDate);
+      $('selectedDate').value=selectedDate;
+      $('taskCount').textContent=`${a.length} tâche${a.length>1?'s':''}`;
+      $('todayTasks').innerHTML=a.length?a.map(taskHtml).join(''):'<div class="empty">Rien de saisi pour cette date.</div>';
+    }
+    function renderLater(){
+      const a=futureTasks();
+      if(!a.length){$('laterTasks').innerHTML='<div class="empty" style="margin-bottom:14px">Rien à garder en vue pour le moment.</div>';return}
+      const groups={};for(const t of a)(groups[t.date]??=[]).push(t);
+      $('laterTasks').innerHTML=Object.entries(groups).map(([date,tasks])=>`<div class="dayBlock"><div class="dayLabel">${esc(formatDate(date))}</div><div class="taskList">${tasks.map(taskHtml).join('')}</div></div>`).join('');
+    }
+    function setPlan(n){
+      planOffset=Number(n);planDate=addDays(localDate(),planOffset);
+      document.querySelectorAll('[data-plan]').forEach(b=>b.classList.toggle('active',Number(b.dataset.plan)===planOffset));
+      $('planDateLabel').textContent=`Ajout prévu pour ${formatDate(planDate)}.`;
+    }
+    function render(){
+      $('headerDate').textContent=formatDate(localDate(),false);
+      renderHome();renderToday();renderLater();setPlan(planOffset);
+    }
+    function addTask(raw){
+      const title=String(raw.title||'').trim();if(!title)return false;
+      state.tasks.push(normalizeTask({...raw,title}));save();render();return true;
+    }
+    function upsertTask(raw){
+      const t=normalizeTask(raw);if(!t)return{ok:false};
+      let i=state.tasks.findIndex(x=>x.id===t.id);let updated=false;
+      if(i<0)i=state.tasks.findIndex(x=>x.date===t.date&&x.time===t.time&&x.title===t.title);
+      if(i>=0){state.tasks[i]={...state.tasks[i],...t,done:state.tasks[i].done&&state.tasks[i].date===t.date};updated=true}else state.tasks.push(t);
+      save();return{ok:true,updated,task:t};
+    }
+    function switchView(name){
+      document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+      document.querySelectorAll('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+      $(`view${name[0].toUpperCase()+name.slice(1)}`).classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});render();
+    }
+    function openModal(id){$(id).classList.add('show')}
+    function closeModal(id){$(id).classList.remove('show')}
+    function buildBrief(){
+      const date=localDate();const a=tasksFor(date);const remaining=a.filter(t=>!t.done);const done=a.filter(t=>t.done);
+      const lines=remaining.length?remaining.map((t,i)=>`${i+1}. ${t.time?t.time.replace(':','h')+' · ':''}${t.title}`).join('\n'):'Rien d’obligatoire aujourd’hui.';
+      return `CLAIR MATIN — ${formatDate(date).toUpperCase()}\n\n${lines}\n\n${done.length?`${done.length} tâche${done.length>1?'s':''} déjà faite${done.length>1?'s':''}.`:'Une chose à la fois.'}`;
+    }
+    function showBrief(){const a=tasksFor(localDate()).filter(t=>!t.done);$('briefIntro').textContent=a.length?`${a.length} chose${a.length>1?'s':''} à garder en tête aujourd’hui.`:'Une journée sans obligation particulière.';$('briefText').textContent=buildBrief();openModal('briefModal')}
+    async function copyText(x){try{await navigator.clipboard.writeText(x);toast('Copié')}catch{const a=document.createElement('textarea');a.value=x;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();toast('Copié')}}
+    function googleUrl(t){
+      const start=`${t.date.replaceAll('-','')}T${(t.time||'09:00').replace(':','')}00`;
+      const d=new Date(`${t.date}T${t.time||'09:00'}:00`);d.setMinutes(d.getMinutes()+30);
+      const end=`${localDate(d).replaceAll('-','')}T${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}00`;
+      const p=new URLSearchParams({action:'TEMPLATE',text:t.title,dates:`${start}/${end}`,details:'Ajouté depuis Clair Matin.'});
+      return `https://calendar.google.com/calendar/render?${p}`;
+    }
+    function openTask(id){
+      const t=state.tasks.find(x=>x.id===id);if(!t)return;
+      editingId=id;$('editDate').value=t.date;$('editTime').value=t.time||'';$('editTitle').value=t.title;$('editCategory').value=t.category||'À trier';$('editDone').checked=Boolean(t.done);openModal('taskModal');
+    }
+    function saveEditedTask(){
+      const i=state.tasks.findIndex(t=>t.id===editingId);if(i<0)return;
+      const title=$('editTitle').value.trim();if(!title){toast('Indique une tâche');return}
+      state.tasks[i]={...state.tasks[i],date:$('editDate').value||localDate(),time:normalizeTime($('editTime').value),title,category:$('editCategory').value,done:$('editDone').checked};save();closeModal('taskModal');render();toast('Tâche enregistrée');
+    }
+    function category(title){const s=title.toLowerCase();if(/photo|expo|tirage/.test(s))return'Photo / Expo';if(/salle|vélo|marche|sport/.test(s))return'Forme';if(/mairie|rdv|papier|mail/.test(s))return'Administratif';if(/sylvie|famille|enfant/.test(s))return'Famille';if(/ranger|maison|courses/.test(s))return'Maison';return'À trier'}
+    function parseLines(text){
+      return String(text||'').split(/\n+/).map(x=>x.trim()).filter(Boolean).map(line=>{
+        line=line.replace(/^[•\-–—*]\s*/,'');
+        if(/^note\s*:/i.test(line))return null;
+        const m=line.match(/(?:^|\s)(\d{1,2})\s*(?:h|:)(\d{0,2})\s*(?:[—\-:]\s*)?(.*)$/i);
+        let time='',title=line,date=selectedDate;
+        if(/après-demain|apres-demain/i.test(line))date=addDays(selectedDate,2);else if(/demain/i.test(line))date=addDays(selectedDate,1);
+        if(m){time=normalizeTime(`${m[1]}:${m[2]||'00'}`);title=(m[3]||line).trim()}
+        return title.length>2?{date,time,title,category:category(title)}:null;
+      }).filter(Boolean);
+    }
+    function decodeHorizon(text){
+      const s=String(text||'').trim();const pos=s.indexOf(PREFIX);if(pos<0)throw new Error('prefix');
+      const raw=decodeURIComponent(s.slice(pos+PREFIX.length).trim());const p=JSON.parse(raw);
+      if(p.kind!=='clair-horizon-task'||!p.task)throw new Error('format');
+      const t=normalizeTask({...p.task,source:'clair-horizon'});if(!t||!/^\d{4}-\d{2}-\d{2}$/.test(t.date))throw new Error('task');
+      return{operation:p.operation||'upsert',task:t};
+    }
+    function importHorizon(text){
+      try{
+        const p=decodeHorizon(text);
+        if(p.operation==='delete'){state.tasks=state.tasks.filter(t=>t.id!==p.task.id);save();render();toast('Tâche retirée');return true}
+        if(p.operation==='complete'){const t=state.tasks.find(t=>t.id===p.task.id);if(t)t.done=true;else state.tasks.push({...p.task,done:true});save();render();toast('Tâche terminée');return true}
+        const r=upsertTask(p.task);selectedDate=p.task.date;localStorage.setItem('clairMatin.lastHorizonImport',new Date().toISOString());$('bridgeStatus').textContent=`${r.updated?'Mise à jour':'Ajout'} : ${p.task.title} · ${formatDate(p.task.date)}${p.task.time?' à '+p.task.time:''}`;render();toast(r.updated?'Mis à jour depuis Clair Horizon':'Ajouté depuis Clair Horizon');return true;
+      }catch{toast('Aucune tâche Clair Horizon reconnue');return false}
+    }
+
+    document.querySelectorAll('.navBtn').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
+    document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
+    document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
+    document.body.addEventListener('click',e=>{const row=e.target.closest('[data-task-id]');if(row)openTask(row.dataset.taskId)});
+    $('profileBtn').onclick=()=>openModal('profileModal');
+    $('headerDateBtn').onclick=()=>{switchView('today');setTimeout(()=>$('selectedDate').showPicker?.(),180)};
+    $('showAllTodayBtn').onclick=()=>switchView('today');
+    $('homeAddBtn').onclick=()=>{switchView('today');setTimeout(()=>{$('addCard').scrollIntoView({behavior:'smooth',block:'start'});$('taskTitle').focus()},220)};
+    $('briefBtn').onclick=showBrief;
+    $('copyBriefBtn').onclick=()=>copyText(buildBrief());
+    $('briefChatBtn').onclick=()=>{copyText(buildBrief());setTimeout(()=>window.open('https://chatgpt.com/','_blank','noopener'),180)};
+    $('selectedDate').onchange=e=>{selectedDate=e.target.value||localDate();render()};
+    $('todayBtn').onclick=()=>{selectedDate=localDate();render()};
+    document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>setPlan(b.dataset.plan));
+    $('addTaskBtn').onclick=()=>{if(addTask({date:planDate,time:$('taskTime').value,title:$('taskTitle').value,category:$('taskCategory').value})){selectedDate=planDate;$('taskTitle').value='';$('taskTime').value='';render();toast('Ajouté')}};
+    $('taskTitle').addEventListener('keydown',e=>{if(e.key==='Enter')$('addTaskBtn').click()});
+    $('clearDoneBtn').onclick=()=>{const before=state.tasks.length;state.tasks=state.tasks.filter(t=>!(t.date===selectedDate&&t.done));save();render();toast(before===state.tasks.length?'Aucune tâche faite':'Tâches faites retirées')};
+    $('importHorizonBtn').onclick=async()=>{try{const text=await navigator.clipboard.readText();importHorizon(text)}catch{$('horizonPaste').focus();toast('Autorise Coller, ou colle le texte ci-dessous')}};
+    $('importHorizonTextBtn').onclick=()=>importHorizon($('horizonPaste').value);
+    $('copyChatBtn').onclick=()=>copyText(`Chat, voici mon agenda clair pour ${formatDate(selectedDate)}.\n\nTâches réellement prévues :\n${tasksFor(selectedDate).length?tasksFor(selectedDate).map(t=>`- ${t.time?t.time.replace(':','h')+' — ':''}${t.title}`).join('\n'):'- Rien de prévu.'}\n\nAide-moi à en faire une journée réaliste, sans la surcharger.`);
+    $('openChatBtn').onclick=()=>window.open('https://chatgpt.com/','_blank','noopener');
+    $('importChatBtn').onclick=()=>{const a=parseLines($('chatImport').value);a.forEach(addTask);$('chatImport').value='';toast(a.length?`${a.length} tâche${a.length>1?'s':''} créée${a.length>1?'s':''}`:'Aucune tâche claire')};
+    $('backupBtn').onclick=()=>copyText(JSON.stringify(state,null,2));
+    $('exportBtn').onclick=()=>copyText(state.tasks.sort((a,b)=>a.date.localeCompare(b.date)).map(t=>`${formatDate(t.date)} · ${t.time||'--'} · ${t.title} · ${t.category}`).join('\n')||'Aucune tâche.');
+    $('helpBtn').onclick=()=>{closeModal('profileModal');openModal('helpModal')};
+    $('resetBtn').onclick=()=>{if(confirm('Réinitialiser Clair Matin sur cet appareil ?')){state={tasks:[]};save();closeModal('profileModal');render();toast('Application réinitialisée')}};
+    $('saveTaskBtn').onclick=saveEditedTask;
+    $('deleteTaskBtn').onclick=()=>{if(!editingId)return;if(confirm('Supprimer cette tâche ?')){state.tasks=state.tasks.filter(t=>t.id!==editingId);save();closeModal('taskModal');render();toast('Tâche supprimée')}};
+    $('calendarTaskBtn').onclick=()=>{const t=state.tasks.find(x=>x.id===editingId);if(t)window.open(googleUrl(t),'_blank','noopener')};
+
+    const last=localStorage.getItem('clairMatin.lastHorizonImport');if(last)$('bridgeStatus').textContent='Dernier import : '+new Intl.DateTimeFormat('fr-FR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(last));
+    if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+    setPlan(0);render();
+  })();
+  </script>
+</body>
+</html>
