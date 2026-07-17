@@ -7,97 +7,144 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Clair Matin" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <title>Clair Matin V5.6</title>
+  <title>Clair Matin V5.7</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <style>
     :root{
       --bg:#f7f1e8;
       --paper:#fffdf8;
-      --card:rgba(255,253,248,.93);
+      --card:rgba(255,253,248,.94);
       --ink:#312922;
       --muted:#8f8174;
-      --line:#e8ddd0;
+      --line:#e7dbce;
       --accent:#d4874d;
       --accent-dark:#b96f39;
       --sage:#8fa080;
       --soft:#f3ebe1;
       --danger:#9b5a4f;
-      --shadow:0 16px 42px rgba(66,48,31,.08);
-      --radius:28px;
+      --shadow:0 14px 36px rgba(66,48,31,.075);
+      --radius:27px;
     }
     *{box-sizing:border-box}
     html,body{margin:0;min-height:100%;background:linear-gradient(180deg,#fbf7f0 0%,var(--bg) 58%,#eee3d6 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif}
-    body{padding:0 0 calc(96px + env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent}
+    body{padding:0 0 calc(94px + env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent}
     button,input,select,textarea{font:inherit}
     button{border:0;cursor:pointer;color:inherit}
-    .app{max-width:760px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 16px 24px}
-    .topbar{padding:8px 2px 12px}
+    .app{max-width:760px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px 24px}
+
+    .topbar{padding:6px 2px 12px}
     .topline{display:flex;align-items:center;justify-content:space-between;gap:14px}
     .brand{display:flex;align-items:center;gap:13px;min-width:0}
-    .logo{width:56px;height:56px;flex:0 0 56px;border-radius:20px;position:relative;overflow:hidden;background:linear-gradient(145deg,#fffaf2,#f1dfcd);border:1px solid rgba(212,135,77,.26);box-shadow:0 10px 24px rgba(89,59,35,.08)}
-    .logo:before{content:"";position:absolute;width:27px;height:27px;border-radius:50%;background:#e8a264;left:14px;top:12px}
-    .logo:after{content:"";position:absolute;left:10px;right:10px;bottom:13px;height:17px;background:linear-gradient(180deg,#fffdf8 0 58%,#d8c7b6 58% 66%,#fffdf8 66%);box-shadow:0 8px 0 rgba(216,199,182,.45)}
+    .logo{width:54px;height:54px;flex:0 0 54px;border-radius:20px;position:relative;overflow:hidden;background:linear-gradient(145deg,#fffaf2,#f1dfcd);border:1px solid rgba(212,135,77,.26);box-shadow:0 9px 22px rgba(89,59,35,.07)}
+    .logo:before{content:"";position:absolute;width:27px;height:27px;border-radius:50%;background:#e8a264;left:13px;top:11px}
+    .logo:after{content:"";position:absolute;left:9px;right:9px;bottom:12px;height:17px;background:linear-gradient(180deg,#fffdf8 0 58%,#d8c7b6 58% 66%,#fffdf8 66%);box-shadow:0 8px 0 rgba(216,199,182,.45)}
     .brandText{min-width:0}
-    .titleLine{display:flex;align-items:baseline;gap:9px;min-width:0}
-    h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,8vw,43px);font-weight:600;letter-spacing:-.035em;line-height:1;margin:0;white-space:nowrap}
+    .titleLine{display:flex;align-items:baseline;gap:8px;min-width:0}
+    h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,8vw,42px);font-weight:600;letter-spacing:-.035em;line-height:1;margin:0;white-space:nowrap}
     .version{font-size:12px;color:var(--muted);white-space:nowrap}
     .tagline{margin-top:7px;color:var(--muted);font-size:16px}
-    .profileBtn{width:50px;height:50px;flex:0 0 50px;border-radius:50%;background:rgba(255,253,248,.9);border:1px solid var(--line);font-size:20px;font-weight:800;box-shadow:0 8px 20px rgba(58,43,29,.05)}
-    .dateButton{display:inline-flex;align-items:center;gap:9px;margin-top:18px;padding:5px 4px;background:transparent;color:var(--muted);font-size:15px}
+    .profileBtn{width:50px;height:50px;flex:0 0 50px;border-radius:50%;background:rgba(255,253,248,.9);border:1px solid var(--line);font-size:20px;font-weight:800;box-shadow:0 8px 20px rgba(58,43,29,.045)}
+    .dateButton{display:inline-flex;align-items:center;gap:9px;margin-top:17px;padding:4px 2px;background:transparent;color:var(--muted);font-size:15px}
     .dateIcon{width:20px;height:20px;border:1.8px solid #b9a18b;border-radius:5px;position:relative}
     .dateIcon:before{content:"";position:absolute;left:3px;right:3px;top:5px;border-top:1.8px solid #b9a18b}
-    .view{display:none;animation:fade .2s ease-out}
+
+    .view{display:none;animation:fade .18s ease-out}
     .view.active{display:block}
-    @keyframes fade{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
-    .hero{position:relative;overflow:hidden;margin:8px 0 28px;padding:28px 28px 30px;border:1px solid rgba(232,221,208,.92);border-radius:34px;background:linear-gradient(145deg,rgba(255,253,248,.97),rgba(250,245,237,.90));box-shadow:var(--shadow);min-height:260px}
-    .eyebrow{font-size:13px;font-weight:850;letter-spacing:.075em;text-transform:uppercase;color:#987055}
-    .hero h2{position:relative;z-index:2;max-width:74%;font-family:Georgia,"Times New Roman",serif;font-size:clamp(39px,10.5vw,58px);line-height:1.01;letter-spacing:-.045em;font-weight:600;margin:24px 0 22px}
-    .hero p{position:relative;z-index:2;max-width:65%;margin:0;color:#786c61;font-size:18px;line-height:1.5}
-    .botanical{position:absolute;right:18px;top:75px;width:145px;height:160px;opacity:.43}
-    .stem{position:absolute;width:3px;height:128px;background:var(--sage);border-radius:999px;transform:rotate(25deg);right:57px;top:18px}
-    .leaf{position:absolute;width:50px;height:24px;background:var(--sage);border-radius:100% 0 100% 0;transform:rotate(var(--r,0deg))}
-    .leaf.l1{right:20px;top:45px;--r:28deg}.leaf.l2{right:67px;top:54px;--r:155deg}.leaf.l3{right:11px;top:92px;--r:17deg}.leaf.l4{right:72px;top:103px;--r:160deg}.leaf.l5{right:38px;top:13px;--r:54deg;width:38px;height:19px}
-    .sectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 4px 15px}
-    .sectionHead h2{margin:0;font-size:15px;letter-spacing:.075em;text-transform:uppercase;color:#8e684e}
-    .smallLink{background:transparent;color:var(--accent-dark);font-size:13px;font-weight:750;padding:5px}
+    @keyframes fade{from{opacity:.35;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+    .hero{position:relative;overflow:hidden;margin:7px 0 22px;padding:24px 24px 25px;border:1px solid rgba(232,221,208,.92);border-radius:32px;background:linear-gradient(145deg,rgba(255,253,248,.98),rgba(250,245,237,.91));box-shadow:var(--shadow);min-height:220px}
+    .eyebrow{font-size:12px;font-weight:850;letter-spacing:.075em;text-transform:uppercase;color:#987055}
+    .hero h2{position:relative;z-index:2;max-width:76%;font-family:Georgia,"Times New Roman",serif;font-size:clamp(37px,10vw,54px);line-height:1.01;letter-spacing:-.045em;font-weight:600;margin:19px 0 16px}
+    .hero p{position:relative;z-index:2;max-width:67%;margin:0;color:#786c61;font-size:17px;line-height:1.48}
+    .botanical{position:absolute;right:12px;top:54px;width:132px;height:150px;opacity:.40}
+    .stem{position:absolute;width:3px;height:120px;background:var(--sage);border-radius:999px;transform:rotate(25deg);right:52px;top:17px}
+    .leaf{position:absolute;width:47px;height:23px;background:var(--sage);border-radius:100% 0 100% 0;transform:rotate(var(--r,0deg))}
+    .leaf.l1{right:18px;top:42px;--r:28deg}.leaf.l2{right:62px;top:50px;--r:155deg}.leaf.l3{right:8px;top:84px;--r:17deg}.leaf.l4{right:67px;top:96px;--r:160deg}.leaf.l5{right:34px;top:10px;--r:54deg;width:36px;height:18px}
+
+    .sectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 4px 13px}
+    .sectionHead h2{margin:0;font-size:14px;letter-spacing:.075em;text-transform:uppercase;color:#8e684e}
+    .smallLink{background:transparent;color:var(--accent-dark);font-size:13px;font-weight:800;padding:5px}
     .taskList{display:grid;gap:9px}
-    .taskRow{width:100%;display:grid;grid-template-columns:48px minmax(0,1fr) auto 16px;align-items:center;gap:12px;padding:13px 14px;background:var(--card);border:1px solid var(--line);border-radius:23px;box-shadow:0 9px 22px rgba(57,42,28,.045);text-align:left}
-    .taskIcon{width:46px;height:46px;border-radius:17px;background:#f8f2e9;display:grid;place-items:center;color:var(--sage);font-size:22px}
+    .taskRow{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr) auto 13px;align-items:center;gap:10px;padding:12px 13px;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 20px rgba(57,42,28,.04);text-align:left}
+    .taskIcon{width:42px;height:42px;border-radius:16px;background:#f8f2e9;display:grid;place-items:center;color:var(--sage);font-size:21px}
     .taskIcon.timed{color:var(--accent-dark)}
     .taskMain{min-width:0}
-    .taskTitle{display:block;font-family:Georgia,"Times New Roman",serif;font-size:20px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .taskMeta{display:block;margin-top:4px;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .taskTime{font-size:15px;color:var(--accent-dark);font-weight:700;white-space:nowrap}
-    .chevron{font-size:24px;color:#c9b8a7;font-weight:300}
-    .taskRow.done{opacity:.56}.taskRow.done .taskTitle{text-decoration:line-through}
-    .empty{padding:22px 18px;border:1px dashed #d7c8b8;border-radius:23px;background:rgba(255,253,248,.62);color:var(--muted);text-align:center;line-height:1.45}
-    .moreLine{margin:11px 4px 0;color:var(--muted);font-size:13px}
-    .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0 10px}
-    .primaryBtn,.secondaryBtn{min-height:62px;border-radius:22px;font-size:17px;font-weight:800}
-    .primaryBtn{background:linear-gradient(135deg,#dc9055,#ca7841);color:#fff;box-shadow:0 12px 24px rgba(194,112,57,.20)}
-    .secondaryBtn{background:rgba(255,253,248,.84);border:1px solid #ddcfc0;color:var(--ink)}
-    .pageTitle{margin:8px 2px 18px}.pageTitle small{color:#987055;font-weight:850;letter-spacing:.075em;text-transform:uppercase;font-size:12px}.pageTitle h2{font-family:Georgia,"Times New Roman",serif;font-size:38px;letter-spacing:-.035em;margin:8px 0 5px}.pageTitle p{color:var(--muted);margin:0;line-height:1.45}
-    .card{margin-bottom:14px;background:var(--card);border:1px solid var(--line);border-radius:27px;padding:18px;box-shadow:0 10px 26px rgba(57,42,28,.045)}
-    .cardTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.cardTitle h3{font-size:18px;margin:0}.pill{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--soft);color:#796653;font-size:12px;font-weight:800}
+    .taskTitle{display:block;font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .taskMeta{display:block;margin-top:4px;color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .taskTime{font-size:14px;color:var(--accent-dark);font-weight:750;white-space:nowrap}
+    .chevron{font-size:23px;color:#c9b8a7;font-weight:300}
+    .taskRow.done{opacity:.55}.taskRow.done .taskTitle{text-decoration:line-through}
+    .empty{padding:20px 17px;border:1px dashed #d7c8b8;border-radius:22px;background:rgba(255,253,248,.62);color:var(--muted);text-align:center;line-height:1.45}
+    .moreLine{margin:10px 4px 0;color:var(--muted);font-size:13px}
+
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0 10px}
+    .primaryBtn,.secondaryBtn{min-height:60px;border-radius:21px;font-size:17px;font-weight:800}
+    .primaryBtn{background:linear-gradient(135deg,#dc9055,#ca7841);color:#fff;box-shadow:0 11px 23px rgba(194,112,57,.19)}
+    .secondaryBtn{background:rgba(255,253,248,.85);border:1px solid #ddcfc0;color:var(--ink)}
+
+    .pageTitle{margin:8px 2px 16px}
+    .pageTitle small{color:#987055;font-weight:850;letter-spacing:.075em;text-transform:uppercase;font-size:12px}
+    .pageTitle h2{font-family:Georgia,"Times New Roman",serif;font-size:37px;letter-spacing:-.035em;margin:7px 0 5px}
+    .pageTitle p{color:var(--muted);margin:0;line-height:1.45}
+    .card{margin-bottom:14px;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:17px;box-shadow:0 9px 24px rgba(57,42,28,.04)}
+    .cardTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+    .cardTitle h3{font-size:18px;margin:0}
+    .pill{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--soft);color:#796653;font-size:12px;font-weight:800}
     .datePickerRow{display:grid;grid-template-columns:1fr auto;gap:9px}
     input,select,textarea{width:100%;border:1px solid var(--line);border-radius:16px;background:#fffdf9;color:var(--ink);padding:13px;outline:none}
-    textarea{min-height:110px;resize:vertical;line-height:1.45}
+    textarea{min-height:108px;resize:vertical;line-height:1.45}
     label{font-size:12px;font-weight:800;color:var(--muted);display:block;margin:0 0 6px}
     .todayButton{padding:0 15px;border-radius:16px;background:var(--soft);font-weight:800;color:#685645}
-    .formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
-    .quickDates{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}.quickDates button{padding:11px 5px;border-radius:15px;background:#fffaf4;border:1px solid var(--line);font-size:12px;font-weight:800;color:#796a5d}.quickDates button.active{background:var(--accent);border-color:var(--accent);color:white}
-    .formActions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}.compactBtn{padding:12px 15px;border-radius:16px;font-weight:800}.compactBtn.accent{background:var(--accent);color:white}.compactBtn.soft{background:var(--soft)}.compactBtn.ghost{background:transparent;border:1px solid var(--line);color:#7a604c}
-    details{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}summary{cursor:pointer;color:#7d6c5c;font-weight:750;font-size:14px}
-    .bridgeNote{color:var(--muted);font-size:13px;line-height:1.45;margin:10px 0}.bridgeStatus{color:#756452;font-size:12px;margin-top:9px}
-    .dayBlock{margin-bottom:18px}.dayLabel{margin:0 3px 9px;font-size:13px;font-weight:850;color:#8f7d6d;text-transform:capitalize}
+    .formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .full{grid-column:1/-1}
+    .quickDates{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}
+    .quickDates button{padding:11px 5px;border-radius:15px;background:#fffaf4;border:1px solid var(--line);font-size:12px;font-weight:800;color:#796a5d}
+    .quickDates button.active{background:var(--accent);border-color:var(--accent);color:white}
+    .formActions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
+    .compactBtn{padding:12px 15px;border-radius:16px;font-weight:800}
+    .compactBtn.accent{background:var(--accent);color:white}
+    .compactBtn.soft{background:var(--soft)}
+    .compactBtn.ghost{background:transparent;border:1px solid var(--line);color:#7a604c}
+    details{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
+    summary{cursor:pointer;color:#7d6c5c;font-weight:750;font-size:14px}
+    .bridgeNote{color:var(--muted);font-size:13px;line-height:1.45;margin:10px 0}
+    .bridgeStatus{color:#756452;font-size:12px;margin-top:9px}
+    .dayBlock{margin-bottom:18px}
+    .dayLabel{margin:0 3px 9px;font-size:13px;font-weight:850;color:#8f7d6d;text-transform:capitalize}
+
     .bottomNav{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:rgba(255,252,247,.90);backdrop-filter:blur(18px);border-top:1px solid rgba(232,221,208,.86)}
-    .navInner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.navBtn{min-height:58px;border-radius:19px;background:transparent;color:#a09285;display:grid;place-items:center;gap:2px}.navBtn span{font-size:21px;line-height:1}.navBtn small{font-size:11px}.navBtn.active{color:var(--accent-dark);background:#fff8ef}
-    .toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(18px);background:rgba(49,41,34,.94);color:#fff;border-radius:999px;padding:11px 16px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:90;max-width:92%;text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-    .modal{position:fixed;inset:0;z-index:80;background:rgba(42,34,28,.30);display:none;align-items:flex-end;padding-top:env(safe-area-inset-top)}.modal.show{display:flex}.sheet{width:100%;max-width:760px;max-height:88vh;overflow:auto;margin:0 auto;background:var(--paper);border-radius:30px 30px 0 0;padding:22px 18px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -15px 40px rgba(43,34,27,.18)}
-    .sheetHandle{width:44px;height:5px;border-radius:999px;background:#d8cabb;margin:0 auto 18px}.sheet h2{font-family:Georgia,"Times New Roman",serif;font-size:30px;margin:0 0 6px}.sheetIntro{color:var(--muted);margin:0 0 18px;line-height:1.45}.briefBox{white-space:pre-wrap;border:1px solid var(--line);border-radius:20px;background:#fffaf4;padding:16px;line-height:1.5;max-height:320px;overflow:auto}.modalGrid{display:grid;gap:10px}.checkLine{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:16px;background:#fffaf4}.checkLine input{width:auto}.dangerBtn{background:#f4e5e2;color:var(--danger);padding:12px 15px;border-radius:16px;font-weight:800}
-    .editGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.statusLine{font-size:13px;color:var(--muted);margin-top:8px}
-    @media(max-width:430px){.hero{padding:25px 23px;min-height:245px}.hero h2{max-width:78%;font-size:42px}.hero p{max-width:68%;font-size:17px}.botanical{right:5px;transform:scale(.88)}.taskTitle{font-size:18px}.taskRow{grid-template-columns:44px minmax(0,1fr) auto 12px;gap:10px;padding:12px}.taskIcon{width:42px;height:42px}.actions{gap:9px}.primaryBtn,.secondaryBtn{min-height:58px}.quickDates{grid-template-columns:1fr 1fr}}
+    .navInner{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+    .navBtn{min-height:58px;border-radius:19px;background:transparent;color:#a09285;display:grid;place-items:center;gap:2px}
+    .navBtn span{font-size:21px;line-height:1}
+    .navBtn small{font-size:11px}
+    .navBtn.active{color:var(--accent-dark);background:#fff8ef}
+
+    .toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(18px);background:rgba(49,41,34,.94);color:#fff;border-radius:999px;padding:11px 16px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:90;max-width:92%;text-align:center}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .modal{position:fixed;inset:0;z-index:80;background:rgba(42,34,28,.30);display:none;align-items:flex-end;padding-top:env(safe-area-inset-top)}
+    .modal.show{display:flex}
+    .sheet{width:100%;max-width:760px;max-height:88vh;overflow:auto;margin:0 auto;background:var(--paper);border-radius:30px 30px 0 0;padding:22px 18px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -15px 40px rgba(43,34,27,.18)}
+    .sheetHandle{width:44px;height:5px;border-radius:999px;background:#d8cabb;margin:0 auto 18px}
+    .sheet h2{font-family:Georgia,"Times New Roman",serif;font-size:30px;margin:0 0 6px}
+    .sheetIntro{color:var(--muted);margin:0 0 18px;line-height:1.45}
+    .briefBox{white-space:pre-wrap;border:1px solid var(--line);border-radius:20px;background:#fffaf4;padding:16px;line-height:1.5;max-height:320px;overflow:auto}
+    .modalGrid{display:grid;gap:10px}
+    .checkLine{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:16px;background:#fffaf4}
+    .checkLine input{width:auto}
+    .dangerBtn{background:#f4e5e2;color:var(--danger);padding:12px 15px;border-radius:16px;font-weight:800}
+    .editGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .statusLine{font-size:13px;color:var(--muted);margin-top:8px}
+
+    @media(max-width:430px){
+      .hero{padding:22px 21px;min-height:205px}
+      .hero h2{max-width:80%;font-size:40px}
+      .hero p{max-width:70%;font-size:16px}
+      .botanical{right:0;top:48px;transform:scale(.86)}
+      .actions{gap:9px}
+      .primaryBtn,.secondaryBtn{min-height:57px}
+      .quickDates{grid-template-columns:1fr 1fr}
+    }
   </style>
 </head>
 <body>
@@ -107,35 +154,46 @@
         <div class="brand">
           <div class="logo" aria-hidden="true"></div>
           <div class="brandText">
-            <div class="titleLine"><h1>Clair Matin</h1><span class="version">V5.6</span></div>
+            <div class="titleLine"><h1>Clair Matin</h1><span class="version">V5.7</span></div>
             <div class="tagline">Une chose à la fois.</div>
           </div>
         </div>
-        <button class="profileBtn" id="profileBtn" aria-label="Ouvrir les réglages">F</button>
+        <button class="profileBtn" id="profileBtn" aria-label="Réglages">F</button>
       </div>
       <button class="dateButton" id="headerDateBtn"><span class="dateIcon" aria-hidden="true"></span><span id="headerDate"></span></button>
     </header>
 
     <main>
       <section id="viewHome" class="view active">
-        <article class="hero">
+        <div class="hero">
           <div class="eyebrow">Bonjour Freddy</div>
           <h2>Aujourd’hui,<br>l’essentiel.</h2>
           <p>Trois choses suffisent pour avancer calmement.</p>
           <div class="botanical" aria-hidden="true"><span class="stem"></span><span class="leaf l1"></span><span class="leaf l2"></span><span class="leaf l3"></span><span class="leaf l4"></span><span class="leaf l5"></span></div>
-        </article>
+        </div>
+
         <div class="sectionHead"><h2>Aujourd’hui</h2><button class="smallLink" id="showAllTodayBtn">Tout voir</button></div>
-        <div id="homeTasks" class="taskList"></div>
+        <div class="taskList" id="homeTasks"></div>
         <div class="moreLine" id="homeMore"></div>
-        <div class="actions"><button class="primaryBtn" id="homeAddBtn">Ajouter</button><button class="secondaryBtn" id="briefBtn">Voir le brief</button></div>
+
+        <div class="actions">
+          <button class="primaryBtn" id="homeAddBtn">Ajouter</button>
+          <button class="secondaryBtn" id="briefBtn">Voir le brief</button>
+        </div>
       </section>
 
       <section id="viewToday" class="view">
-        <div class="pageTitle"><small>Ma journée</small><h2>Aujourd’hui</h2><p>Tout ce qui compte, sans surcharger la journée.</p></div>
+        <div class="pageTitle"><small>Aujourd’hui</small><h2>La journée</h2><p>Tout ce qui compte, sans la surcharger.</p></div>
+
         <article class="card">
-          <div class="datePickerRow"><input type="date" id="selectedDate"><button class="todayButton" id="todayBtn">Aujourd’hui</button></div>
+          <div class="datePickerRow"><input id="selectedDate" type="date"><button class="todayButton" id="todayBtn">Aujourd’hui</button></div>
         </article>
-        <article class="card"><div class="cardTitle"><h3>À faire ce jour</h3><span class="pill" id="taskCount">0 tâche</span></div><div id="todayTasks" class="taskList"></div></article>
+
+        <article class="card">
+          <div class="cardTitle"><h3>À faire</h3><span class="pill" id="taskCount">0 tâche</span></div>
+          <div class="taskList" id="todayTasks"></div>
+        </article>
+
         <article class="card" id="addCard">
           <div class="cardTitle"><h3>Ajouter une chose</h3></div>
           <div class="formGrid">
@@ -174,9 +232,9 @@
 
   <div class="modal" id="briefModal"><div class="sheet"><div class="sheetHandle"></div><h2>Le brief du jour</h2><p class="sheetIntro" id="briefIntro"></p><div class="briefBox" id="briefText"></div><div class="formActions"><button class="compactBtn accent" id="copyBriefBtn">Copier</button><button class="compactBtn soft" id="briefChatBtn">Ouvrir ChatGPT</button><button class="compactBtn ghost" data-close="briefModal">Fermer</button></div></div></div>
 
-  <div class="modal" id="profileModal"><div class="sheet"><div class="sheetHandle"></div><h2>Clair Matin</h2><p class="sheetIntro">V5.6 · Une organisation simple, centrée sur aujourd’hui.</p><div class="modalGrid"><button class="compactBtn soft" id="backupBtn">Copier la sauvegarde</button><button class="compactBtn soft" id="exportBtn">Copier l’agenda</button><button class="compactBtn ghost" id="helpBtn">Mode d’emploi</button><button class="dangerBtn" id="resetBtn">Réinitialiser l’application</button><button class="compactBtn ghost" data-close="profileModal">Fermer</button></div></div></div>
+  <div class="modal" id="profileModal"><div class="sheet"><div class="sheetHandle"></div><h2>Clair Matin</h2><p class="sheetIntro">V5.7 · L’essentiel d’abord, le reste plus tard.</p><div class="modalGrid"><button class="compactBtn soft" id="backupBtn">Copier la sauvegarde</button><button class="compactBtn soft" id="exportBtn">Copier l’agenda</button><button class="compactBtn ghost" id="helpBtn">Mode d’emploi</button><button class="dangerBtn" id="resetBtn">Réinitialiser l’application</button><button class="compactBtn ghost" data-close="profileModal">Fermer</button></div></div></div>
 
-  <div class="modal" id="helpModal"><div class="sheet"><div class="sheetHandle"></div><h2>Mode d’emploi</h2><p class="sheetIntro"><strong>Accueil</strong> montre les trois premières choses de la journée.<br><br><strong>Aujourd’hui</strong> permet d’ajouter, modifier ou terminer une tâche.<br><br><strong>Plus tard</strong> rassemble ce qui est prévu après aujourd’hui.<br><br>Une tâche reçue de Clair Horizon se trouve dans « Aujourd’hui », tout en bas du formulaire.</p><button class="compactBtn accent" data-close="helpModal">J’ai compris</button></div></div>
+  <div class="modal" id="helpModal"><div class="sheet"><div class="sheetHandle"></div><h2>Mode d’emploi</h2><p class="sheetIntro"><strong>Accueil</strong> montre seulement les trois premières choses de la journée.<br><br><strong>Aujourd’hui</strong> permet d’ajouter, modifier ou terminer une tâche.<br><br><strong>Plus tard</strong> rassemble ce qui est prévu après aujourd’hui.<br><br>Une tâche reçue de Clair Horizon se trouve dans « Aujourd’hui », tout en bas du formulaire.</p><button class="compactBtn accent" data-close="helpModal">J’ai compris</button></div></div>
 
   <div class="modal" id="taskModal"><div class="sheet"><div class="sheetHandle"></div><h2>La tâche</h2><p class="sheetIntro">Tu peux la modifier, la terminer ou l’ajouter à Google Agenda.</p><div class="editGrid"><div><label>Date</label><input type="date" id="editDate"></div><div><label>Heure</label><input type="time" id="editTime"></div><div class="full"><label>Tâche</label><input id="editTitle"></div><div class="full"><label>Catégorie</label><select id="editCategory"><option>Maison</option><option>Administratif</option><option>Forme</option><option>Famille</option><option>Photo / Expo</option><option>À trier</option></select></div></div><div class="checkLine"><input type="checkbox" id="editDone"><label for="editDone" style="margin:0">Tâche terminée</label></div><div class="formActions"><button class="compactBtn accent" id="saveTaskBtn">Enregistrer</button><button class="compactBtn soft" id="calendarTaskBtn">Google Agenda</button><button class="dangerBtn" id="deleteTaskBtn">Supprimer</button><button class="compactBtn ghost" data-close="taskModal">Fermer</button></div></div></div>
 
@@ -234,7 +292,7 @@
     function renderToday(){
       const a=tasksFor(selectedDate);
       $('selectedDate').value=selectedDate;
-      $('taskCount').textContent=`${a.length} tâche${a.length>1?'s':''}`;
+      $('taskCount').textContent=`${a.length} tâche${a.length!==1?'s':''}`;
       $('todayTasks').innerHTML=a.length?a.map(taskHtml).join(''):'<div class="empty">Rien de saisi pour cette date.</div>';
     }
     function renderLater(){
@@ -327,7 +385,7 @@
     document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
     document.body.addEventListener('click',e=>{const row=e.target.closest('[data-task-id]');if(row)openTask(row.dataset.taskId)});
     $('profileBtn').onclick=()=>openModal('profileModal');
-    $('headerDateBtn').onclick=()=>{switchView('today');setTimeout(()=>$('selectedDate').showPicker?.(),180)};
+    $('headerDateBtn').onclick=()=>{switchView('today');setTimeout(()=>{if($('selectedDate').showPicker)$('selectedDate').showPicker();else $('selectedDate').focus()},180)};
     $('showAllTodayBtn').onclick=()=>switchView('today');
     $('homeAddBtn').onclick=()=>{switchView('today');setTimeout(()=>{$('addCard').scrollIntoView({behavior:'smooth',block:'start'});$('taskTitle').focus()},220)};
     $('briefBtn').onclick=showBrief;
@@ -345,7 +403,7 @@
     $('openChatBtn').onclick=()=>window.open('https://chatgpt.com/','_blank','noopener');
     $('importChatBtn').onclick=()=>{const a=parseLines($('chatImport').value);a.forEach(addTask);$('chatImport').value='';toast(a.length?`${a.length} tâche${a.length>1?'s':''} créée${a.length>1?'s':''}`:'Aucune tâche claire')};
     $('backupBtn').onclick=()=>copyText(JSON.stringify(state,null,2));
-    $('exportBtn').onclick=()=>copyText(state.tasks.sort((a,b)=>a.date.localeCompare(b.date)).map(t=>`${formatDate(t.date)} · ${t.time||'--'} · ${t.title} · ${t.category}`).join('\n')||'Aucune tâche.');
+    $('exportBtn').onclick=()=>copyText([...state.tasks].sort((a,b)=>a.date.localeCompare(b.date)).map(t=>`${formatDate(t.date)} · ${t.time||'--'} · ${t.title} · ${t.category}`).join('\n')||'Aucune tâche.');
     $('helpBtn').onclick=()=>{closeModal('profileModal');openModal('helpModal')};
     $('resetBtn').onclick=()=>{if(confirm('Réinitialiser Clair Matin sur cet appareil ?')){state={tasks:[]};save();closeModal('profileModal');render();toast('Application réinitialisée')}};
     $('saveTaskBtn').onclick=saveEditedTask;
