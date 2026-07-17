@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Clair Matin" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <title>Clair Matin V5.7</title>
+  <title>Clair Matin V5.8</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <style>
@@ -65,6 +65,10 @@
     .sectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 4px 13px}
     .sectionHead h2{margin:0;font-size:14px;letter-spacing:.075em;text-transform:uppercase;color:#8e684e}
     .smallLink{background:transparent;color:var(--accent-dark);font-size:13px;font-weight:800;padding:5px}
+    .homeCount{margin-top:5px;color:var(--muted);font-size:13px}
+    .logo{transform-origin:50% 78%}
+    body.justOpened .logo{animation:sunrise .65s ease-out both}
+    @keyframes sunrise{from{opacity:.55;transform:translateY(5px) scale(.97)}to{opacity:1;transform:none}}
     .taskList{display:grid;gap:9px}
     .taskRow{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr) auto 13px;align-items:center;gap:10px;padding:12px 13px;background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 20px rgba(57,42,28,.04);text-align:left}
     .taskIcon{width:42px;height:42px;border-radius:16px;background:#f8f2e9;display:grid;place-items:center;color:var(--sage);font-size:21px}
@@ -154,7 +158,7 @@
         <div class="brand">
           <div class="logo" aria-hidden="true"></div>
           <div class="brandText">
-            <div class="titleLine"><h1>Clair Matin</h1><span class="version">V5.7</span></div>
+            <div class="titleLine"><h1>Clair Matin</h1><span class="version">V5.8</span></div>
             <div class="tagline">Une chose à la fois.</div>
           </div>
         </div>
@@ -166,13 +170,13 @@
     <main>
       <section id="viewHome" class="view active">
         <div class="hero">
-          <div class="eyebrow">Bonjour Freddy</div>
-          <h2>Aujourd’hui,<br>l’essentiel.</h2>
-          <p>Trois choses suffisent pour avancer calmement.</p>
+          <div class="eyebrow" id="greetingText">Bonjour Freddy</div>
+          <h2 id="heroTitle">Aujourd’hui,<br>l’essentiel.</h2>
+          <p id="heroText">Trois choses suffisent pour avancer calmement.</p>
           <div class="botanical" aria-hidden="true"><span class="stem"></span><span class="leaf l1"></span><span class="leaf l2"></span><span class="leaf l3"></span><span class="leaf l4"></span><span class="leaf l5"></span></div>
         </div>
 
-        <div class="sectionHead"><h2>Aujourd’hui</h2><button class="smallLink" id="showAllTodayBtn">Tout voir</button></div>
+        <div class="sectionHead"><div><h2>Aujourd’hui</h2><div class="homeCount" id="homeCount"></div></div><button class="smallLink" id="showAllTodayBtn">Tout voir</button></div>
         <div class="taskList" id="homeTasks"></div>
         <div class="moreLine" id="homeMore"></div>
 
@@ -232,9 +236,11 @@
 
   <div class="modal" id="briefModal"><div class="sheet"><div class="sheetHandle"></div><h2>Le brief du jour</h2><p class="sheetIntro" id="briefIntro"></p><div class="briefBox" id="briefText"></div><div class="formActions"><button class="compactBtn accent" id="copyBriefBtn">Copier</button><button class="compactBtn soft" id="briefChatBtn">Ouvrir ChatGPT</button><button class="compactBtn ghost" data-close="briefModal">Fermer</button></div></div></div>
 
-  <div class="modal" id="profileModal"><div class="sheet"><div class="sheetHandle"></div><h2>Clair Matin</h2><p class="sheetIntro">V5.7 · L’essentiel d’abord, le reste plus tard.</p><div class="modalGrid"><button class="compactBtn soft" id="backupBtn">Copier la sauvegarde</button><button class="compactBtn soft" id="exportBtn">Copier l’agenda</button><button class="compactBtn ghost" id="helpBtn">Mode d’emploi</button><button class="dangerBtn" id="resetBtn">Réinitialiser l’application</button><button class="compactBtn ghost" data-close="profileModal">Fermer</button></div></div></div>
+  <div class="modal" id="profileModal"><div class="sheet"><div class="sheetHandle"></div><h2>Clair Matin</h2><p class="sheetIntro">V5.8 · Édition Signature.</p><div class="modalGrid"><button class="compactBtn soft" id="backupBtn">Copier la sauvegarde</button><button class="compactBtn soft" id="exportBtn">Copier l’agenda</button><button class="compactBtn soft" id="restoreBtn">Restaurer une sauvegarde</button><button class="compactBtn ghost" id="helpBtn">Mode d’emploi</button><button class="dangerBtn" id="resetBtn">Réinitialiser l’application</button><button class="compactBtn ghost" data-close="profileModal">Fermer</button></div></div></div>
 
   <div class="modal" id="helpModal"><div class="sheet"><div class="sheetHandle"></div><h2>Mode d’emploi</h2><p class="sheetIntro"><strong>Accueil</strong> montre seulement les trois premières choses de la journée.<br><br><strong>Aujourd’hui</strong> permet d’ajouter, modifier ou terminer une tâche.<br><br><strong>Plus tard</strong> rassemble ce qui est prévu après aujourd’hui.<br><br>Une tâche reçue de Clair Horizon se trouve dans « Aujourd’hui », tout en bas du formulaire.</p><button class="compactBtn accent" data-close="helpModal">J’ai compris</button></div></div>
+
+  <div class="modal" id="restoreModal"><div class="sheet"><div class="sheetHandle"></div><h2>Restaurer</h2><p class="sheetIntro">Colle ici une sauvegarde copiée depuis Clair Matin. Les tâches actuelles seront remplacées seulement après confirmation.</p><textarea id="restoreText" placeholder='{"tasks": [...]}'></textarea><div class="formActions"><button class="compactBtn accent" id="applyRestoreBtn">Restaurer</button><button class="compactBtn ghost" data-close="restoreModal">Annuler</button></div></div></div>
 
   <div class="modal" id="taskModal"><div class="sheet"><div class="sheetHandle"></div><h2>La tâche</h2><p class="sheetIntro">Tu peux la modifier, la terminer ou l’ajouter à Google Agenda.</p><div class="editGrid"><div><label>Date</label><input type="date" id="editDate"></div><div><label>Heure</label><input type="time" id="editTime"></div><div class="full"><label>Tâche</label><input id="editTitle"></div><div class="full"><label>Catégorie</label><select id="editCategory"><option>Maison</option><option>Administratif</option><option>Forme</option><option>Famille</option><option>Photo / Expo</option><option>À trier</option></select></div></div><div class="checkLine"><input type="checkbox" id="editDone"><label for="editDone" style="margin:0">Tâche terminée</label></div><div class="formActions"><button class="compactBtn accent" id="saveTaskBtn">Enregistrer</button><button class="compactBtn soft" id="calendarTaskBtn">Google Agenda</button><button class="dangerBtn" id="deleteTaskBtn">Supprimer</button><button class="compactBtn ghost" data-close="taskModal">Fermer</button></div></div></div>
 
@@ -283,11 +289,33 @@
     function futureTasks(){return state.tasks.filter(t=>t.date>localDate()).sort((a,b)=>a.date.localeCompare(b.date)||(a.done-b.done)||(a.time||'99:99').localeCompare(b.time||'99:99'))}
     function iconFor(t){if(t.time)return '◷';const c=(t.category||'').toLowerCase();if(c.includes('photo'))return '▣';if(c.includes('forme'))return '◇';if(c.includes('famille'))return '♡';if(c.includes('administratif'))return '≡';if(c.includes('maison'))return '⌂';return '○'}
     function taskHtml(t){return `<button class="taskRow ${t.done?'done':''}" data-task-id="${esc(t.id)}"><span class="taskIcon ${t.time?'timed':''}">${iconFor(t)}</span><span class="taskMain"><span class="taskTitle">${esc(t.title)}</span><span class="taskMeta">${esc(t.category||'À trier')}${t.source==='clair-horizon'?' · Clair Horizon':''}</span></span><span class="taskTime">${esc(t.time||'')}</span><span class="chevron">›</span></button>`}
+    function greetingForNow(){
+      const h=new Date().getHours();
+      if(h<12)return {greeting:'Bonjour Freddy',title:'Aujourd’hui,<br>l’essentiel.',text:'Trois choses suffisent pour avancer calmement.'};
+      if(h<18)return {greeting:'Bon après-midi Freddy',title:'Continuons<br>sereinement.',text:'Une chose après l’autre, sans surcharger la journée.'};
+      return {greeting:'Bonsoir Freddy',title:'Terminons<br>tranquillement.',text:'Garde seulement ce qui compte encore aujourd’hui.'};
+    }
+    function emptyThought(){
+      const phrases=[
+        'La journée peut rester légère.',
+        'Une journée libre a aussi de la valeur.',
+        'Prends le temps de regarder dehors.',
+        'Rien d’obligatoire. Garde de la place pour l’imprévu.',
+        'Aujourd’hui peut simplement respirer.'
+      ];
+      const start=new Date(new Date().getFullYear(),0,0);
+      const day=Math.floor((new Date()-start)/86400000);
+      return phrases[day%phrases.length];
+    }
     function renderHome(){
       const all=tasksFor(localDate());
-      const visible=all.slice(0,3);
-      $('homeTasks').innerHTML=visible.length?visible.map(taskHtml).join(''):'<div class="empty">Rien de prévu aujourd’hui.<br>La journée peut rester légère.</div>';
-      $('homeMore').textContent=all.length>3?`${all.length-3} autre${all.length-3>1?'s':''} chose${all.length-3>1?'s':''} dans la journée.`:'';
+      const remaining=all.filter(t=>!t.done);
+      const visible=remaining.slice(0,3);
+      const g=greetingForNow();
+      $('greetingText').textContent=g.greeting;$('heroTitle').innerHTML=g.title;$('heroText').textContent=g.text;
+      $('homeCount').textContent=remaining.length?`${remaining.length} tâche${remaining.length>1?'s':''} aujourd’hui`:'Aucune tâche aujourd’hui';
+      $('homeTasks').innerHTML=visible.length?visible.map(taskHtml).join(''):`<div class="empty">Rien de prévu aujourd’hui.<br>${emptyThought()}</div>`;
+      $('homeMore').textContent=remaining.length>3?`${remaining.length-3} autre${remaining.length-3>1?'s':''} chose${remaining.length-3>1?'s':''} dans la journée.`:'';
     }
     function renderToday(){
       const a=tasksFor(selectedDate);
@@ -331,8 +359,12 @@
     function closeModal(id){$(id).classList.remove('show')}
     function buildBrief(){
       const date=localDate();const a=tasksFor(date);const remaining=a.filter(t=>!t.done);const done=a.filter(t=>t.done);
-      const lines=remaining.length?remaining.map((t,i)=>`${i+1}. ${t.time?t.time.replace(':','h')+' · ':''}${t.title}`).join('\n'):'Rien d’obligatoire aujourd’hui.';
-      return `CLAIR MATIN — ${formatDate(date).toUpperCase()}\n\n${lines}\n\n${done.length?`${done.length} tâche${done.length>1?'s':''} déjà faite${done.length>1?'s':''}.`:'Une chose à la fois.'}`;
+      if(!remaining.length)return `${formatDate(date)}\n\nRien d’obligatoire aujourd’hui.\n${emptyThought()}\n\nBonne journée Freddy.`;
+      const first=remaining[0];
+      const list=remaining.map(t=>`${t.time?t.time.replace(':','h')+' · ':''}${t.title}`).join('\n');
+      const opening=remaining.length===1?'Aujourd’hui, une seule chose est prévue.':`Aujourd’hui, ${remaining.length} choses sont prévues.`;
+      const firstLine=first.time?`La première est à ${first.time.replace(':','h')} : ${first.title}.`:`Commence par : ${first.title}.`;
+      return `${formatDate(date)}\n\n${opening}\n${firstLine}\n\n${list}\n\n${done.length?`${done.length} tâche${done.length>1?'s':''} déjà faite${done.length>1?'s':''}.\n`:''}Bonne journée Freddy.`;
     }
     function showBrief(){const a=tasksFor(localDate()).filter(t=>!t.done);$('briefIntro').textContent=a.length?`${a.length} chose${a.length>1?'s':''} à garder en tête aujourd’hui.`:'Une journée sans obligation particulière.';$('briefText').textContent=buildBrief();openModal('briefModal')}
     async function copyText(x){try{await navigator.clipboard.writeText(x);toast('Copié')}catch{const a=document.createElement('textarea');a.value=x;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();toast('Copié')}}
@@ -352,7 +384,7 @@
       const title=$('editTitle').value.trim();if(!title){toast('Indique une tâche');return}
       state.tasks[i]={...state.tasks[i],date:$('editDate').value||localDate(),time:normalizeTime($('editTime').value),title,category:$('editCategory').value,done:$('editDone').checked};save();closeModal('taskModal');render();toast('Tâche enregistrée');
     }
-    function category(title){const s=title.toLowerCase();if(/photo|expo|tirage/.test(s))return'Photo / Expo';if(/salle|vélo|marche|sport/.test(s))return'Forme';if(/mairie|rdv|papier|mail/.test(s))return'Administratif';if(/sylvie|famille|enfant/.test(s))return'Famille';if(/ranger|maison|courses/.test(s))return'Maison';return'À trier'}
+    function category(title){const s=title.toLowerCase();if(/photo|expo|tirage|vernissage|appareil|lightroom/.test(s))return'Photo / Expo';if(/salle|vélo|marche|sport|coach|garmin/.test(s))return'Forme';if(/mairie|rdv|rendez-vous|papier|mail|banque|médecin/.test(s))return'Administratif';if(/sylvie|famille|enfant|abbie|hazel|sacha/.test(s))return'Famille';if(/ranger|maison|course|courses|ménage|linge|cuisine/.test(s))return'Maison';return'À trier'}
     function parseLines(text){
       return String(text||'').split(/\n+/).map(x=>x.trim()).filter(Boolean).map(line=>{
         line=line.replace(/^[•\-–—*]\s*/,'');
@@ -394,7 +426,10 @@
     $('selectedDate').onchange=e=>{selectedDate=e.target.value||localDate();render()};
     $('todayBtn').onclick=()=>{selectedDate=localDate();render()};
     document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>setPlan(b.dataset.plan));
-    $('addTaskBtn').onclick=()=>{if(addTask({date:planDate,time:$('taskTime').value,title:$('taskTitle').value,category:$('taskCategory').value})){selectedDate=planDate;$('taskTitle').value='';$('taskTime').value='';render();toast('Ajouté')}};
+    $('addTaskBtn').onclick=()=>{if(addTask({date:planDate,time:$('taskTime').value,title:$('taskTitle').value,category:$('taskCategory').value})){selectedDate=planDate;$('taskTitle').value='';$('taskTime').value='';$('taskCategory').value='À trier';autoCategory=true;render();toast('Ajouté')}};
+    let autoCategory=true;
+    $('taskCategory').addEventListener('change',()=>{autoCategory=false});
+    $('taskTitle').addEventListener('input',()=>{if(!autoCategory)return;const c=category($('taskTitle').value);if(c!=='À trier')$('taskCategory').value=c});
     $('taskTitle').addEventListener('keydown',e=>{if(e.key==='Enter')$('addTaskBtn').click()});
     $('clearDoneBtn').onclick=()=>{const before=state.tasks.length;state.tasks=state.tasks.filter(t=>!(t.date===selectedDate&&t.done));save();render();toast(before===state.tasks.length?'Aucune tâche faite':'Tâches faites retirées')};
     $('importHorizonBtn').onclick=async()=>{try{const text=await navigator.clipboard.readText();importHorizon(text)}catch{$('horizonPaste').focus();toast('Autorise Coller, ou colle le texte ci-dessous')}};
@@ -404,6 +439,8 @@
     $('importChatBtn').onclick=()=>{const a=parseLines($('chatImport').value);a.forEach(addTask);$('chatImport').value='';toast(a.length?`${a.length} tâche${a.length>1?'s':''} créée${a.length>1?'s':''}`:'Aucune tâche claire')};
     $('backupBtn').onclick=()=>copyText(JSON.stringify(state,null,2));
     $('exportBtn').onclick=()=>copyText([...state.tasks].sort((a,b)=>a.date.localeCompare(b.date)).map(t=>`${formatDate(t.date)} · ${t.time||'--'} · ${t.title} · ${t.category}`).join('\n')||'Aucune tâche.');
+    $('restoreBtn').onclick=()=>{closeModal('profileModal');$('restoreText').value='';openModal('restoreModal')};
+    $('applyRestoreBtn').onclick=()=>{try{const parsed=JSON.parse($('restoreText').value.trim());const tasks=Array.isArray(parsed)?parsed:parsed.tasks;if(!Array.isArray(tasks))throw new Error('format');if(!confirm('Remplacer les tâches actuelles par cette sauvegarde ?'))return;state={tasks:tasks.map(normalizeTask).filter(Boolean)};save();closeModal('restoreModal');render();toast('Sauvegarde restaurée')}catch{toast('Sauvegarde non reconnue')}};
     $('helpBtn').onclick=()=>{closeModal('profileModal');openModal('helpModal')};
     $('resetBtn').onclick=()=>{if(confirm('Réinitialiser Clair Matin sur cet appareil ?')){state={tasks:[]};save();closeModal('profileModal');render();toast('Application réinitialisée')}};
     $('saveTaskBtn').onclick=saveEditedTask;
@@ -412,7 +449,7 @@
 
     const last=localStorage.getItem('clairMatin.lastHorizonImport');if(last)$('bridgeStatus').textContent='Dernier import : '+new Intl.DateTimeFormat('fr-FR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(last));
     if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-    setPlan(0);render();
+    document.body.classList.add('justOpened');setTimeout(()=>document.body.classList.remove('justOpened'),800);setPlan(0);render();
   })();
   </script>
 </body>
